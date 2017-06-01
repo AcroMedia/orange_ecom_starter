@@ -1,0 +1,7 @@
+{
+  "name": "acromedia/orange_ecom_starter",
+  "type": "drupal-theme",
+  "description": "A starting theme for Drupal E-Commerce projects.",
+  "homepage": "https://github.com/AcroMedia/orange_ecom_starter",
+  "license": "GPL-2.0+"
+}
