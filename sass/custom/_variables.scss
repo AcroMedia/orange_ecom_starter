@@ -7,13 +7,13 @@
  */
 $c-site-bg: #fff;
 
-$c-primary: #ff9900;
+$c-primary: #f95e27;
 $c-primary-hover: darken($c-primary, 10%);
 
-$c-secondary: #304772;
+$c-secondary: #25a8e0;
 $c-secondary-hover: darken($c-secondary, 10%);
 
-$c-tertiary: #7e8aa2;
+$c-tertiary: #713a7d;
 $c-tertiary-hover: darken($c-tertiary, 10%);
 
 $c-accent-1: #ccc;
@@ -22,7 +22,7 @@ $c-accent-3: #ccc;
 
 $c-body: #666;
 
-$c-link: #0594D8;
+$c-link: #1cb06d;
 $c-link-hover: darken($c-link, 10%);
 
 $gray-base:              #151515 !default;
@@ -30,15 +30,17 @@ $gray-darker:            #353535;
 $gray-dark:              #545353;
 $gray:                   #807e7e;
 $gray-light:             #cccaca;
-$gray-lighter:           #f2f0f0;
+$gray-lighter:           #f1f3f2;
 
 /**
  * Fonts.
  */
+$f-glyphicons: 'Glyphicons Halflings';
+$f-font-awesome: FontAwesome;
+
 $f-primary: Verdana, Geneva, sans-serif;
 $f-secondary: Georgia, Times, 'Times New Roman', serif;
 $f-body: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-$f-glyphicons: 'Glyphicons Halflings';
 
 /**
  * Site styles.
@@ -54,6 +56,9 @@ $screen-min: 320px;
 $screen-xs: 480px !default;
 $screen-xs-min: $screen-xs !default;
 
+// Small screen / large phone.
+$screen-sm-ph: 600px;
+
 // Small screen / tablet.
 $screen-sm: 768px !default;
 $screen-sm-min: $screen-sm !default;
@@ -65,6 +70,11 @@ $screen-md-min: $screen-md !default;
 // Large screen / wide desktop.
 $screen-lg: 1200px !default;
 $screen-lg-min: $screen-lg !default;
+
+// Extra large screen / wider desktop.
+// See '_bootstrap-overrides.scss' for details.
+$screen-xl: 1560px !default;
+$screen-xl-min: $screen-xl !default;
 
 // So media queries don't overlap when required, provide a maximum.
 $screen-xs-max: ($screen-sm-min - 1) !default;

@@ -1,0 +1,82 @@
+{% extends "page.html.twig" %}
+
+{% block page_body %}
+  {#
+    Render sidebars to check if it is truly empty.
+    Issue: https://www.drupal.org/node/953034.
+  #}
+  {% set left_sidebar_rendered = page.left_sidebar|render %}
+  {% set left_sidebar_exists = left_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {% set right_sidebar_rendered = page.right_sidebar|render %}
+  {% set right_sidebar_exists = right_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {# Set column class based on sidebars. #}
+  {% if left_sidebar_exists and right_sidebar_exists %}
+    {% set col_class = 'col-sm-6' %}
+    {% set sidebar_col_class = 'col-sm-3 hidden-xs' %}
+  {% elseif left_sidebar_exists or right_sidebar_exists %}
+    {% set col_class = 'col-sm-8 col-md-9' %}
+    {% set sidebar_col_class = 'col-sm-4 col-md-3 hidden-xs' %}
+  {% else %}
+    {% set col_class = 'col-sm-12' %}
+  {% endif %}
+
+  <div class="site-content">
+    <div class="container">
+      {# Page Banner. #}
+      {% if node and node.field_image.entity.uri.value %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header-image">
+              {{ drupal_field('field_image', 'node', node.id, 'default') }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {# / Page Banner. #}
+
+      <div class="row">
+        {# Left Sidebar. #}
+        {% if left_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--left" role="complementary">
+              {{ page.left_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Left Sidebar. #}
+
+        {# Main content. #}
+        <div class="{{ col_class }}">
+          <main class="content__main-content clearfix" role="main">
+            <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
+            {% if page.highlighted %}
+              {{ page.highlighted }}
+            {% endif %}
+            {% if page.above_content %}
+              {{ page.above_content }}
+            {% endif %}
+            {% if page.content %}
+              {{ page.content }}
+            {% endif %}
+            {% if page.below_content %}
+              {{ page.below_content }}
+            {% endif %}
+          </main>
+        </div>
+        {# / Main content. #}
+
+        {# Right Sidebar. #}
+        {% if right_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--right" role="complementary">
+              {{ page.right_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Right Sidebar. #}
+      </div>
+    </div>
+  </div>
+{% endblock page_body %}

@@ -4,10 +4,70 @@ global-styling:
     theme:
       css/style.css: { media: all }
   js:
+    js/contrib/bootstrap-tabcollapse.js: {}
     js/custom/script.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.once
     - core/drupal
+    - magnific_popup/magnific_popup
+    - orange_ecom_starter/bootstrap
+
+slick:
+  version: 1.x
+  css:
+    theme:
+      js/contrib/slick/slick.css: { media: all }
+  js:
+    js/contrib/slick/slick.min.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+paragraph-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-featured-products:
+  version: 1.x
+  js:
+    js/custom/paragraphs/featured-products.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+commerce-product:
+  version: 1.x
+  js:
+    js/custom/commerce-product.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - orange_ecom_starter/slick
+
+bootstrap:
+  version: 1.x
+  js:
+    js/contrib/bootstrap/transition.js: { weight: 0 }
+    js/contrib/bootstrap/alert.js: { weight: 0 }
+    js/contrib/bootstrap/carousel.js: { weight: 0 }
+    js/contrib/bootstrap/collapse.js: { weight: 0 }
+    js/contrib/bootstrap/dropdown.js: { weight: 0 }
+    js/contrib/bootstrap/modal.js: { weight: 0 }
+    js/contrib/bootstrap/tab.js: { weight: 0 }
+    js/contrib/bootstrap/affix.js: { weight: 0 }
+    js/contrib/bootstrap/scrollspy.js: { weight: 0 }
+    js/contrib/bootstrap/tooltip.js: { weight: -1 }
+    js/contrib/bootstrap/popover.js: { weight: 0 }
+  dependencies:
+    - core/jquery
 
 maintenance_page:
   version: 1.x

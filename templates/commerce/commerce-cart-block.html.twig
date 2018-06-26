@@ -1,7 +1,6 @@
 <div{{ attributes}}>
   <div class="cart-block--summary">
     <a class="cart-block--link__expand" href="{{ url }}">
-      <span class="cart-block--summary__icon">{{ icon }}</span>
       <span class="cart-block--summary__count">{{ count_text }}</span>
     </a>
   </div>
@@ -12,7 +11,11 @@
         {{ content }}
       </div>
       <div class="cart-block--contents__links">
-        {{ links }}
+        <ul class="menu">
+          <li class="menu__item menu__item--cart">
+            <a href="{{ path('commerce_cart.page') }}">{{ 'View Cart'|t }}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

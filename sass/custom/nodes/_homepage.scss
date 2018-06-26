@@ -1,0 +1,40 @@
+/**
+ * Homepage.
+ */
+.page-node-type-homepage {
+  // Set region widths since the page has no site container wrapper.
+  .region-highlighted,
+  .region-above-content,
+  .region-below-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $screen-xl-min;
+  }
+  .region-highlighted > div {
+    margin: 20px 0;
+  }
+  // Hide page title block.
+  .block-page-title-block {
+    display: none;
+  }
+  .site-content {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Adjust region spacing if logged in.
+.user-logged-in.toolbar-vertical.page-node-type-homepage,
+.user-logged-in.toolbar-horizontal.page-node-type-homepage {
+  .region-above-content > .block {
+    margin: 20px 0;
+  }
+}
+
+// Homepage body content.
+.homepage__body {
+  margin: 0;
+  padding: 20px 0;
+}

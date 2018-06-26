@@ -9,6 +9,17 @@ use Drupal\Core\Template\Attribute;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Url;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductVariation;
+use Drupal\commerce_product\Plugin\Field\FieldWidget\ProductVariationAttributesWidget;
+use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\Display\EntityFormDisplayInterface;
+use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\comment\Entity\Comment;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -38,7 +49,7 @@ function orange_ecom_starter_theme_suggestions_page_alter(array &$suggestions, a
     $page_current_alias = str_replace('-', '_', $page_current_alias);
     $pos_page_current_alias = strpos($page_current_alias, $search_for);
 
-    if ($pos_page_current_alias !== false) {
+    if ($pos_page_current_alias !== FALSE) {
       $page_current_alias_formatted = substr_replace($page_current_alias, '', $pos_page_current_alias, strlen($search_for));
       $page_current_alias_formatted = str_replace('/', '__', $page_current_alias_formatted);
     }
@@ -74,18 +85,26 @@ function orange_ecom_starter_preprocess_html(&$variables) {
     // Set variable for taxonomy term's name.
     $variables['term_name'] = $term->getName();
   }
+
+  // Commerce Product.
+  if ($commerce_product = \Drupal::request()->attributes->get('commerce_product')) {
+    $variables['commerce_product_type'] = $commerce_product->bundle();
+  }
 }
 
 /**
  * Implements hook__preprocess_comment_HOOK() for Comments.
  */
 function orange_ecom_starter_preprocess_comment(&$variables) {
-  $comment = $variables['elements']['#comment'];
+  if (isset($variables['elements']['#comment'])) {
+    $comment = $variables['elements']['#comment'];
 
-  $variables['created'] = t('@comment_date at @comment_time', array(
-    '@comment_date' => \Drupal::service('date.formatter')->format($comment->getCreatedTime(), 'custom', 'F j, Y'),
-    '@comment_time' => \Drupal::service('date.formatter')->format($comment->getCreatedTime(), 'custom', 'g:i a')
-  ));
+    $variables['comment_type'] = $comment->bundle();
+
+    $variables['created'] = t('@comment_date', [
+      '@comment_date' => \Drupal::service('date.formatter')->format($comment->getCreatedTime(), 'custom', 'F j, Y')
+    ]);
+  }
 }
 
 /**
@@ -99,7 +118,7 @@ function orange_ecom_starter_preprocess_node(&$variables) {
     $variables['base_path'] = base_path();
 
     // Absolute path variable.
-    $node_absolute_url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['absolute' => TRUE])->toString();
+    $node_absolute_url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['absolute' => TRUE])->toString();
     $variables['absolute_path'] = $node_absolute_url;
 
     // Encoded fields for social media sharing.
@@ -108,80 +127,6 @@ function orange_ecom_starter_preprocess_node(&$variables) {
 
     $encoded_title = rawurlencode($node->title->value);
     $variables['encoded_title'] = $encoded_title;
-
-    // Page.
-    if ($node->getType() === 'page') {
-      // Page Header Image.
-      if (isset($node->field_page_header_image->entity)) {
-        $variables['page_header_image_url'] = ImageStyle::load('banner')->buildUrl($node->field_page_header_image->entity->getFileUri());
-      }
-    }
-
-    // Homepage Carousel Slide.
-    if ($node->getType() === 'homepage_carousel_slide') {
-      // Image.
-      if (isset($node->field_carousel_slide_image->entity)) {
-        $variables['slide_image_url'] = ImageStyle::load('homepage_carousel_slide_image')->buildUrl($node->field_carousel_slide_image->entity->getFileUri());
-        $variables['slide_mobile_image_url'] = ImageStyle::load('homepage_carousel_slide_image_mobile')->buildUrl($node->field_carousel_slide_image->entity->getFileUri());
-      }
-      // Mobile image.
-      if (isset($node->field_carousel_slide_image_sml->entity)) {
-        $variables['slide_mobile_image_url'] = ImageStyle::load('homepage_carousel_slide_image_mobile')->buildUrl($node->field_carousel_slide_image_sml->entity->getFileUri());
-      }
-      // Link URL.
-      if (isset($node->field_carousel_slide_link->uri)) {
-        $carousel_link = $node->field_carousel_slide_link->uri;
-        $variables['slide_link_url'] = Url::fromUri($carousel_link);
-      }
-    }
-
-    // Blog Post.
-    if ($node->getType() === 'blog_post') {
-      // User.
-      if (isset($node->get('uid')->entity)) {
-        $blog_author_id = $node->get('uid')->entity->id();
-        $blog_author_name = $node->get('uid')->entity->getUsername();
-
-        $variables['blog_author_id'] = $blog_author_id;
-        $variables['blog_author_name'] = $blog_author_name;
-      }
-
-      // Date.
-      if (!empty($node->field_post_date)) {
-        $post_date = strtotime($node->field_post_date->value);
-        $variables['blog_post_date'] = \Drupal::service('date.formatter')->format($post_date, 'custom', 'M j, Y');
-      }
-
-      // Image.
-      if (isset($node->field_blog_image->entity)) {
-        $variables['blog_image_url'] = ImageStyle::load('banner')->buildUrl($node->field_blog_image->entity->getFileUri());
-      }
-    }
-
-    // Image Gallery.
-    if ($node->getType() === 'image_gallery') {
-      if (isset($node->field_gallery_image->entity)) {
-        $field_gallery_image = $node->field_gallery_image;
-
-        // Create array to push field data into.
-        $image_gallery_images = [];
-
-        foreach ($field_gallery_image as $key => $image) {
-          // Image.
-          $image_gallery_images[$key]['image_gallery_image_url'] = ImageStyle::load('image_gallery_image')->buildUrl($image->entity->getFileUri());
-          // Image thumbnail.
-          $image_gallery_images[$key]['image_gallery_thumb_url'] = ImageStyle::load('image_gallery_thumb')->buildUrl($image->entity->getFileUri());
-          // Image title.
-          if (!empty($image->title)) {
-            $image_gallery_images[$key]['title'] = $image->title;
-          }
-          // Image alt.
-          $image_gallery_images[$key]['alt'] = $image->alt;
-        }
-
-        $variables['image_gallery'] = $image_gallery_images;
-      }
-    }
   }
 }
 
@@ -192,24 +137,6 @@ function orange_ecom_starter_preprocess_page(&$variables) {
   // Load the site name out of configuration.
   $config = \Drupal::config('system.site');
   $variables['site_name'] = $config->get('name');
-
-  // Homepage.
-  if ($is_front_page = \Drupal::service('path.matcher')->isFrontPage()) {
-    // Homepage carousel view.
-    $homepage_carousel_view_name = 'homepage_carousel';
-    $homepage_carousel_view_display = 'default';
-    $homepage_carousel_view_results = views_get_view_result($homepage_carousel_view_name, $homepage_carousel_view_display);
-    $result = count($homepage_carousel_view_results);
-    // Set variable if the view has results.
-    if ($result) {
-      $variables['homepage_carousel_view'] = views_embed_view($homepage_carousel_view_name, $homepage_carousel_view_display);
-    }
-  }
-
-  // Node.
-  if (isset($variables['node'])) {
-    $node = $variables['node'];
-  }
 }
 
 /**
@@ -219,18 +146,284 @@ function orange_ecom_starter_preprocess_taxonomy_term(&$variables) {
   if (isset($variables['term'])) {
     $term = $variables['term'];
 
-    // Set base path variable.
+    // Set base path variable since it's not available by default.
     $variables['base_path'] = base_path();
   }
 }
 
 /**
- * Implements hook_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id).
+ * Implements hook_form_alter().
  */
-function orange_ecom_starter_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Comment form.
   if ($form_id == 'comment_node_comment_form') {
     // Update submit button text.
     $form['actions']['submit']['#value'] = t('Post Comment');
   }
+
+  // Product Review comment form.
+  if ($form_id == 'comment_product_review_form') {
+    // Update submit button text.
+    $form['actions']['submit']['#value'] = t('Post Review');
+  }
+
+  // Commerce Add To Cart form.
+  if ((strpos($form_id, 'commerce_order_item_add_to_cart_form') === 0)) {
+    $form['#theme'][] = 'commerce_custom_add_to_cart_form';
+
+    // Check for existing variation.
+    if (isset($form['purchased_entity']['widget'][0]['variation']['#value'])) {
+      // Set data attribute for the product variation id.
+      $product_variation_id = $form['purchased_entity']['widget'][0]['variation']['#value'];
+      $form['#attributes']['data-product-variation-id'] = $product_variation_id;
+      $form['#product_variation_id'] = $product_variation_id;
+    }
+  }
+
+  // Commerce Cart form.
+  if ((strpos($form_id, 'views_form_commerce_cart_form') === 0)) {
+    if (isset($form['actions']['checkout'])) {
+      // Make checkout button the primary button.
+      $form['actions']['checkout']['#button_type'] = 'primary';
+    }
+  }
+
+  // Commerce Cart form.
+  if ((strpos($form_id, 'commerce_checkout_flow') === 0)) {
+    // Set submit button types as primary.
+    if (isset($form['login']['returning_customer']['submit'])) {
+      $form['login']['returning_customer']['submit']['#button_type'] = 'primary';
+    }
+    if (isset($form['login']['guest']['continue'])) {
+      $form['login']['guest']['continue']['#button_type'] = 'primary';
+    }
+    if (isset($form['login']['register']['register']['submit'])) {
+      $form['login']['register']['register']['#button_type'] = 'primary';
+    }
+
+    // Login - Returning Customer.
+    if (isset($form['login']['returning_customer']['name'])) {
+      // Remove autofocus from username input.
+      unset($form['login']['returning_customer']['name']['#attributes']['autofocus']);
+    }
+
+    // Contact Information - Email fields.
+    if (isset($form['contact_information']['email'])) {
+      $form['contact_information']['email']['#description'] = t("We'll email your order confirmation to this address.");
+      $form['contact_information']['email']['#attributes']['placeholder'] = t('email@address.com');
+    }
+    if (isset($form['contact_information']['email_confirm'])) {
+      $form['contact_information']['email_confirm']['#attributes']['placeholder'] = t('email@address.com');
+    }
+  }
+
+  // User Login form.
+  if ($form_id == 'user_login_form') {
+    // Make checkout button the primary button.
+    $form['actions']['submit']['#button_type'] = 'primary';
+
+    // Remove autofocus from username input.
+    unset($form['name']['#attributes']['autofocus']);
+  }
+
+  // User Reset Password form.
+  if ($form_id == 'user_pass') {
+    // Make checkout button the primary button.
+    $form['actions']['submit']['#button_type'] = 'primary';
+
+    // Remove mail which was markup.
+    // And assign new text to the name field description instead.
+    $form['mail'] = [];
+    $form['name']['#description'] = t('Password reset instructions will be sent to your registered email address.');
+
+    // Remove autofocus from username input.
+    unset($form['name']['#attributes']['autofocus']);
+  }
+}
+
+/**
+ * Implements hook_preprocess(&$variables, $hook).
+ */
+function orange_ecom_starter_preprocess(&$variables, $hook) {
+  // Commerce Product.
+  if (isset($variables['elements']['#entity_type']) && $hook == 'commerce_product') {
+    if (isset($variables['elements']['#commerce_product'])) {
+      $product = $variables['elements']['#commerce_product'];
+
+      // Set base path variable since it's not available by default.
+      $variables['base_path'] = base_path();
+
+      // Set absolute product URL for social media sharing.
+      $product_url = Url::fromRoute('<current>');
+      $variables['product_absolute_url'] = \Drupal::request()->getSchemeAndHttpHost() . $product_url->toString();
+
+      // Get view mode & assign variable.
+      $view_mode = $variables['elements']['#view_mode'];
+      $variables['view_mode'] = $view_mode;
+
+      // Get product and variations.
+      $product_variations = $product->getVariations();
+
+      // Product Images.
+      if (isset($product->field_images->entity)) {
+        // Create array to feed images into.
+        $product_images = [];
+      }
+      if (isset($product->field_images->entity)) {
+        foreach ($product->field_images as $key => &$product_image) {
+          $product_images[$key]['variation_id'] = '';
+          $product_images[$key]['images'][$key] = $product_image;
+        }
+      }
+
+      // Product Variation Images.
+      if (!empty($product_variations)) {
+        // Loop through variations and create array to feed images
+        // if the variation is active and contains an image.
+        foreach ($product_variations as $variation) {
+          if ($variation->status->value == '1') {
+            if (isset($variation->field_images->entity)) {
+              // Create array to feed images into.
+              $product_variation_images = [];
+              break;
+            }
+          }
+        }
+
+        foreach ($product_variations as $key => $variation) {
+          // If variation is active.
+          if ($variation->status->value == '1') {
+            // If variation has an image.
+            if (isset($variation->field_images->entity)) {
+              $variation_id = $variation->variation_id->value;
+              $product_variation_images[$key]['variation_id'] = $variation_id;
+
+              foreach ($variation->field_images as $image_key => &$variation_image) {
+                $product_variation_images[$key]['images'][$image_key] = $variation_image;
+              }
+            }
+          }
+        }
+      }
+
+      // Set product images variable.
+      if (isset($product_images) && isset($product_variation_images)) {
+        $variables['product_variation_images'] = array_merge($product_variation_images, $product_images);
+      }
+      elseif (isset($product_variation_images)) {
+        $variables['product_variation_images'] = $product_variation_images;
+      }
+      elseif (isset($product_images)) {
+        $variables['product_variation_images'] = $product_images;
+      }
+
+      // Product Reviews.
+      // Set average star rating.
+      $score_fragment = [
+        'whole' => 0,
+        'fraction' => 0,
+        'half' => 0,
+        'empty' => 5,
+      ];
+
+      $product_id = $product->id();
+
+      $cids = \Drupal::entityQuery('comment')
+        ->condition('entity_id', $product_id)
+        ->condition('entity_type', 'commerce_product')
+        ->condition('status', '1')
+        ->execute();
+
+      $average = 0;
+
+      foreach ($cids as $cid) {
+        $comment = Comment::load($cid);
+        $average += $comment->get('field_review_rating')->getValue()[0]['rating'];
+      }
+
+      if ($average > 0) {
+        $average = $average / count($cids);
+        $score_fragment = convert_granularity($average);
+      }
+
+      $variables['average_review_rating'] = $score_fragment;
+    }
+  }
+}
+
+/**
+ * Return score granularity in 2 parts.
+ *
+ * For eg 10.5 will be returned as number 10 and 0.5.
+ */
+function convert_granularity($score) {
+  $half = $whole = 0;
+  $granule = ($score * 5) / 100;
+
+  // 1.
+  $whole = floor($granule);
+
+  // .25.
+  $fraction = $granule - $whole;
+
+  if ($fraction >= 0.5) {
+    $half = 1;
+  }
+
+  $total_used = ($whole + $half);
+  $empty_stars = (5 - $total_used);
+
+  $score_fragment = [
+    'whole' => $whole,
+    'fraction' => $fraction,
+    'half' => $half,
+    'empty' => $empty_stars,
+  ];
+
+  return $score_fragment;
+}
+
+/**
+ * Implements hook_preprocess_commerce_product_variation(&$variables).
+ */
+function orange_ecom_starter_preprocess_commerce_product_variation(&$variables) {
+  // Commerce Product Variation.
+  if (isset($variables['elements']['#commerce_product_variation'])) {
+    // Get view mode & assign variable.
+    $view_mode = $variables['elements']['#view_mode'];
+    $variables['view_mode'] = $view_mode;
+  }
+}
+
+/**
+ * Implements hook_preprocess_input(&$variables).
+ */
+function orange_ecom_starter_preprocess_input(&$variables) {
+  if (isset($variables['element'])) {
+    if (isset($variables['element']['#type'])) {
+      $variables['type'] = $variables['element']['#type'];
+    }
+    if (isset($variables['element']['#button_type'])) {
+      $variables['button_type'] = $variables['element']['#button_type'];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_swiftmailer(&$variables).
+ */
+function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
+  // Load the site name out of configuration.
+  $config = \Drupal::config('system.site');
+  $variables['site_name'] = $config->get('name');
+
+  $variables['base_path'] = base_path();
+  $variables['site_path'] = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString();
+}
+
+/**
+ * Prepares variables for the cart block element template.
+ */
+function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
+  $variables['attributes']['class'][] = 'cart--cart-block';
 }

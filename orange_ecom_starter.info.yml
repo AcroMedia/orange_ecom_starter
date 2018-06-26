@@ -9,22 +9,31 @@ base theme: orange_framework
 libraries:
   - orange_ecom_starter/global-styling
 
+libraries-override:
+  orange_framework/bootstrap: orange_ecom_starter/bootstrap
+  # Remove commerce styles since we use our own.
+  commerce_checkout/login_pane: false
+  commerce_checkout/form: false
+
 ckeditor_stylesheets:
   - css/style.css
 
 regions:
+  site_search: 'Site Search'
   header: 'Header'
   highlighted: 'Highlighted'
   above_content: 'Above Content'
   content: 'Content'
   below_content: 'Below Content'
-  page_sidebar: 'Page - Sidebar'
-  blog_sidebar: 'Blog - Sidebar'
-  site_search: 'Site Search'
+  left_sidebar: 'Left Sidebar'
+  right_sidebar: 'Right Sidebar'
+  store_filters: 'Store Filters'
+  store_facets: 'Store Facets'
   footer: 'Footer'
   # Navigation.
+  mobile_nav: 'Mobile Navigation'
+  user_nav: 'User Navigation'
   header_nav: 'Header Navigation'
   primary_nav: 'Primary Navigation'
   footer_nav: 'Footer Navigation'
-  mobile_nav: 'Mobile Navigation'
   social_nav: 'Social Media Navigation'

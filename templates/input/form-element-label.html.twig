@@ -17,12 +17,12 @@
  */
 #}
 {%-
-  set classes = [
-    'control-label',
-    title_display == 'after' ? 'option',
-    title_display == 'invisible' ? 'sr-only',
-    required ? 'js-form-required',
-  ]
+set classes = [
+  'control-label',
+  title_display == 'after' ? 'option',
+  title_display == 'invisible' ? 'sr-only',
+  required ? 'js-form-required',
+]
 -%}
 {%- if title is not empty -%}
   <label{{ attributes.addClass(classes) }}>{{ element }}{{ title }}
@@ -33,6 +33,6 @@
   {%- if required and (title_display == 'before' or title_display == 'after') -%}
     <span class="form-required"> *</span>
   {%- else -%}
-    <span class="form-optional"> - Optional</span>
+    <span class="form-optional {{ title_display == 'invisible' ? 'sr-only' : '' }}"> - {{ 'Optional'|t }}</span>
   {%- endif -%}
 {%- endif -%}

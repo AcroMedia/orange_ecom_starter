@@ -1,0 +1,27 @@
+{% extends "page.html.twig" %}
+
+{% block page_body %}
+  <div class="site-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <main class="content__main-content clearfix" role="main">
+            <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
+            {% if page.highlighted %}
+              {{ page.highlighted }}
+            {% endif %}
+            {% if page.above_content %}
+              {{ page.above_content }}
+            {% endif %}
+            {% if page.content %}
+              {{ page.content }}
+            {% endif %}
+            {% if page.below_content %}
+              {{ page.below_content }}
+            {% endif %}
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock page_body %}

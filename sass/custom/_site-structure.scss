@@ -1,0 +1,209 @@
+/**
+* Site Structure.
+*/
+.site-wrapper {
+  position: relative;
+  clear: both;
+}
+
+/**
+ * Site Header.
+ */
+.site-header {
+  min-height: 120px;
+  background: $gray-darker;
+}
+.site-header__logo {
+  float: left;
+  margin: 15px 0;
+  padding: 0;
+
+  img {
+    display: block;
+    width: 80px;
+    height: 89px;
+  }
+}
+
+/**
+ * Site Header Navigation.
+ */
+.site-header-nav {
+  float: right;
+  text-align: right;
+
+  .block,
+  .region {
+    display: inline-block;
+    vertical-align: top;
+  }
+  .menu__link {
+    display: block;
+    margin: 0;
+    padding: 15px;
+  }
+}
+
+/**
+ * Site header bottom.
+ */
+.site-header__bottom {
+  background-color: $gray-base;
+}
+
+/**
+ * Primary navigation.
+ */
+.primary-nav {
+  display: block;
+
+  .menu__link {
+    display: block;
+    margin: 0;
+    padding: 15px;
+  }
+
+  .menu--child-menu {
+    background-color: $gray-base;
+  }
+}
+
+/**
+ * Site header search.
+ */
+.site-header__search {
+  float: right;
+  clear: right;
+
+  .form-optional {
+    display: none;
+  }
+
+  // Product search.
+  .region-site-search {
+    position: relative;
+  }
+  .form-item {
+    display: none;
+  }
+  .form-actions {
+    margin: 0;
+    padding: 0;
+
+    input {
+      display: none;
+    }
+  }
+  .form-item-search {
+    display: block;
+
+    input {
+      margin: 0;
+      // Right padding is for search submit icon.
+      padding: 6px 36px 6px 12px;
+      width: 100%;
+      max-width: 400px;
+      font-size: 14px;
+    }
+  }
+  .bef-exposed-form .form-item {
+    margin: 0;
+  }
+
+  .form-submit--trigger {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    z-index: 1;
+
+    &:hover {
+      text-decoration: none;
+    }
+    &:before {
+      display: block;
+      content: "\e003";
+      font-family: $f-glyphicons;
+      font-size: 19px;
+      color: $gray-base;
+      transition: color .2s ease-in-out;
+    }
+    &:focus:before,
+    &:hover:before {
+      color: $gray;
+    }
+  }
+}
+
+/**
+ * Site footer.
+ */
+.site-footer {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+  background: #333;
+
+  @media (min-width: $screen-sm-min) {
+    text-align: left;
+  }
+}
+
+/**
+ * Footer navigation.
+ */
+.footer-nav {
+  margin: 0 0 50px 0;
+
+  .menu__link {
+    display: block;
+    margin: 0;
+    padding: 15px;
+  }
+}
+
+/**
+ * Footer social media nav.
+ */
+.site-footer .social-media-nav {
+  float: none;
+
+  @media (min-width: $screen-sm-min) {
+    float: right;
+  }
+}
+
+/**
+ * Footer copyright.
+ */
+.site-footer__copyright {
+  clear: both;
+  font-size: 10px;
+}
+
+/**
+ * Sticky footer.
+ */
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.dialog-off-canvas-main-canvas {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.site-header,
+.site-footer {
+  flex: none;
+}
+.site-content {
+  flex: 1 0 auto;
+}

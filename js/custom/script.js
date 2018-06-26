@@ -11,6 +11,18 @@
     }
   });
 
+  // Mobile Toggle.
+  // Toggle active classes for a piece of content.
+  $('.js-mobile-toggle').click(function (e) {
+    var $this = $(this);
+    var $toggleContent = $this.data('toggle-content');
+
+    $this.toggleClass('is-active');
+    $('.' + $toggleContent).toggleClass('is-active');
+
+    e.preventDefault();
+  });
+
   // Mobile Overlay.
   $('.mobile-overlay').click(function(e) {
     $(this).fadeOut('fast');
@@ -23,7 +35,7 @@
   // Mobile Search.
   $('.mobile-control-nav .menu__item--search a').click(function(e) {
     $('.mobile-search-overlay').fadeIn('fast');
-    $('.mobile-search-form input.form-search').focus();
+    $('.mobile-search-form .form-item-search input').focus();
     e.preventDefault();
   });
   $('.mobile-search-form__submit').click(function(e) {
@@ -67,18 +79,8 @@
   // Add search input placeholder.
   $('.block-search input.form-search, .search-page-form input.form-search').attr('placeholder', Drupal.t('Enter keyword...'));
 
-  // Homepage Carousel Slider.
-  if ($('.homepage-carousel-slider').length) {
-    $('.homepage-carousel-slider').flexslider({
-      animation: 'fade',
-      slideshow: true,
-      controlNav: true,
-      directionNav: false,
-      smoothHeight: true,
-      prevText: '',
-      nextText: ''
-    });
-  }
+  // Add Commerce search input placeholder.
+  $('.region-site-search .form-item-search input').attr('placeholder', Drupal.t('Search for products...'));
 
   // Site search submit trigger.
   if ($('.form-search-submit-trigger').length) {
@@ -88,4 +90,40 @@
       e.preventDefault();
     });
   }
+
+  // Form submit trigger.
+  if ($('.form-submit--trigger').length) {
+    $('.form-submit--trigger').click(function(e) {
+      // Submit the parent form.
+      $(this).parents('form').submit();
+      e.preventDefault();
+    });
+  }
+
+  // Magnific Popup Gallery.
+  if ($('.magnific-popup-gallery').length) {
+    $('.magnific-popup-gallery').magnificPopup({
+      type: 'image',
+      gallery: {
+        enabled: true
+      }
+    });
+  }
+
+  // Store.
+  // Add store exposed search placeholder.
+  $('.view-store .views-exposed-form .form-text').attr('placeholder', Drupal.t('Search for a product'));
+
+  $('.b-store-mobile-facets-toggle').click(function (e) {
+    $(this).toggleClass('is-active').parent().find('.store-facets--mobile').fadeToggle('fast');
+    e.preventDefault();
+  });
+
+  // Tabs.
+  if ($('.nav-tabs').length) {
+    $('.nav-tabs').each(function () {
+      $(this).tabCollapse();
+    });
+  }
+
 })(jQuery, Drupal);

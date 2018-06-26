@@ -19,16 +19,15 @@
 }
 .menu__item {
   position: relative;
-  display: inline-block;
   float: none;
+  display: inline-block;
   margin: 0;
   padding: 0;
 }
 .menu__link {
   display: block;
   margin: 0;
-  padding: 15px;
-  font-size: 16px;
+  padding: 0;
 
   &:hover {
     text-decoration: none;
@@ -91,9 +90,7 @@
  * Social media navigation.
  */
 .social-media-nav {
-  @media (min-width: 768px) {
-    float: right;
-  }
+
 }
 .menu--social-media {
   padding: 15px 0;
@@ -104,23 +101,26 @@
     padding: 0;
     margin: 0 5px;
     font-size: 0;
+
+    // Icons.
+    &:before {
+      font-family: $f-font-awesome;
+      font-size: 18px;
+    }
   }
-  li a:before {
-    font-family: FontAwesome;
-    font-size: 18px;
-  }
-  .menu__item--facebook a:before { content: "\f09a"; }
-  .menu__item--twitter a:before { content: "\f099"; }
-  .menu__item--instagram a:before { content: "\f16d"; }
-  .menu__item--google-plus a:before { content: "\f0d5"; }
-  .menu__item--pinterest a:before { content: "\f0d2"; }
-  .menu__item--linkedin a:before { content: "\f0e1"; }
-  .menu__item--youtube a:before { content: "\f16a"; }
-  .menu__item--vimeo a:before { content: "\f27d"; }
-  .menu__item--snapchat a:before { content: "\f2ab"; }
-  .menu__item--vine a:before { content: "\f1ca"; }
-  .menu__item--yelp a:before { content: "\f1e9"; }
-  .menu__item--trip-advisor a:before { content: "\f262"; }
+  // Need more? Font Awesome variables at: sass/contrib/font-awesome/_variables.scss
+  .menu__item--facebook a:before { content: $fa-var-facebook; }
+  .menu__item--twitter a:before { content: $fa-var-twitter; }
+  .menu__item--instagram a:before { content: $fa-var-instagram; }
+  .menu__item--google-plus a:before { content: $fa-var-google-plus; }
+  .menu__item--pinterest a:before { content: $fa-var-pinterest; }
+  .menu__item--linkedin a:before { content: $fa-var-linkedin; }
+  .menu__item--youtube a:before { content: $fa-var-youtube-play; }
+  .menu__item--vimeo a:before { content: $fa-var-vimeo; }
+  .menu__item--snapchat a:before { content: $fa-var-snapchat; }
+  .menu__item--vine a:before { content: $fa-var-vine; }
+  .menu__item--yelp a:before { content: $fa-var-yelp; }
+  .menu__item--trip-advisor a:before { content: $fa-var-tripadvisor; }
 }
 
 /**
@@ -137,9 +137,10 @@
 
 // Mobile Control Navigation.
 .mobile-control-nav {
+  clear: right;
   float: right;
   margin: 0;
-  padding: 64px 0 0 0;
+  padding: 10px 0 0 0;
   text-align: right;
 
   .menu {
@@ -240,6 +241,12 @@
     margin-top: 0;
     margin-bottom: 0;
   }
+  .form-item {
+    display: none;
+  }
+  .form-item-search {
+    display: block;
+  }
   label,
   .form-submit,
   .form-optional,
@@ -250,7 +257,11 @@
   .container-inline label {
     display: block;
   }
-  .form-search {
+  .bef-exposed-form .form-item {
+    float: none;
+  }
+  .form-search,
+  .form-item-search input {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -263,11 +274,12 @@
     background: none;
     outline: none;
     box-shadow: none;
-  }
-  .form-search:focus {
-    background: none;
-    outline: none;
-    box-shadow: none;
+
+    &:focus {
+      background: none;
+      outline: none;
+      box-shadow: none;
+    }
   }
 }
 .mobile-search-form__submit {
@@ -306,9 +318,9 @@
 }
 .mobile-nav-overlay__header {
   clear: both;
-  margin: 0 0 10px 0;
+  margin: 0;
   padding: 0;
-  min-height: 16px;
+  min-height: 0;
   text-align: right;
   background: none;
 }
@@ -318,10 +330,10 @@
   right: 0;
   display: inline-block;
   margin: 0;
-  padding: 10px 15px 0 15px;
+  padding: 5px 15px 0 15px;
   font-size: 28px;
   line-height: 28px;
-  color: $c-body;
+  color: #fff;
   vertical-align: top;
   outline: none;
   z-index: 10;
@@ -331,7 +343,7 @@
   }
   &:hover,
   &:focus {
-    color: lighten(#818181, 20%);
+    color: lighten($gray-dark, 20%);
   }
   span {
     vertical-align: top;
@@ -340,22 +352,21 @@
 
 // Mobile navigation.
 .mobile-nav {
-
+  // Block titles.
+  h2 {
+    margin: 0;
+    padding: 8px 15px;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #fff;
+    background: $gray-dark;
+  }
   .menu {
     clear: both;
     display: block;
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-  // Make the main menu stand out more than the other menus.
-  .menu--main.menu--level-0 {
-    margin: 0 0 25px 0;
-
-    > .menu__item > .menu__link {
-      font-size: 26px;
-      line-height: 1.3;
-    }
   }
   .menu__item {
     clear: both;
@@ -364,9 +375,6 @@
     margin: 0;
     padding: 0;
     border-bottom: 2px solid #eee;
-  }
-  .menu--level-1 .menu__item:last-child {
-    border-bottom: none;
   }
   .menu__link {
     position: relative;
@@ -414,8 +422,7 @@
     clear: both;
     margin: 0 0 10px 15px;
     padding: 0;
-  }
-  .menu--level-2 {
+
     .menu__item {
       border: none;
     }
@@ -430,22 +437,29 @@
         content: $fa-var-chevron-right;
         position: absolute;
         top: 10px;
-        left: 0px;
+        left: 0;
         font-size: 12px;
         line-height: 12px;
         color: $gray-light;
       }
     }
   }
+  .block {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 /**
- * Social media sharing navigation.
+ * Social Media Sharing Navigation.
  */
 .social-media-sharing-nav {
   clear: both;
   margin: 0 0 20px 0;
   padding: 0;
+}
+.social-media-sharing-nav--product {
+  margin: 0;
 }
 .social-media-sharing-menu {
   margin: 0;
@@ -472,11 +486,11 @@
   text-align: center;
   vertical-align: top;
   border-radius: 4px;
-  background: #3b5998;
+  background: #666;
 
   &:hover {
     color: #fff;
-    background: darken(#3b5998, 10%);
+    background: darken(#666, 10%);
   }
 }
 .social-media-sharing-menu__link--facebook {
@@ -505,5 +519,12 @@
 
   &:hover {
     background: darken(#0077b5, 10%);
+  }
+}
+.social-media-sharing-menu__link--pinterest {
+  background-color: #bd081c;
+
+  &:hover {
+    background: darken(#bd081c, 10%);
   }
 }

@@ -25,10 +25,13 @@
 {% spaceless %}
   {%
     set classes = [
-      'btn btn-primary',
+      'btn',
+      button_type == 'primary' ? 'btn--primary',
+      type == 'submit' ? 'js-form-submit',
     ]
   %}
   {% block input %}
     <input{{ attributes.addClass(classes) }} />{{ children }}
+    <a href="#" class="form-submit--trigger"></a>
   {% endblock %}
 {% endspaceless %}

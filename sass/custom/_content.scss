@@ -1,25 +1,15 @@
 /**
- * Content styles.
+ * Site Content.
  */
 .site-content {
-  padding: 20px 0;
+  padding: 20px 0 40px 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: $screen-sm-min) {
     padding: 50px 0;
   }
   .page-title {
     margin-top: 0;
   }
-  img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
-}
-
-// Hide page title block on pages.
-.page-node-type-page .block-page-title-block {
-  display: none;
 }
 
 /**
@@ -44,7 +34,7 @@
   // Sub items - 2nd level.
   .menu--level-1 .menu__link {
     position: relative;
-    padding-left: 30px;
+    padding-left: 40px;
 
     // Sub item icon.
     &:before {
@@ -52,13 +42,12 @@
       content: $fa-var-chevron-right;
       position: absolute;
       top: 16px;
-      left: 15px;
-      font-size: 12px;
+      left: 25px;
+      font-size: 10px;
       line-height: 12px;
-      color: $gray;
+      color: $gray-light;
     }
   }
-
   // Sub items - 3rd level.
   .menu--level-2 .menu__link {
     padding-left: 40px;
@@ -66,6 +55,17 @@
     // Sub item icon.
     &:before {
       left: 25px;
+    }
+  }
+  // Menu block title/parent.
+  .block-menu h2 {
+    margin-top: 0;
+
+    a {
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
     }
   }
 }
@@ -81,8 +81,8 @@
 }
 .form-control,
 .form-textarea-wrapper textarea {
-  max-width: 100%;
-  width: 350px;
+  max-width: 350px;
+  width: 100%;
 }
 .radio,
 .checkbox {
@@ -105,7 +105,7 @@
 }
 textarea,
 textarea.resize-vertical {
-  // Remove browser resizer in bottom right.
+  // Remove browser resizer.
   resize: none;
 }
 
@@ -208,9 +208,10 @@ input.form-search {
     font-family: $f-secondary;
     transition: all .2s ease-in-out;
 
+    // Arrow icon.
     &::before {
-      content: "\f105";
-      font-family: FontAwesome;
+      @include fa-icon();
+      content: $fa-var-angle-right;
       color: lighten($gray-light, 10%);
       position: absolute;
       left: 0;
@@ -306,6 +307,56 @@ a.card:hover {
 /**
  * Tables.
  */
+table,
+.table {
+  margin: 0 0 20px 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+
+  // Cells.
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: 8px;
+        line-height: 1.4;
+        vertical-align: top;
+        border-top: 1px solid $gray-light;
+      }
+      > td.is-active {
+        background: $gray-lighter;
+      }
+    }
+  }
+  // Bottom align for column headings.
+  > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid $gray-light;
+  }
+  // Remove top border from thead by default.
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: 0;
+      }
+    }
+  }
+  // Account for multiple tbody instances.
+  > tbody + tbody {
+    border-top: 2px solid $gray-light;
+  }
+  // Nesting.
+  .table {
+    background-color: #fff;
+  }
+}
 .table-bordered thead {
   background: $c-secondary;
   color: #fff;
@@ -334,7 +385,7 @@ a.card:hover {
 /**
  * Modals.
  */
-@media(min-width: 768px) {
+@media (min-width: $screen-sm-min) {
   .modal.in .modal-dialog {
     transform: translateX(-50%) translateY(-50%);
   }

@@ -32,65 +32,205 @@
  *   page's path (e.g. node/12345 and node/12345/revisions, but not
  *   comment/reply/12345).
  *
- * Regions:
- * - page.header: Items for the header region.
- * - page.pre_content: Items for the pre-content region.
- * - page.breadcrumb: Items for the breadcrumb region.
- * - page.highlighted: Items for the highlighted region.
- * - page.help: Dynamic help text, mostly for admin pages.
- * - page.content: The main content of the current page.
- *
  * @see template_preprocess_page()
- * @see seven_preprocess_page()
  * @see html.html.twig
  */
 #}
-{#
-  Render sidebar to be able to check if it is truly empty.
-  Issue: https://www.drupal.org/node/953034.
-#}
-{% set page_sidebar_rendered = render_var(page.page_sidebar) %}
-{# Set column class based on sidebar. #}
-{% set col_class = page_sidebar_rendered ? 'col-sm-8 col-md-9' : 'col-sm-12' %}
+{% block page_header %}
+  {# Mobile overlays. #}
+  {% if page.mobile_nav %}
+    {% if page.site_search %}
+      <div class="mobile-search-overlay mobile-overlay">
+        <div class="mobile-search-overlay__content mobile-overlay__content">
+          <a href="#" class="mobile-search-overlay__close mobile-overlay__close">
+            <span class="fa fa-times" aria-hidden="true"></span>
+          </a>
 
-{# Site Header. #}
-{% include base_path ~ directory ~ '/templates/pages/includes/site_header.html.twig' %}
-{# / Site Header. #}
-
-{# Main Content. #}
-<div class="site-content">
-  <div class="container">
-    <div class="row">
-      {% if page_sidebar_rendered %}
-        <div class="col-sm-4 col-md-3 hidden-xs">
-          <aside class="site-sidebar" role="complementary">
-            {{ page.page_sidebar }}
-          </aside>
+          <div class="mobile-search-form">
+            {{ page.site_search }}
+            <a class="mobile-search-form__submit" href="#" title="{{ 'Search'|t }}">
+              <span class="fa fa-search" aria-hidden="true"></span>
+            </a>
+          </div>
         </div>
-      {% endif %}
+      </div>
+    {% endif %}
 
-      <div class="{{ col_class }}">
-        <main class="content__main-content clearfix" role="main">
-          <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
-          {% if page.highlighted %}
-            {{ page.highlighted }}
+    <div class="mobile-nav-overlay mobile-overlay">
+      <div class="mobile-nav-overlay__content mobile-overlay__content clearfix">
+        <header class="mobile-nav-overlay__header clearfix" role="banner">
+          <a href="#" class="mobile-nav-overlay__close mobile-overlay__close">
+            <span class="fa fa-times" aria-hidden="true"></span>
+          </a>
+        </header>
+
+        <div class="mobile-nav">
+          {{ page.mobile_nav }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {# / Mobile overlays. #}
+
+  <header class="site-header">
+    <div class="site-header__top container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if page.header_nav %}
+            <div class="site-header-nav">
+              <div class="region hidden-xs">
+                {{ page.header_nav }}
+              </div>
+
+              {% if page.user_nav %}
+                {{ page.user_nav }}
+              {% endif %}
+            </div>
           {% endif %}
-          {% if page.above_content %}
-            {{ page.above_content }}
+
+          <div class="site-header__logo">
+            <a href="{{ front_page }}">
+              <img src="{{ base_path ~ directory }}/gfx/logo.png" alt="{{ site_name ? site_name }}" />
+            </a>
+          </div>
+
+          {# Mobile navigation controls. #}
+          {% if page.mobile_nav %}
+            <div class="mobile-control-nav visible-xs-block">
+              <ul class="menu clearfix">
+                <li class="menu__item menu__item--search">
+                  <a href="#" class="menu__link" title="{{ 'Search'|t }}">
+                    <span aria-hidden="true" class="fa fa-search"></span>
+                  </a>
+                </li>
+                <li class="menu__item menu__item--menu">
+                  <a href="#" class="menu__link" title="{{ 'Menu'|t }}">
+                    <span aria-hidden="true" class="fa fa-bars"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           {% endif %}
-          {% if page.content %}
-            {{ page.content }}
+          {# / Mobile navigation controls. #}
+
+          {% if page.site_search %}
+            <div class="site-header__search hidden-xs">
+              {{ page.site_search }}
+            </div>
           {% endif %}
-          {% if page.below_content %}
-            {{ page.below_content }}
-          {% endif %}
-        </main>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-header__bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            {# Primary navigation. #}
+            {% if page.primary_nav %}
+              <div class="primary-nav hidden-xs">
+                {{ page.primary_nav }}
+              </div>
+            {% endif %}
+            {# / Primary navigation. #}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block page_body %}
+  {#
+    Render sidebars to check if it is truly empty.
+    Issue: https://www.drupal.org/node/953034.
+  #}
+  {% set left_sidebar_rendered = page.left_sidebar|render %}
+  {% set left_sidebar_exists = left_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {% set right_sidebar_rendered = page.right_sidebar|render %}
+  {% set right_sidebar_exists = right_sidebar_rendered|striptags('<a><img>')|trim ? true : false %}
+
+  {# Set column class based on sidebars. #}
+  {% if left_sidebar_exists and right_sidebar_exists %}
+    {% set col_class = 'col-sm-6' %}
+    {% set sidebar_col_class = 'col-sm-3 hidden-xs' %}
+  {% elseif left_sidebar_exists or right_sidebar_exists %}
+    {% set col_class = 'col-sm-8 col-md-9' %}
+    {% set sidebar_col_class = 'col-sm-4 col-md-3 hidden-xs' %}
+  {% else %}
+    {% set col_class = 'col-sm-12' %}
+  {% endif %}
+
+  <div class="site-content">
+    <div class="container">
+      <div class="row">
+        {# Left Sidebar. #}
+        {% if left_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--left" role="complementary">
+              {{ page.left_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Left Sidebar. #}
+
+        {# Main content. #}
+        <div class="{{ col_class }}">
+          <main class="content__main-content clearfix" role="main">
+            <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>
+            {% if page.highlighted %}
+              {{ page.highlighted }}
+            {% endif %}
+            {% if page.above_content %}
+              {{ page.above_content }}
+            {% endif %}
+            {% if page.content %}
+              {{ page.content }}
+            {% endif %}
+            {% if page.below_content %}
+              {{ page.below_content }}
+            {% endif %}
+          </main>
+        </div>
+        {# / Main content. #}
+
+        {# Right Sidebar. #}
+        {% if right_sidebar_exists %}
+          <div class="{{ sidebar_col_class }}">
+            <aside class="site-sidebar site-sidebar--right" role="complementary">
+              {{ page.right_sidebar }}
+            </aside>
+          </div>
+        {% endif %}
+        {# / Right Sidebar. #}
       </div>
     </div>
   </div>
-</div>
-{# / Main Content. #}
+{% endblock page_body %}
 
-{# Site Footer. #}
-{% include base_path ~ directory ~ '/templates/pages/includes/site_footer.html.twig' %}
-{# / Site Footer. #}
+{% block page_footer %}
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if page.social_nav %}
+            <div class="social-media-nav">
+              {{ page.social_nav }}
+            </div>
+          {% endif %}
+
+          {% if page.footer_nav %}
+            <div class="footer-nav">
+              {{ page.footer_nav }}
+            </div>
+          {% endif %}
+
+          <div class="site-footer__copyright">
+            {{'Copyright &copy; @year <a href="@frontpage_url">Acro Media Inc</a>.  All rights reserved.'| t({'@frontpage_url': front_page, '@year': 'now'|date('Y') }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+{% endblock page_footer %}

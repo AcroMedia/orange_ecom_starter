@@ -11,7 +11,6 @@
   @media (min-width: $screen-sm-min) {
     padding: 40px;
   }
-
   // Comment message textarea.
   .form-textarea-wrapper textarea {
     width: 100%;
@@ -31,6 +30,9 @@
   padding: 0 0 30px 60px;
   border-bottom: 1px solid #ccc;
 
+  &:last-child {
+    border-bottom: none;
+  }
   // Comment bubble icon.
   &:before {
     position: absolute;
@@ -43,7 +45,6 @@
     line-height: 43px;
     color: $c-accent-1;
   }
-
   ul.links {
     clear: both;
     display: block;
@@ -65,9 +66,7 @@
         display: inline-block;
         vertical-align: top;
       }
-
       &:first-child {
-
         a {
           padding-left: 30px;
 
@@ -88,8 +87,13 @@
     }
   }
 }
-.comment-wrapper > .comment:first-child {
-  margin-top: 30px;
+.comment-wrapper {
+  > h2.title {
+    margin-bottom: 20px;
+  }
+  > .comment:first-child {
+    margin-top: 30px;
+  }
 }
 // Comment Reply.
 .indented {

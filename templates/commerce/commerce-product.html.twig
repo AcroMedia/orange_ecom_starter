@@ -2,7 +2,7 @@
 /**
  * @file
  *
- * Default product template.
+ * Product template.
  *
  * Available variables:
  * - attributes: HTML attributes for the wrapper.
@@ -19,6 +19,343 @@
  * @ingroup themeable
  */
 #}
+{# Set langcode so we can reference it within entities. #}
+{% set langcode = product_entity.get('langcode').value %}
+
+{# Fallback product thumbnail placeholder. #}
+{% set product_thumbnail_url = base_path ~ directory ~ '/gfx/product-placeholder.jpg' %}
+{% set product_thumbnail_alt = product_entity.title.value %}
+
+{# Check if reviews are turned on. #}
+{% if product.field_product_reviews and (product_entity.field_product_reviews.status == 2) %}
+  {% set reviews_are_active = true %}
+{% endif %}
+
+{# Average Rating. #}
+{% set average_review_rating_stars %}
+  {% if average_review_rating|length %}
+    <div class="fivestar-basic">
+      <div class="fivestar-widget clearfix">
+        {# Whole star. #}
+        {% if average_review_rating.whole %}
+          {% for i in 1..average_review_rating.whole %}
+            <div class="star on"></div>
+          {% endfor %}
+        {% endif %}
+
+        {# Half star. #}
+        {% if average_review_rating.half %}
+          <div class="star half-on"></div>
+        {% endif %}
+
+        {# Empty star. #}
+        {% if average_review_rating.empty %}
+          {% for i in range(1,average_review_rating.empty) %}
+            <div class="star"></div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endset %}
+
+{# Review Count. #}
+{% if product_entity.field_product_reviews.comment_count %}
+  {% set review_count = product_entity.field_product_reviews.comment_count %}
+{% endif %}
+
 <article{{ attributes }}>
-  {{- product|without('variation_attributes') -}}
+  <div class="product__header clearfix">
+    <a href="{{ base_path }}products" class="btn btn--default btn--product-go-back">{{ 'Back to Catalog'|t }}</a>
+
+    <div class="hidden-xs hidden-sm">
+      {# Social Media Sharing. #}
+      <div class="product__social-media-sharing">
+        <div class="product__social-media-sharing__label">{{ 'Share Page'|t }}</div>
+        <div class="social-media-sharing-nav social-media-sharing-nav--product">
+          <ul class="social-media-sharing-menu clearfix">
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--email" href="mailto:?subject={{ product_entity.title.value|url_encode }}&amp;body={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'E-Mail'|t }}" title="{{ 'E-Mail'|t }}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+            </li>
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--facebook" href="https://facebook.com/sharer/sharer.php?u={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Facebook'|t }}" title="{{ 'Share on Facebook'|t }}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            </li>
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ product_absolute_url|url_encode }}&amp;title={{ product_entity.title.value|url_encode }}&amp;summary={{ product_entity.title.value|url_encode }}&amp;source={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on LinkedIn'|t }}" title="{{ 'Share on LinkedIn'|t }}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            </li>
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--twitter" href="https://twitter.com/intent/tweet/?text={{ product_entity.title.value|url_encode }}&amp;url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Twitter'|t }}" title="{{ 'Share on Twitter'|t }}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--pinterest" href="https://pinterest.com/pin/create/button/?url={{ product_absolute_url|url_encode }}&amp;media={{ product_absolute_url|url_encode }}&amp;description={{ product_entity.title.value|url_encode }}" target="_blank" aria-label="{{ 'Share on Pinterest'|t }}" title="{{ 'Share on Pinterest'|t }}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+            </li>
+            <li class="social-media-sharing-menu__item">
+              <a class="social-media-sharing-menu__link social-media-sharing-menu__link--google-plus" href="https://plus.google.com/share?url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Google+'|t }}" title="{{ 'Share on Google+'|t }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {# / Social Media Sharing. #}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 col-lg-4">
+      {{ attach_library('orange_ecom_starter/commerce-product') }}
+
+      {# Set product slider class. #}
+      {% if product_variation_images %}
+        {% if product_variation_images|length <= 1 %}
+          {% set product_slider_class = 'product-slider product-slider--no-thumbnails' %}
+        {% else %}
+          {% set product_slider_class = 'product-slider' %}
+        {% endif %}
+      {% else %}
+        {% set product_slider_class = 'product-slider product-slider--no-thumbnails' %}
+      {% endif %}
+
+      <div class="{{ product_slider_class }}">
+        <div class="product-slider__main-slider">
+          {% if product_variation_images %}
+            {% for product_variation in product_variation_images %}
+              {% for product_variation_image in product_variation.images %}
+                <div>
+                  <div class="product-slider__main-slider__item">
+                    <a href="{{ file_url(product_variation_image.entity.uri.value) }}" class="product-slider__main-slider__item-content magnific-popup-gallery">
+                      <span><img src="{{ product_variation_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.alt }}" /></span>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            <div>
+              <div class="product-slider__main-slider__item">
+                <div class="product-slider__main-slider__item-content">
+                  <span><img src="{{ product_thumbnail_url }}" alt="{{ product_thumbnail_alt }}" /></span>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div class="product-slider__nav-slider">
+          {% if product_variation_images %}
+            {% for product_variation in product_variation_images %}
+              {% if product_variation.variation_id %}
+                {% set product_variation_id = product_variation.variation_id %}
+              {% else %}
+                {% set product_variation_id = '' %}
+              {% endif %}
+              {% for product_variation_image in product_variation.images %}
+                <div>
+                  <a class="product-slider__nav-slider__item" data-product-variation-id="{{ product_variation_id }}">
+                    <span><img src="{{ product_variation_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.alt }}" /></span>
+                  </a>
+                </div>
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <div class="product_main-content">
+        {# Brands. #}
+        {% if product_entity.field_terms_reference_2.0.target_id %}
+          <div class="product__brands">
+            {% for brand in product_entity.field_terms_reference_2 %}
+              {% set brand_entity = brand.entity.getTranslation(langcode) %}
+              {{ brand_entity.name.value }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {# / Brands. #}
+        <h2 class="product__title">{{ product.title }}</h2>
+        <div class="product__price">
+          {{ product.variation_price }}
+        </div>
+        <div class="product__details">
+          <div class="product__sku">
+            {{ product.variation_sku }}
+          </div>
+          {% if reviews_are_active and average_review_rating|length %}
+            <div class="product__average-rating">
+              {{ 'Average Rating'|t }}: {{ average_review_rating_stars }}
+            </div>
+          {% endif %}
+        </div>
+        {# Summary. #}
+        {% if product_entity.field_text_long.value %}
+          <div class="product__summary">
+            {{ product.field_text_long }}
+          </div>
+        {% endif %}
+        {# / Summary. #}
+        {# Product Form. #}
+        <div class="product__form">
+          {# Variations: Where quantity, add to cart, attributes display etc. #}
+          {{ product.variations }}
+        </div>
+        {# / Product Form. #}
+
+        <div class="visible-xs-block visible-sm-block">
+          {# Social Media Sharing. #}
+          <div class="product__social-media-sharing">
+            <div class="product__social-media-sharing__label">{{ 'Share Page'|t }}</div>
+            <div class="social-media-sharing-nav social-media-sharing-nav--product">
+              <ul class="social-media-sharing-menu clearfix">
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--email" href="mailto:?subject={{ product_entity.title.value|url_encode }}&amp;body={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'E-Mail'|t }}" title="{{ 'E-Mail'|t }}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                </li>
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--facebook" href="https://facebook.com/sharer/sharer.php?u={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Facebook'|t }}" title="{{ 'Share on Facebook'|t }}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </li>
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ product_absolute_url|url_encode }}&amp;title={{ product_entity.title.value|url_encode }}&amp;summary={{ product_entity.title.value|url_encode }}&amp;source={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on LinkedIn'|t }}" title="{{ 'Share on LinkedIn'|t }}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </li>
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--twitter" href="https://twitter.com/intent/tweet/?text={{ product_entity.title.value|url_encode }}&amp;url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Twitter'|t }}" title="{{ 'Share on Twitter'|t }}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                </li>
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--pinterest" href="https://pinterest.com/pin/create/button/?url={{ product_absolute_url|url_encode }}&amp;media={{ product_absolute_url|url_encode }}&amp;description={{ product_entity.title.value|url_encode }}" target="_blank" aria-label="{{ 'Share on Pinterest'|t }}" title="{{ 'Share on Pinterest'|t }}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                </li>
+                <li class="social-media-sharing-menu__item">
+                  <a class="social-media-sharing-menu__link social-media-sharing-menu__link--google-plus" href="https://plus.google.com/share?url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Google+'|t }}" title="{{ 'Share on Google+'|t }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {# / Social Media Sharing. #}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id or reviews_are_active %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="product__tabs">
+          {# Tabs. #}
+          <ul id="product-tabs" class="nav nav-tabs" role="tablist">
+            {# Product Overview tab. #}
+            {% if product_entity.body.value %}
+              <li role="presentation" class="active">
+                <a href="#description" aria-controls="description" role="tab" data-toggle="tab">
+                  {{ 'Product Overview'|t }}
+                </a>
+              </li>
+            {% endif %}
+            {# / Product Overview tab. #}
+
+            {# Tabs added from the user. #}
+            {% if product_entity.field_paragraphs_reference.0.target_id %}
+              {% for tab in product_entity.field_paragraphs_reference %}
+                {% set tab_entity = tab.entity.getTranslation(langcode) %}
+                {% set tab_field_title = tab_entity.field_text %}
+                {% set tab_id = tab_field_title.value|clean_class %}
+
+                {# Set active tab if it's the first tab and body is empty. #}
+                {% if loop.first and not product_entity.body.value %}
+                  {% set tab_li_class = 'active' %}
+                {% else %}
+                  {% set tab_li_class = '' %}
+                {% endif %}
+
+                <li role="presentation" class="{{ tab_li_class }}">
+                  <a href="#{{ tab_id }}" aria-controls="{{ tab_id }}" role="tab" data-toggle="tab">
+                    {{ tab_field_title|view }}
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %}
+            {# / Tabs added from the user. #}
+
+            {# Product Reviews tab. #}
+            {% if reviews_are_active %}
+              <li role="presentation" class="{{ (product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id) ? '' : 'active' }}">
+                <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">
+                  {{ 'Reviews'|t }} {% if review_count %}<span class="badge">{{ review_count }}</span>{% endif %}
+                </a>
+              </li>
+            {% endif %}
+            {# / Product Reviews tab. #}
+          </ul>
+
+          {# Tab Content. #}
+          <div class="tab-content">
+            {# Product Overview tab content. #}
+            {% if product_entity.body.value %}
+              <div role="tabpanel" class="tab-pane fade active in" id="description">
+                <h2 class="tab-pane__title">{{ product.title }} {{ 'Overview'|t }}</h2>
+                {{ product.body }}
+              </div>
+            {% endif %}
+            {# / Product Overview tab content. #}
+
+            {# Tabs content added from the user. #}
+            {% if product_entity.field_paragraphs_reference.0.target_id %}
+              {% for tab in product_entity.field_paragraphs_reference %}
+                {% set tab_entity = tab.entity.getTranslation(langcode) %}
+                {% set tab_field_title = tab_entity.field_text %}
+                {% set tab_field_body = tab_entity.field_text_long_formatted %}
+                {% set tab_id = tab_field_title.value|clean_class %}
+
+                {# Set active tab if it's the first tab and body is empty. #}
+                {% if loop.first and not product_entity.body.value %}
+                  {% set tab_class = 'tab-pane fade active in' %}
+                {% else %}
+                  {% set tab_class = 'tab-pane fade' %}
+                {% endif %}
+
+                <div role="tabpanel" class="{{ tab_class }}" id="{{ tab_id }}">
+                  <h2 class="tab-pane__title">{{ tab_field_title|view }}</h2>
+                  {{ tab_field_body|view }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            {# / Tabs content added from the user. #}
+
+            {# Product Reviews tab content. #}
+            {% if reviews_are_active %}
+              <div role="tabpanel" class="tab-pane fade {{ (product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id) ? '' : 'active in' }}" id="reviews">
+                <div class="product__reviews">
+                  <header class="product__reviews-header clearfix">
+                    {% if average_review_rating|length %}
+                      <h2 class="tab-pane__title">{{ 'Overall Rating'|t }}</h2>
+                      <div class="product__reviews-header-rating">
+                        {{ average_review_rating_stars }}
+                      </div>
+                    {% endif %}
+
+                    <div class="add-product-review">
+                      <a href="#" id="b-add-product-review" class="btn btn--default">
+                        <span class="review-off">{{ 'Add Review'|t }}</span>
+                        <span class="review-on">{{ 'Close Review'|t }}</span>
+                      </a>
+                    </div>
+                  </header>
+
+                  {{ product.field_product_reviews }}
+
+                  {% if not review_count %}
+                    <p>{{ 'There are currently no reviews for this product. Be the first one!'|t }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+            {# / Product Reviews tab content. #}
+          </div>
+          {# / Tab Content. #}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Featured Products. #}
+  {% if product_entity.field_paragraph_reference.0.target_id %}
+    <div class="row">
+      <div class="col-md-12">
+        {{ product.field_paragraph_reference }}
+      </div>
+    </div>
+  {% endif %}
+  {# / Featured Products. #}
 </article>

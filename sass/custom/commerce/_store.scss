@@ -1,0 +1,420 @@
+/**
+ * Store.
+ */
+
+/**
+ * Product Listing.
+ */
+// Hide ajax throbber due to bug where it duplicates itself.
+.path-products .ajax-progress-fullscreen {
+  display: none !important;
+}
+.product-listing {
+  clear: both;
+  margin: 0;
+  padding: 0;
+
+  // Use .views-infinite-scroll-content-wrapper if you have infinite scroll enabled.
+  > .view-content {
+    display: flex;
+    flex-wrap: wrap;
+    // Neg. margin to offset listing items.
+    margin: 0 -10px;
+    padding: 0;
+
+    @media (min-width: $screen-xs-min) {
+      // Neg. margin to offset listing items.
+      margin: 0 -10px;
+    }
+    @media (min-width: $screen-md-min) {
+      // Neg. margin to offset listing items.
+      margin: 0 -15px;
+    }
+  }
+  .views-row {
+    float: none;
+    margin: 0 0 30px 0;
+    padding: 0 10px;
+    width: 50%;
+    background: none;
+
+    @media (min-width: $screen-xs-min) {
+      padding: 0 10px;
+      width: 33.3333%;
+    }
+    @media (min-width: $screen-md-min) {
+      padding: 0 15px;
+      width: 25%;
+    }
+  }
+}
+.product-listing__results-label {
+  font-size: 20px;
+  color: $gray;
+}
+
+// Store Filters.
+.store-filters {
+  position: relative;
+  clear: both;
+  margin: 0 0 40px 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+
+  // Clearfix.
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  // Exposed filter search.
+  .views-exposed-form {
+    float: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: auto;
+    text-align: left;
+
+    @media (min-width: $screen-sm-min) {
+      float: right;
+      width: 45%;
+      text-align: right;
+    }
+    // Hide optional notices.
+    .form-optional {
+      display: none;
+    }
+    .form-item-search,
+    .form-actions,
+    .form-item {
+      float: none;
+      margin: 0;
+      padding: 0;
+    }
+    // Search field.
+    .form-item-search {
+      .form-control {
+        // Right padding is for search submit icon.
+        padding: 6px 36px 6px 12px;
+        font-size: 14px;
+      }
+    }
+    .form-submit {
+      display: none;
+    }
+    // Pseudo search button.
+    .form-submit--trigger {
+      position: absolute;
+      top: 3px;
+      right: 10px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      z-index: 1;
+
+      &:hover {
+        text-decoration: none;
+      }
+      &:before {
+        display: block;
+        content: "\e003";
+        font-family: $f-glyphicons;
+        font-size: 19px;
+        color: $gray-base;
+        transition: color .2s ease-in-out;
+      }
+      &:focus:before,
+      &:hover:before {
+        color: $gray;
+      }
+    }
+    // Hide text search field.
+    .form-item-search,
+    .form-submit--trigger {
+      display: none;
+    }
+    .form-item-sort-bef-combine {
+      label {
+        display: inline-block;
+        margin: 4px 5px 0 0;
+        padding: 0;
+        vertical-align: top;
+      }
+      .select-wrapper {
+        display: inline-block;
+        width: 170px;
+        vertical-align: top;
+      }
+      .form-control {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+  // Facet Summary.
+  .block-facets-summary {
+    float: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 0 66px;
+    width: auto;
+    min-height: 36px;
+
+    @media (min-width: $screen-sm-min) {
+      float: left;
+      width: 45%;
+    }
+  }
+}
+
+/**
+ * Facets.
+ */
+.block-facets {
+  margin: 0 0 20px 0;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #ccc;
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  // Block title.
+  h2 {
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0 0 5px 0;
+      padding: 0;
+      background: none;
+
+      // Facet link.
+      > a {
+        position: relative;
+        display: block;
+        margin: 0;
+        padding: 0 0 0 30px;
+        text-decoration: none;
+
+        // Checkbox.
+        &:before {
+          @include fa-icon();
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin: 0;
+          padding: 2px 0 0 0;
+          width: 20px;
+          height: 20px;
+          font-size: 14px;
+          color: $c-secondary;
+          text-align: center;
+          text-decoration: none;
+          background: #fff;
+          border: 1px solid #ccc;
+          border-radius: $border-radius;
+        }
+        &:hover,
+        &:focus {
+          text-decoration: none;
+
+          .facet-item__value {
+            text-decoration: underline;
+          }
+          // Checkbox.
+          &:before {
+            text-decoration: none;
+          }
+        }
+        // Active checkbox.
+        &.is-active:before {
+          content: $fa-var-check;
+          text-decoration: none;
+        }
+        // Hide status symbol.
+        .facet-item__status {
+          display: none;
+        }
+      }
+      // Nested menus.
+      ul {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+/**
+ * Facets Summary.
+ */
+.block-facets-summary {
+  // Block title.
+  h2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin: 0 18px 20px 0;
+    padding: 7px 0 0 0;
+    font-family: $f-body;
+    font-size: 16px;
+    line-height: 1.0;
+    font-weight: 600;
+    color: $c-body;
+  }
+  > ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+
+    li {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      vertical-align: top;
+
+      a {
+        position: relative;
+        display: inline-block;
+        margin: 0 5px 5px 0;
+        padding: 6px 36px 5px 15px;
+        font-size: 15px;
+        line-height: 1.2;
+        color: $c-body;
+        text-decoration: none;
+        background: #fff;
+        border: 1px solid $c-body;
+
+        // Close icon.
+        &:after {
+          @include fa-icon();
+          content: $fa-var-times;
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: block;
+          margin: 0;
+          padding: 7px 0 0 0;
+          width: 25px;
+          height: 100%;
+          color: #fff;
+          text-align: center;
+          background: $c-body;
+          transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out;
+        }
+        .js-facet-deactivate {
+          display: none;
+        }
+        &:hover,
+        &:focus {
+          color: $c-body;
+          border-color: $c-link;
+
+          // Close icon.
+          &:after {
+            color: #fff;
+            background: $c-link;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Store Facets.
+ */
+.store-facets {
+  position: relative;
+}
+.store-facets__content {
+  // Hide facets content so it can be toggled by mobile control.
+  display: none;
+
+  @media (min-width: $screen-sm-min) {
+    display: block;
+  }
+
+  // Active state.
+  &.is-active {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: block;
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ccc;
+    background: #fff;
+    overflow: scroll;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
+    /* Set higher depending on other existing elements. */
+    z-index: 10;
+
+    @media (min-width: $screen-sm-min) {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: auto;
+      height: auto;
+      border: none;
+      background: none;
+      overflow: auto;
+      box-shadow: none;
+      z-index: 0;
+    }
+  }
+}
+
+// Store Facets - for mobile.
+.store-facets__mobile-toggle {
+  display: block;
+  margin: 0 0 20px 0;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: $gray-darker;
+
+  @media (min-width: $screen-sm-min) {
+    display: none;
+  }
+  &:hover,
+  &:focus {
+    color: #fff;
+    text-decoration: none;
+    background: darken($gray-darker, 20%);
+  }
+  // Icon.
+  &:before {
+    @include fa-icon();
+    content: $fa-var-filter;
+    margin: 0 8px 0 0;
+  }
+  // When the toggle is active.
+  &.is-active {
+    color: #fff;
+    text-decoration: none;
+    background: darken($gray-darker, 20%);
+
+    // Close icon.
+    &:before {
+      content: $fa-var-times;
+    }
+  }
+}
