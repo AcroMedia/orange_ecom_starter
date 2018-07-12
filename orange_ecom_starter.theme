@@ -93,6 +93,22 @@ function orange_ecom_starter_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter() for inputs.
+ */
+function orange_ecom_starter_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  // Set suggestion for inputs within nested paragraphs.
+  if (isset($element['#attributes']['data-paragraph-parent'])) {
+    array_splice($suggestions, 1, 0, 'input__' . $element['#type'] . '__' . 'paragraph__parent' . '__' . $element['#attributes']['data-paragraph-parent']);
+  }
+  // Set suggestion for inputs within paragraphs.
+  if (isset($element['#attributes']['data-paragraph'])) {
+    array_splice($suggestions, 1, 0, 'input__' . $element['#type'] . '__' . 'paragraph' . '__' . $element['#attributes']['data-paragraph']);
+  }
+}
+
+/**
  * Implements hook__preprocess_comment_HOOK() for Comments.
  */
 function orange_ecom_starter_preprocess_comment(&$variables) {
@@ -155,6 +171,36 @@ function orange_ecom_starter_preprocess_taxonomy_term(&$variables) {
  * Implements hook_form_alter().
  */
 function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Webforms.
+  if ((isset($form['#entity_type'])) && ($form['#entity_type'] == 'webform_submission')) {
+    $paragraph_matches = [];
+
+    // Check for webforms within paragraphs.
+    if (preg_match('/paragraph_([0-9]+)/', $form_id, $paragraph_matches)) {
+      $paragraph_id = $paragraph_matches[1];
+      $paragraph = Paragraph::load($paragraph_id);
+
+      if ($paragraph = Paragraph::load($paragraph_id)) {
+        $paragraph_type = $paragraph->bundle();
+
+        // Set paragraph attribute.
+        $form['actions']['submit']['#attributes']['data-paragraph'] = $paragraph_type;
+
+        // Paragraph parent.
+        if ($paragraph->parent_id->value) {
+          $paragraph_parent_id = $paragraph->parent_id->value;
+
+          if ($paragraph_parent = Paragraph::load($paragraph_parent_id)) {
+            $paragraph_parent_type = $paragraph_parent->bundle();
+
+            // Set paragraph parent attribute.
+            $form['actions']['submit']['#attributes']['data-paragraph-parent'] = $paragraph_parent_type;
+          }
+        }
+      }
+    }
+  }
+
   // Comment form.
   if ($form_id == 'comment_node_comment_form') {
     // Update submit button text.
@@ -193,6 +239,9 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
     // Set submit button types as primary.
     if (isset($form['login']['returning_customer']['submit'])) {
       $form['login']['returning_customer']['submit']['#button_type'] = 'primary';
+    }
+    if (isset($form['login']['guest']['text'])) {
+      $form['login']['guest']['text']['#markup'] = t('Proceed to checkout, no account creation necessary.');
     }
     if (isset($form['login']['guest']['continue'])) {
       $form['login']['guest']['continue']['#button_type'] = 'primary';
@@ -406,6 +455,35 @@ function orange_ecom_starter_preprocess_input(&$variables) {
     if (isset($variables['element']['#button_type'])) {
       $variables['button_type'] = $variables['element']['#button_type'];
     }
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element(&$variables).
+ */
+function orange_ecom_starter_preprocess_form_element(&$variables) {
+  $variables['label']['#attributes']['data-element-type'] = $variables['element']['#type'];
+}
+
+/**
+ * Implements hook_preprocess_form_element_label(&$variables).
+ */
+function orange_ecom_starter_preprocess_form_element_label(&$variables) {
+  if (isset($variables['element'])) {
+    $variables['attributes'] = array_merge($variables['attributes'], $variables['element']['#attributes']);
+
+    if (isset($variables['element']['#attributes']['data-element-type'])) {
+      $variables['element_type'] = $variables['element']['#attributes']['data-element-type'];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_fieldset(&$variables).
+ */
+function orange_ecom_starter_preprocess_fieldset(&$variables) {
+  if (isset($variables['element']['#type'])) {
+    $variables['element_type'] = $variables['element']['#type'];
   }
 }
 

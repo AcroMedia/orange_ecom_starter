@@ -23,15 +23,13 @@ body {
  * Images.
  */
 img {
-  display: block;
+  display: inline-block;
   max-width: 100%;
   height: auto;
 
-  @media (min-width: $screen-xs-min) {
-    display: inline-block;
-  }
   // CKEditor alignment styles.
   &.align-left {
+    display: block;
     float: none;
     margin: 0 0 20px 0;
 
@@ -41,14 +39,19 @@ img {
     }
   }
   &.align-right {
+    display: block;
     float: none;
     margin: 0 0 20px 0;
 
     @media (min-width: $screen-xs-min) {
       float: right;
       margin: 0 0 20px 20px;
-
     }
+  }
+  &.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -250,7 +253,7 @@ button {
   line-height: 1.0;
   color: $gray-darker;
   text-decoration: none;
-  background: none;
+  background: #fff;
   border: 1px solid $gray-light;
   transition: color .2s ease-in-out, background-color .2s ease-in-out;
 
@@ -293,8 +296,17 @@ button {
 
 // Large button.
 .btn-lg,
+.btn--lg,
 .btn-group-lg > .btn {
   font-size: 24px;
+}
+
+// Small button.
+.btn-sm,
+.btn--sm,
+.btn-group-sm > .btn {
+  padding: 8px 16px;
+  font-size: 16px;
 }
 
 // Form buttons.

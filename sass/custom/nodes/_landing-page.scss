@@ -12,6 +12,10 @@
   .region-highlighted > div {
     margin: 20px 0;
   }
+  // Force hide the page title block.
+  .block-page-title-block {
+    display: none;
+  }
   .site-content {
     margin: 0;
     padding: 0;

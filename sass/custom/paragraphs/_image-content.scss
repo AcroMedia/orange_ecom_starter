@@ -2,11 +2,7 @@
  * Image + Content.
  */
 .component-image-content {
-  margin: 20px 0;
-
-  @media (min-width: $screen-sm-min) {
-    margin: 40px 0;
-  }
+  margin: 60px 0;
 }
 .component-image-content__container {
   background: #fff;
@@ -42,9 +38,12 @@
   .base-accordion .base-accordion__content {
     background: none;
   }
+  a {
+    text-decoration: underline;
+  }
   a:hover,
   a:focus {
     color: inherit;
-    text-decoration: underline;
+    text-decoration: none;
   }
 }

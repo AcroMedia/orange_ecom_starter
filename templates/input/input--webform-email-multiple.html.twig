@@ -1,21 +1,18 @@
-{% extends "input.html.twig" %}
 {#
 /**
  * @file
- * Theme suggestion for "button" input form element.
+ * Theme implementation for a Webform Email Multiple type form element.
  *
  * Available variables:
  * - attributes: A list of HTML attributes for the input element.
  * - children: Optional additional rendered elements.
  * - icon: An icon.
- * - icon_only: Flag to display only the icon and not the label.
+ * - input_group: Flag to display as an input group.
  * - icon_position: Where an icon should be displayed.
- * - label: button label.
  * - prefix: Markup to display before the input element.
  * - suffix: Markup to display after the input element.
  * - type: The type of input.
  *
- * @see \Drupal\bootstrap\Plugin\Preprocess\InputButton
  * @see \Drupal\bootstrap\Plugin\Preprocess\Input
  * @see template_preprocess_input()
  *
@@ -23,16 +20,30 @@
  */
 #}
 {% spaceless %}
+  {% if input_group %}
+    <div class="input-group">
+  {% endif %}
+
+  {% if prefix %}
+    {{ prefix }}
+  {% endif %}
+
   {%
     set classes = [
-      'btn',
-      button_type == 'primary' ? 'btn--primary',
-      attributes.hasClass('webform-button--next') ? 'btn--primary',
-      type == 'submit' ? 'js-form-submit',
+      'form-control',
     ]
   %}
   {% block input %}
-    <input{{ attributes.addClass(classes) }} />{{ children }}
-    <a href="#" class="form-submit--trigger"></a>
+    <input{{ attributes.addClass(classes) }} />
   {% endblock %}
+
+  {% if suffix %}
+    {{ suffix }}
+  {% endif %}
+
+  {% if input_group %}
+    </div>
+  {% endif %}
+
+  {{ children }}
 {% endspaceless %}

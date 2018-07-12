@@ -24,6 +24,18 @@ slick:
     - core/jquery
     - core/drupal
 
+aos:
+  version: 1.x
+  css:
+    theme:
+      js/contrib/aos/aos.css: { media: all }
+  js:
+    js/contrib/aos/aos.js: {}
+    js/custom/aos.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 paragraph-carousel:
   version: 1.x
   js:

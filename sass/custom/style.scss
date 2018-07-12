@@ -24,10 +24,13 @@
 @import 'nodes/blog-post';
 
 // Paragraphs.
+@import 'paragraphs/cta';
+@import 'paragraphs/cta-strap';
 @import 'paragraphs/featured-products';
 @import 'paragraphs/strap';
 @import 'paragraphs/carousel';
 @import 'paragraphs/image-content';
+@import 'paragraphs/image-strap';
 @import 'paragraphs/webform-content';
 @import 'paragraphs/gallery';
 @import 'paragraphs/webform';
@@ -37,6 +40,9 @@
 @import 'commerce/cart';
 @import 'commerce/products';
 @import 'commerce/checkout';
+
+// CSS Effects.
+@import 'effects';
 
 // Live CSS.
 @import 'live-css';
