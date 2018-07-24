@@ -93,6 +93,19 @@ function orange_ecom_starter_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_alter() for blocks.
+ */
+function orange_ecom_starter_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  $elements = $variables['elements'];
+
+  if (isset($elements['content']['#block_content'])) {
+    $bundle = $elements['content']['#block_content']->bundle();
+    // Set suggestion based on block type.
+    $suggestions[] = 'block__type__' . $bundle;
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter() for inputs.
  */
 function orange_ecom_starter_theme_suggestions_input_alter(&$suggestions, array $variables) {
@@ -264,6 +277,28 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
     if (isset($form['contact_information']['email_confirm'])) {
       $form['contact_information']['email_confirm']['#attributes']['placeholder'] = t('email@address.com');
     }
+
+    // Order Information Step - Display helper text.
+    if (isset($form['#step_id']) && $form['#step_id'] == 'order_information') {
+      $form['actions']['helper_text'] = [
+        '#type' => 'inline_template',
+        '#template' => '<div class="form-item commerce-checkout__helper-text">{{ helper_text }}</div>',
+        '#context' => [
+          'helper_text' => t("You won't be charged until you review your order."),
+        ],
+      ];
+
+      $form['shipping_information']['#title'] = t('Shipping Address');
+
+      $form['coupon_redemption']['section_title'] = [
+        '#type' => 'inline_template',
+        '#template' => '<h2 class="commerce-checkout__section-title">{{ title_text }}</h2>',
+        '#context' => [
+          'title_text' => t("Optional"),
+        ],
+        '#weight' => -99,
+      ];
+    }
   }
 
   // User Login form.
@@ -298,6 +333,14 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
   if (isset($variables['elements']['#entity_type']) && $hook == 'commerce_product') {
     if (isset($variables['elements']['#commerce_product'])) {
       $product = $variables['elements']['#commerce_product'];
+
+      // Product - Back to catalog link generation.
+      $current_path = \Drupal::request()->getRequestUri();
+      $variables['product_path'] = Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $product->id(), 'referrer' => $current_path]);
+      $variables['back_to_catalog_path'] = \Drupal::request()->query->get('referrer');
+      if (empty($variables['back_to_catalog_path'])) {
+        $variables['back_to_catalog_path'] = Url::fromRoute('view.store.product_listing');
+      }
 
       // Set base path variable since it's not available by default.
       $variables['base_path'] = base_path();
