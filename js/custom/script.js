@@ -126,4 +126,11 @@
     });
   }
 
+  // Trigger page refresh when the shipping method changes
+    if($('.form-radio').length && window.location.pathname.indexOf('/checkout/') > -1) {
+      $('input[class="form-radio"]').change(function(e) {
+        setTimeout(window.location.reload(), 500);
+      });
+    }
+
 })(jQuery, Drupal);
