@@ -127,10 +127,16 @@
   }
 
   // Trigger page refresh when the shipping method changes
-    if($('.form-radio').length && window.location.pathname.indexOf('/checkout/') > -1) {
-      $('input[class="form-radio"]').change(function(e) {
-        setTimeout(window.location.reload(), 500);
-      });
-    }
+  if($('.form-radio').length && window.location.pathname.indexOf('/checkout/') > -1) {
+    $('input[class="form-radio"]').change(function(e) {
+      setTimeout(window.location.reload(), 500);
+    });
+  }
 
+  if($('#edit-shipping-information-recalculate-shipping').length) {
+      $('body').on('blur', 'input.postal-code', function () {
+          console.log('blur!');
+          $('input[id^=edit-shipping-information-recalculate-shipping]').mousedown();
+      });
+  }
 })(jQuery, Drupal);
