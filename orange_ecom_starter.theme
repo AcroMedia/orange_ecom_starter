@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Ajax\InsertCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Url;
@@ -21,9 +21,9 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\comment\Entity\Comment;
 use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\CommandInterface;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -275,7 +275,11 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
       $form['shipping_information']['recalculate_shipping']['#attributes'] = [
         'class' => array('hidden'),
       ];
+      $form['shipping_information']['shipping_profile']['#after_build'] = [
+        'callback' => 'shippingProfileForm',
+      ];
     }
+    // edit-shipping-information-shipping-profile-address-0-address-postal-code
     // Login - Returning Customer.
     if (isset($form['login']['returning_customer']['name'])) {
       // Remove autofocus from username input.
@@ -563,24 +567,51 @@ function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
 }
 
 /**
- * Ajax callback for refreshing the order summary.
+ * Ajax callback for refreshing the order shipping method, this will eventually
+ * be moved to the commerce shipping module instead.
  */
 function ajaxRefreshSummary(array $form, FormStateInterface $form_state) {
-  $parents = $form_state->getTriggeringElement()['#parents'];
-  array_pop($parents);
-  $element = NestedArray::getValue($form, $parents);
-  $summary_element = $form['sidebar']['order_summary'];
-  $response = new AjaxResponse();
-  $response->addCommand(new InsertCommand('[data-drupal-selector="edit-sidebar-order-summary"]', $summary_element));
-  // Allow parent elements to hook into the ajax refresh.
-  foreach ($element['#element_ajax'] as $element_ajax) {
-    if (is_callable($element_ajax)) {
-      $command = $element_ajax($form, $form_state);
-      if ($command instanceof CommandInterface) {
-        $response->addCommand($command);
-      }
-    }
+  // Save the modified shipments.
+  $order = $form['sidebar']['order_summary']['summary']['#order_entity'];
+  $shipments = [];
+  $shipping = $form['shipping_information'];
+  foreach (Element::children($shipping['shipments']) as $index) {
+    /** @var \Drupal\commerce_shipping\Entity\ShipmentInterface $shipment */
+    $shipment = clone $shipping['shipments'][$index]['#shipment'];
+    $form_display = EntityFormDisplay::collectRenderDisplay($shipment, 'default');
+    $form_display->removeComponent('shipping_profile');
+    $form_display->removeComponent('title');
+    $form_display->extractFormValues($shipment, $shipping['shipments'][$index], $form_state);
+    $shipment->setShippingProfile($shipping['shipping_profile']['#profile']);
+    $shipment->save();
+    $shipments[] = $shipment;
   }
+  $order->shipments = $shipments;
+  $order->save();
 
+  // Delete shipments that are no longer in use.
+  $removed_shipment_ids = $shipping['removed_shipments']['#value'];
+  if (!empty($removed_shipment_ids)) {
+    $shipment_storage = $this->entityTypeManager->getStorage('commerce_shipment');
+    $removed_shipments = $shipment_storage->loadMultiple($removed_shipment_ids);
+    $shipment_storage->delete($removed_shipments);
+  }
+  $response = new AjaxResponse();
+
+  $summary_element = $form['sidebar']['order_summary'];
+  $response->addCommand(new ReplaceCommand('[data-drupal-selector="edit-sidebar-order-summary"]', $summary_element));
   return $response;
+}
+
+function shippingProfileForm(array $element, FormStateInterface $form_state) {
+  $element['address']['widget'][0]['address']['postal_code']['#ajax_processed'] = TRUE;
+  $element['address']['widget'][0]['address']['postal_code']['#ajax'] = [
+    'callback' => 'parent::submitForm',
+    'event' => 'blur',
+    'progress' => [
+      'type' => 'throbber',
+      'message' => t('Calculating postal code...'),
+    ],
+  ];
+  return $element;
 }
