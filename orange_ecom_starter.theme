@@ -605,7 +605,7 @@ function ajaxRefreshSummary(array $form, FormStateInterface $form_state) {
 
 function shippingProfileForm(array $element, FormStateInterface $form_state) {
   $element['address']['widget'][0]['address']['postal_code']['#ajax_processed'] = TRUE;
-  $element['address']['widget'][0]['address']['postal_code']['#ajax'] = [
+  $element['address']['widget'][0]['address']['#ajax'] = [
     'callback' => 'parent::submitForm',
     'event' => 'blur',
     'progress' => [

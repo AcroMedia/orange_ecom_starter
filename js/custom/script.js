@@ -125,11 +125,5 @@
       $(this).tabCollapse();
     });
   }
-
-  // Mousedown on hidden button to trigger price recalculation when postal code input is out of focus.
-  if($('#edit-shipping-information-recalculate-shipping').length) {
-      $('body').on('blur', 'input.postal-code', function () {
-          $('input[id^=edit-shipping-information-recalculate-shipping]').mousedown();
-      });
-  }
+  
 })(jQuery, Drupal);
