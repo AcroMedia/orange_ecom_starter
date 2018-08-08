@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Ajax\InsertCommand;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Url;
@@ -20,6 +21,10 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\comment\Entity\Comment;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CommandInterface;
+
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  *
@@ -265,7 +270,7 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
     // Reassign Recaulate shipping ajax to shipping method buttons instead.
     if (isset($form['shipping_information']['recalculate_shipping'])) {
       $form['shipping_information']['shipments'][0]['shipping_method']['widget'][0]['#ajax'] = [
-        'callback' => '::submitForm',
+        'callback' => 'ajaxRefreshSummary',
       ];
       $form['shipping_information']['recalculate_shipping']['#attributes'] = [
         'class' => array('hidden'),
@@ -558,8 +563,24 @@ function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
 }
 
 /**
- * Implements hook_commerce_checkout_pane_info_alter(&$checkout_panes).
+ * Ajax callback for refreshing the order summary.
  */
-function orange_ecom_starter_commerce_checkout_pane_info_alter(&$checkout_panes) {
-  if($checkout_panes['shipping_information']) { return false; }
+function ajaxRefreshSummary(array $form, FormStateInterface $form_state) {
+  $parents = $form_state->getTriggeringElement()['#parents'];
+  array_pop($parents);
+  $element = NestedArray::getValue($form, $parents);
+  $summary_element = $form['sidebar']['order_summary'];
+  $response = new AjaxResponse();
+  $response->addCommand(new InsertCommand('[data-drupal-selector="edit-sidebar-order-summary"]', $summary_element));
+  // Allow parent elements to hook into the ajax refresh.
+  foreach ($element['#element_ajax'] as $element_ajax) {
+    if (is_callable($element_ajax)) {
+      $command = $element_ajax($form, $form_state);
+      if ($command instanceof CommandInterface) {
+        $response->addCommand($command);
+      }
+    }
+  }
+
+  return $response;
 }
