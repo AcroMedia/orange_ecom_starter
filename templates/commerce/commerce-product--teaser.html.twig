@@ -26,7 +26,12 @@
 <a href="{{ product_path }}" class="product-teaser">
   <div class="product-teaser__thumbnail">
     {% if product_variation_images %}
-      <img src="{{ product_variation_images.0.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_images.0.images.0.alt }}" />
+      {% for product_variation_image in product_variation_images %}
+        {# Use first image of the first variation. #}
+        {% if loop.first %}
+          <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" />
+        {% endif %}
+      {% endfor %}
     {% else %}
       <img src="{{ product_thumbnail_placeholder_url }}" alt="{{ product_thumbnail_placeholder_alt }}" />
     {% endif %}
