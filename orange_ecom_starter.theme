@@ -275,9 +275,6 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
       $form['shipping_information']['recalculate_shipping']['#attributes'] = [
         'class' => array('hidden'),
       ];
-      $form['shipping_information']['shipping_profile']['#after_build'] = [
-        'callback' => 'shippingProfileForm',
-      ];
     }
     // edit-shipping-information-shipping-profile-address-0-address-postal-code
     // Login - Returning Customer.
