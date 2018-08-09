@@ -270,7 +270,7 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
     // Reassign Recaulate shipping ajax to shipping method buttons instead.
     if (isset($form['shipping_information']['recalculate_shipping'])) {
       $form['shipping_information']['shipments'][0]['shipping_method']['widget'][0]['#ajax'] = [
-        'callback' => 'ajaxRefreshSummary',
+        'callback' => 'orange_ecom_starter_ajax_refresh_summary',
       ];
       $form['shipping_information']['recalculate_shipping']['#attributes'] = [
         'class' => array('hidden'),
@@ -564,10 +564,11 @@ function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
 }
 
 /**
- * Ajax callback for refreshing the order shipping method, this will eventually
- * be moved to the commerce shipping module instead.
+ * Ajax callback for refreshing the order shipping method.
+ *
+ * This will eventually be moved to the commerce shipping module instead.
  */
-function ajaxRefreshSummary(array $form, FormStateInterface $form_state) {
+function orange_ecom_starter_ajax_refresh_summary(array $form, FormStateInterface $form_state) {
   // Save the modified shipments.
   $order = $form['sidebar']['order_summary']['summary']['#order_entity'];
   $shipments = [];

@@ -128,9 +128,16 @@
 
   // Mousedown on hidden button to trigger price recalculation when postal code input is out of focus, because
   // we can't override it in our theme hooks.
+    var recent = false;
   if($('#edit-shipping-information-recalculate-shipping').length) {
-      $('body').on('blur', 'input.postal-code', function () {
-          $('input[id^=edit-shipping-information-recalculate-shipping]').mousedown();
+      $('body').on('keydown', 'input.postal-code', function () {
+          if (!recent) {
+              recent = true;
+              setTimeout(function (){
+                  $('input[id^=edit-shipping-information-recalculate-shipping]').mousedown();
+                  recent = false;
+              }, 2000);
+          }
       });
   }
 })(jQuery, Drupal);
