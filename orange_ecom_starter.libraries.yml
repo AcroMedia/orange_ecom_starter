@@ -45,6 +45,24 @@ paragraph-carousel:
     - core/drupal
     - orange_ecom_starter/slick
 
+paragraph-content-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/content-carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
+paragraph-logo-carousel:
+  version: 1.x
+  js:
+    js/custom/paragraphs/logo-carousel.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/slick
+
 paragraph-featured-products:
   version: 1.x
   js:

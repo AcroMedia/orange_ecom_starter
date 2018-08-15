@@ -65,11 +65,17 @@
           {% if paragraph.field_content_layout.value and (paragraph.field_content_layout.value == '1_4') %}
             {% set col_class = 'col-md-3' %}
             {% set col2_class = 'col-md-9' %}
+          {% elseif paragraph.field_content_layout.value and (paragraph.field_content_layout.value == '2_3') %}
+            {% set col_class = 'col-md-4' %}
+            {% set col2_class = 'col-md-8' %}
           {% endif %}
           {% if paragraph.field_alignment.value and (paragraph.field_alignment.value == 'right') %}
             {% if paragraph.field_content_layout.value and (paragraph.field_content_layout.value == '1_4') %}
               {% set col_class = 'col-md-3 col-md-push-9' %}
               {% set col2_class = 'col-md-9 col-md-pull-3' %}
+            {% elseif paragraph.field_content_layout.value and (paragraph.field_content_layout.value == '2_3') %}
+              {% set col_class = 'col-md-4 col-md-push-8' %}
+              {% set col2_class = 'col-md-8 col-md-pull-4' %}
             {% else %}
               {% set col_class = 'col-md-6 col-md-push-6' %}
               {% set col2_class = 'col-md-6 col-md-pull-6' %}
