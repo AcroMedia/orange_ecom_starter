@@ -9,9 +9,13 @@
   .component-strap__content {
     position: relative;
     margin: 0;
-    padding: 40px 0;
+    padding: 40px 20px;
     text-align: center;
     z-index: 1;
+
+    @media (min-width: $screen-sm-min) {
+      padding: 40px;
+    }
   }
 }
 .component-strap__overlay {

@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme implementation for a CTA Strap paragraph.
+ * Theme implementation for a Content Strap paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -40,58 +40,17 @@
 #}
 {%
   set classes = [
-    'component-cta-strap',
+    'component-content-strap',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
-{% set body_attributes = create_attribute() %}
-{% set style_value = '' %}
-
-{# Background Color. #}
-{% if paragraph.field_bg_color.color %}
-  {% set bg_color = paragraph.field_bg_color.color %}
-  {% set style_value = style_value ~ 'background-color: ' ~ bg_color ~ ';' %}
-  {% set attributes = attributes.setAttribute('style', style_value) %}
-{% endif %}
-
-{# Background Image. #}
-{% if paragraph.field_image.entity.fileuri %}
-  {% set bg_image = paragraph.field_image.entity.fileuri|image_style('background') %}
-  {% set style_value = style_value ~ 'background-image: url(' ~ bg_image ~ ');' %}
-  {% set attributes = attributes.setAttribute('style', style_value) %}
-  {% set attributes = attributes.addClass('component-cta-strap--image') %}
-{% endif %}
-
-{% if paragraph.field_color.color %}
-  {% set color_id = 'paragraph-' ~ paragraph.id.value ~ '-color' %}
-  {% set body_attributes = body_attributes.setAttribute('id', color_id) %}
-  {% set body_attributes = body_attributes.addClass('component-cta-strap--color-override') %}
-  {% set tags = ['h1','h2','h3','h4','h5','h6','h7','h8','div','span','p','a','blockquote','ul','ol','label','table','tr','td','.base-accordion__header::before'] %}
-  <style type="text/css">
-    {% for tag in tags %}#{{ color_id }} {{ tag }}{% if not loop.last %},{% endif %}{% endfor %} {
-      color: {{ paragraph.field_color.color }};
-    }
-  </style>
-{% endif %}
-
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% if (paragraph.field_image.entity.fileuri) and (paragraph.field_bg_color.color and paragraph.field_bg_color.opacity) %}
-      <div class="component-cta-strap__overlay" style="background: {{ paragraph.field_bg_color.color }}; opacity: {{ paragraph.field_bg_color.opacity }};"></div>
-    {% endif %}
-    {% block content_wrapper %}
-      {% block content %}
-        <div class="component-cta-strap__content">
-          <div{{ body_attributes.addClass('component-cta-strap__body') }}>
-            {% if paragraph.field_paragraphs_reference.0.target_id %}
-              {{ content.field_paragraphs_reference }}
-            {% endif %}
-          </div>
-        </div>
-      {% endblock %}
-    {% endblock content_wrapper %}
+    {% block content %}
+      {{ content }}
+    {% endblock %}
   </div>
 {% endblock paragraph %}

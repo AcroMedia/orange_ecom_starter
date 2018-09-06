@@ -217,41 +217,6 @@ input.form-search {
 }
 
 /**
- * Accordion.
- */
-.base-accordion {
-  .active .base-accordion__header {
-    color: $c-secondary;
-
-    &::before {
-      color: $gray-light;
-    }
-  }
-  .base-accordion__header {
-    position: relative;
-    padding-left: 15px;
-    font-family: $f-secondary;
-    transition: all .2s ease-in-out;
-
-    // Arrow icon.
-    &::before {
-      @include fa-icon();
-      content: $fa-var-angle-right;
-      color: lighten($gray-light, 10%);
-      position: absolute;
-      left: 0;
-      transition: all .2s ease-in-out;
-    }
-    &:hover::before {
-      color: $gray-light;
-    }
-  }
-  .base-accordion__content {
-    background-color: #f7f5f5;
-  }
-}
-
-/**
  * Cards.
  */
 .card {

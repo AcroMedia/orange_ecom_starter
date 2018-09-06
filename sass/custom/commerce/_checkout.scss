@@ -52,6 +52,11 @@
         margin-right: 15px;
       }
     }
+    &.checkout-pane-shipping-information {
+      .btn {
+        margin-left: 0;
+      }
+    }
   }
   // Phone number field.
   .field--name-field-phone {
@@ -316,7 +321,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50px;
+  width: 42px;
+  font-size: 14px;
   text-align: left;
 
   @media (min-width: $screen-sm-min) {
@@ -325,24 +331,24 @@
   }
   @media (min-width: $screen-md-min) {
     position: absolute;
-    width: 50px;
+    width: 42px;
   }
 }
 .checkout-order-summary__item-product {
   position: relative;
   margin: 0;
-  padding: 0 0 0 60px;
-  width: 60%;
+  padding: 0 0 0 47px;
+  width: 70%;
 
   @media (min-width: $screen-sm-min) {
     padding: 0;
   }
   @media (min-width: $screen-md-min) {
-    padding: 0 0 0 60px;
+    padding: 0 0 0 47px;
   }
 }
 .checkout-order-summary__item-price-total {
-  width: 40%;
+  width: 30%;
   text-align: right;
   font-weight: bold;
 }

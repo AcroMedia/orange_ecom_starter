@@ -299,6 +299,12 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
         '#weight' => -99,
       ];
     }
+
+    // Shipping Information - Recalculate Shipping Button.
+    if (isset($form['shipping_information']['recalculate_shipping'])) {
+      $form['shipping_information']['recalculate_shipping']['#button_type'] = 'primary';
+      $form['shipping_information']['recalculate_shipping']['#value'] = t('Calculate Shipping');
+    }
   }
 
   // User Login form.

@@ -49,14 +49,8 @@
 %}
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          {% block content %}
-            {{ content }}
-          {% endblock %}
-        </div>
-      </div>
-    </div>
+    {% block content %}
+      {{ content }}
+    {% endblock %}
   </div>
 {% endblock paragraph %}

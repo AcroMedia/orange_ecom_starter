@@ -23,13 +23,15 @@
 {{ attach_library('orange_ecom_starter/paragraph-featured-products') }}
 {%
   set classes = [
+    'component-featured-products__slider',
+    'component-featured-products__slider--no-slider',
     'field',
     'field--name-' ~ field_name|clean_class,
     'field--type-' ~ field_type|clean_class,
     'field--label-' ~ label_display,
   ]
 %}
-<div{{ attributes.addClass(classes, 'component-featured-products__slider') }}>
+<div{{ attributes.addClass(classes) }}>
   {% for item in items %}
     <div{{ item.attributes.addClass('component-featured-products__slider__slide') }}>
       <div class="component-featured-products__slider__slide__item">

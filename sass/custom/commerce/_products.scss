@@ -2,6 +2,32 @@
  * Products.
  */
 .path-product {
+  // Set region widths since the page has no site container wrapper.
+  .region-highlighted,
+  .region-above-content,
+  .region-below-content {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+
+    @media (min-width: $screen-sm-min) {
+      max-width: $container-tablet;
+    }
+    @media (min-width: $screen-md-min) {
+      max-width: $container-desktop;
+    }
+    @media (min-width: $screen-lg-min) {
+      max-width: $container-large-desktop;
+    }
+    @media (min-width: $screen-xl-min) {
+      max-width: $container-xlarge-desktop;
+    }
+  }
+  .region-highlighted > div {
+    margin: 20px 0;
+  }
   // Hide page title block on product pages.
   .block-page-title-block {
     display: none;
@@ -78,8 +104,58 @@
 }
 .checkout-order-summary__item-product {
   .product-variation {
+    position: relative;
+    margin: 0;
     padding: 0;
-    min-height: 0;
+    min-height: 100px;
+
+    @media (min-width: $screen-xs-min) {
+      padding: 0 0 0 65px;
+    }
+    @media (min-width: $screen-sm-ph) {
+      padding: 0 0 0 120px;
+    }
+    @media (min-width: $screen-sm-min) {
+      padding: 0;
+    }
+    @media (min-width: $screen-lg-min) {
+      padding: 0 0 0 65px;
+    }
+    @media (min-width: $screen-xl-min) {
+      padding: 0 0 0 120px;
+    }
+  }
+  .field--name-product-id {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 50px;
+    height: 50px;
+
+    @media (min-width: $screen-xs-min) {
+      display: block;
+      width: 50px;
+      height: 50px;
+    }
+    @media (min-width: $screen-sm-ph) {
+      display: block;
+      width: 100px;
+      height: 100px;
+    }
+    @media (min-width: $screen-sm-min) {
+      display: none;
+    }
+    @media (min-width: $screen-lg-min) {
+      display: block;
+      width: 50px;
+      height: 50px;
+    }
+    @media (min-width: $screen-xl-min) {
+      display: block;
+      width: 100px;
+      height: 100px;
+    }
   }
 }
 .commerce-cart-form__product-image {

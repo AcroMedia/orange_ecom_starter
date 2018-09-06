@@ -66,62 +66,56 @@
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          {% block content %}
-            <div class="component-tabs__tabs">
-              {# Tabs. #}
-              <ul{{ tabs_attributes }} role="tablist">
-                {% if paragraph.field_paragraphs_reference.0.target_id %}
-                  {% for tab in paragraph.field_paragraphs_reference %}
-                    {% set tab_entity = tab.entity.getTranslation(langcode) %}
-                    {% set tab_field_title = tab_entity.field_text %}
-                    {% set tab_id = tab_field_title.value|clean_class ~ '-' ~ tab_entity.id.value %}
+    {% block content %}
+      <div class="component-tabs__tabs">
+        {# Tabs. #}
+        <ul{{ tabs_attributes }} role="tablist">
+          {% if paragraph.field_paragraphs_reference.0.target_id %}
+            {% for tab in paragraph.field_paragraphs_reference %}
+              {% set tab_entity = tab.entity.getTranslation(langcode) %}
+              {% set tab_field_title = tab_entity.field_text %}
+              {% set tab_id = tab_field_title.value|clean_class ~ '-' ~ tab_entity.id.value %}
 
-                    {# Set active tab if it's the first tab. #}
-                    {% if loop.first %}
-                      {% set tab_li_class = 'active' %}
-                    {% else %}
-                      {% set tab_li_class = '' %}
-                    {% endif %}
+              {# Set active tab if it's the first tab. #}
+              {% if loop.first %}
+                {% set tab_li_class = 'active' %}
+              {% else %}
+                {% set tab_li_class = '' %}
+              {% endif %}
 
-                    <li role="presentation" class="{{ tab_li_class }}">
-                      <a href="#{{ tab_id }}" aria-controls="{{ tab_id }}" role="tab" data-toggle="tab">
-                        {{ tab_field_title|view }}
-                      </a>
-                    </li>
-                  {% endfor %}
-                {% endif %}
-              </ul>
-              {# Tab Content. #}
-              <div class="tab-content">
-                {% if paragraph.field_paragraphs_reference.0.target_id %}
-                  {% for tab in paragraph.field_paragraphs_reference %}
-                    {% set tab_entity = tab.entity.getTranslation(langcode) %}
-                    {% set tab_field_title = tab_entity.field_text %}
-                    {% set tab_field_body = tab_entity.field_text_long_formatted %}
-                    {% set tab_id = tab_field_title.value|clean_class ~ '-' ~ tab_entity.id.value %}
+              <li role="presentation" class="{{ tab_li_class }}">
+                <a href="#{{ tab_id }}" aria-controls="{{ tab_id }}" role="tab" data-toggle="tab">
+                  {{ tab_field_title|view }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+        {# Tab Content. #}
+        <div class="tab-content">
+          {% if paragraph.field_paragraphs_reference.0.target_id %}
+            {% for tab in paragraph.field_paragraphs_reference %}
+              {% set tab_entity = tab.entity.getTranslation(langcode) %}
+              {% set tab_field_title = tab_entity.field_text %}
+              {% set tab_field_body = tab_entity.field_text_long_formatted %}
+              {% set tab_id = tab_field_title.value|clean_class ~ '-' ~ tab_entity.id.value %}
 
-                    {# Set active tab if it's the first tab. #}
-                    {% if loop.first %}
-                      {% set tab_class = 'tab-pane fade active in' %}
-                    {% else %}
-                      {% set tab_class = 'tab-pane fade' %}
-                    {% endif %}
+              {# Set active tab if it's the first tab. #}
+              {% if loop.first %}
+                {% set tab_class = 'tab-pane fade active in' %}
+              {% else %}
+                {% set tab_class = 'tab-pane fade' %}
+              {% endif %}
 
-                    <div role="tabpanel" class="{{ tab_class }}" id="{{ tab_id }}">
-                      <h2 class="tab-pane__title">{{ tab_field_title|view }}</h2>
-                      {{ tab_field_body|view }}
-                    </div>
-                  {% endfor %}
-                {% endif %}
+              <div role="tabpanel" class="{{ tab_class }}" id="{{ tab_id }}">
+                <h2 class="tab-pane__title">{{ tab_field_title|view }}</h2>
+                {{ tab_field_body|view }}
               </div>
-              {# / Tab Content. #}
-            </div>
-          {% endblock %}
+            {% endfor %}
+          {% endif %}
         </div>
+        {# / Tab Content. #}
       </div>
-    </div>
+    {% endblock %}
   </div>
 {% endblock paragraph %}

@@ -46,6 +46,14 @@
         color: $gray-dark;
       }
     }
+    // Disabled.
+    &.slick-disabled {
+      // Icon.
+      &:before {
+        color: $gray-border;
+        opacity: 0.5;
+      }
+    }
   }
   .slick-arrow.slick-prev {
     left: 0;

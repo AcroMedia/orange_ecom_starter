@@ -5,7 +5,7 @@
   clear: both;
   margin: 40px 0;
   padding: 40px 0 0 0;
-  border-top: 1px solid $gray-light;
+  border-top: 1px solid $gray-border;
 }
 .component-featured-products__title {
   margin: 0 0 20px 0;
@@ -86,4 +86,35 @@
 }
 .component-featured-products__slider__slide__item {
   padding: 0 10px;
+}
+// If there are not enough items to trigger the slider.
+.component-featured-products__slider--no-slider {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+
+  @media (min-width: $screen-xs-min) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+  }
+  .component-featured-products__slider__slide {
+    float: none;
+    margin: 0 0 30px 0;
+    padding: 0 10px;
+    width: 50%;
+    background: none;
+
+    @media (min-width: $screen-sm-min) {
+      padding: 0 10px;
+      width: 25%;
+    }
+    @media (min-width: $screen-md-min) {
+      width: 15%;
+    }
+  }
+  .component-featured-products__slider__slide__item {
+    padding: 0;
+  }
 }

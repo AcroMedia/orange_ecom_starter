@@ -156,12 +156,13 @@
   .block-facets-summary {
     float: none;
     margin: 0 0 20px 0;
-    padding: 0 0 0 66px;
+    padding: 0;
     width: auto;
     min-height: 36px;
 
     @media (min-width: $screen-sm-min) {
       float: left;
+      padding: 0 0 0 66px;
       width: 45%;
     }
   }
@@ -262,7 +263,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: block;
+    display: none;
     margin: 0 18px 20px 0;
     padding: 7px 0 0 0;
     font-family: $f-body;
@@ -270,6 +271,10 @@
     line-height: 1.0;
     font-weight: 600;
     color: $c-body;
+
+    @media (min-width: $screen-sm-min) {
+      display: block;
+    }
   }
   > ul {
     display: inline-block;
@@ -344,7 +349,6 @@
   @media (min-width: $screen-sm-min) {
     display: block;
   }
-
   // Active state.
   &.is-active {
     position: absolute;

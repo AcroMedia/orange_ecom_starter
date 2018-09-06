@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ *
+ * Product Order Summary template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * @ingroup themeable
+ */
+#}
+{# Fallback product thumbnail placeholder. #}
+{% set product_thumbnail_placeholder_url = base_path ~ directory ~ '/gfx/product-placeholder.jpg' %}
+{% set product_thumbnail_placeholder_alt = product_entity.title.value %}
+
+<a href="{{ product_path }}" class="product-teaser">
+  <div class="product-teaser__thumbnail">
+    {% if product_variation_images %}
+      {% for product_variation_image in product_variation_images %}
+        {# Use first image of the first variation. #}
+        {% if loop.first %}
+          <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" />
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <img src="{{ product_thumbnail_placeholder_url }}" alt="{{ product_thumbnail_placeholder_alt }}" />
+    {% endif %}
+  </div>
+</a>

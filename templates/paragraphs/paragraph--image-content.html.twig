@@ -57,8 +57,8 @@
 
 {% block paragraph %}
   <div data-aos="fade-up"{{ attributes.addClass(classes) }}>
-    {% block content %}
-      <div class="component-image-content__container container">
+    <div class="component-image-content__container container-fluid">
+      {% block content %}
         <div{{ row_style_attributes }} class="row">
           {% set col_class = 'col-md-6' %}
           {% set col2_class = 'col-md-6' %}
@@ -107,7 +107,7 @@
             {% endif %}
           </div>
         </div>
-      </div>
-    {% endblock %}
+      {% endblock %}
+    </div>
   </div>
 {% endblock paragraph %}
