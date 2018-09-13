@@ -9,6 +9,7 @@ use Drupal\Core\Template\Attribute;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\commerce_product\Entity\Product;
 use Drupal\commerce_product\Entity\ProductVariation;
@@ -29,7 +30,9 @@ use Drupal\paragraphs\Entity\Paragraph;
 function orange_ecom_starter_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   // Add content type suggestions.
   if ($node = \Drupal::request()->attributes->get('node')) {
-    array_splice($suggestions, 1, 0, 'page__type__' . $node->getType());
+    if ($node instanceof NodeInterface) {
+      array_splice($suggestions, 1, 0, 'page__type__' . $node->getType());
+    }
   }
 
   // Add taxonomy vocabulary suggestions.
@@ -90,6 +93,18 @@ function orange_ecom_starter_preprocess_html(&$variables) {
   if ($commerce_product = \Drupal::request()->attributes->get('commerce_product')) {
     $variables['commerce_product_type'] = $commerce_product->bundle();
   }
+}
+
+/**
+ * Implements hook_theme_suggestions_taxonomy_term_alter().
+ */
+function orange_ecom_starter_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+  $term = $variables['elements']['#taxonomy_term'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+  // Add view mode theme suggestions.
+  $suggestions[] = 'taxonomy_term__' . $sanitized_view_mode;
+  $suggestions[] = 'taxonomy_term__' . $term->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'taxonomy_term__' . $term->id() . '__' . $sanitized_view_mode;
 }
 
 /**
@@ -166,6 +181,65 @@ function orange_ecom_starter_preprocess_page(&$variables) {
   // Load the site name out of configuration.
   $config = \Drupal::config('system.site');
   $variables['site_name'] = $config->get('name');
+
+  // Call route specific preprocess function.
+  $variables['route_name'] = \Drupal::routeMatch()->getRouteName();
+  $function = 'orange_ecom_starter_preprocess_page__' . str_replace('.', '_', $variables['route_name']);
+  if (function_exists($function)) {
+    $function($variables);
+  }
+}
+
+/**
+ * Implements hook_preprocess_page() via orange_ecom_starter_preprocess_page().
+ *
+ * Preprocessing for the store product listing.
+ */
+function orange_ecom_starter_preprocess_page__view_store_product_listing(&$variables) {
+  // Make the category teaser render array available to the template if
+  // a single category is active.
+  $facets_query = \Drupal::request()->attributes->get('facets_query');
+
+  if (!isset($facets_query)) {
+    return;
+  }
+
+  // Change $category_facet_alias to match your facet URL alias.
+  $category_facet_alias = 'categories';
+
+  // Pattern example: categories/1/categories/2/categories/345
+  // $search_pattern = '/(' . $category_facet_alias . '\/)([0-9]+)/';
+
+  // Pattern: categories/clothing-7/categories/other-shirts-234
+  $search_pattern = '/(' . $category_facet_alias . '\/[a-zA-Z0-9-]+-)([0-9]+)/';
+  $facets_query_categories = preg_match_all($search_pattern, $facets_query, $matches);
+
+  if (!$facets_query_categories) {
+    return;
+  }
+
+  // If we have more than one category selected, we consider it to be the
+  // general search page.
+  if (count($matches[0]) > 1) {
+    return;
+  }
+
+  $category_tid = current($matches[2]);
+  $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $term = $term_storage->load($category_tid);
+
+  if (!$term) {
+    return;
+  }
+
+  // Generate the term view and make it available to the template. Only if
+  // there is a description.
+  $has_description = !$term->get('description')->isEmpty();
+  // Check for a custom field example:
+  // $has_ctas = !$term->get('field_taxonomy_fields')->isEmpty();
+  if ($has_description) {
+    $variables['searched_category_term'] = taxonomy_term_view($term, 'teaser');
+  }
 }
 
 /**

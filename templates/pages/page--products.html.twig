@@ -53,6 +53,14 @@
             {% if page.above_content %}
               {{ page.above_content }}
             {% endif %}
+
+            {# Display the searched category term. #}
+            {% if searched_category_term %}
+              <div class="store__category-teaser">
+                {{ searched_category_term }}
+              </div>
+            {% endif %}
+
             {% if page.content %}
               {{ page.content }}
             {% endif %}

@@ -225,6 +225,11 @@
     font-size: 50px;
   }
 }
+.product__featured-products {
+  margin: 40px 0 0 0;
+  padding: 40px 0 0 0;
+  border-top: 1px solid $gray-border;
+}
 
 // Product Header.
 .product__header {
@@ -420,6 +425,37 @@
       font-size: 24px;
       text-transform: capitalize;
     }
+  }
+}
+
+// Attribute Single Value.
+.js-form-item--attribute-single-value {
+  // Hide form elements since we display the value as HTML.
+  input,
+  select {
+    display: none;
+  }
+  .form-type-radio label {
+    display: none;
+  }
+}
+.purchased-entity-attribute__single-value {
+  position: relative;
+  clear: both;
+  margin: 0;
+  padding: 0 0 0 25px;
+
+  // Bullet.
+  &:before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    display: block;
+    width: 4px;
+    height: 4px;
+    background: $c-body;
+    border-radius: 50%;
   }
 }
 
