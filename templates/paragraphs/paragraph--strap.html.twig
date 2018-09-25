@@ -97,11 +97,6 @@
       {% block content %}
         <div class="component-strap__content" data-aos="fade-up">
           <div{{ body_attributes.addClass('component-strap__body') }}>
-            {% if paragraph.field_text.value %}
-              <div class="component-strap__title">
-                {{ content.field_text }}
-              </div>
-            {% endif %}
             {% if paragraph.field_paragraphs_reference.0.target_id %}
               {{ content.field_paragraphs_reference }}
             {% endif %}

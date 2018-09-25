@@ -61,9 +61,9 @@
             {% set content_body_class = 'component-webform-content__body--webform-right' %}
           {% endif %}
           <div class="component-webform-content__col {{ col_class }}">
-            {% if paragraph.field_text_long_formatted.value %}
+            {% if paragraph.field_text_long.value %}
               <div class="component-webform-content__intro">
-                {{ content.field_text_long_formatted }}
+                {{ content.field_text_long }}
               </div>
             {% endif %}
             {% if content.field_webform_reference %}

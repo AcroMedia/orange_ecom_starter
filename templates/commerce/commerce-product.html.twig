@@ -253,7 +253,7 @@
                   {% if product_entity.field_paragraphs_reference.0.target_id %}
                     {% for tab in product_entity.field_paragraphs_reference %}
                       {% set tab_entity = tab.entity.getTranslation(langcode) %}
-                      {% set tab_field_title = tab_entity.field_text %}
+                      {% set tab_field_title = tab_entity.field_string %}
                       {% set tab_id = tab_field_title.value|clean_class %}
 
                       {# Set active tab if it's the first tab and body is empty. #}
@@ -298,8 +298,8 @@
                   {% if product_entity.field_paragraphs_reference.0.target_id %}
                     {% for tab in product_entity.field_paragraphs_reference %}
                       {% set tab_entity = tab.entity.getTranslation(langcode) %}
-                      {% set tab_field_title = tab_entity.field_text %}
-                      {% set tab_field_body = tab_entity.field_text_long_formatted %}
+                      {% set tab_field_title = tab_entity.field_string %}
+                      {% set tab_field_body = tab_entity.field_text_long %}
                       {% set tab_id = tab_field_title.value|clean_class %}
 
                       {# Set active tab if it's the first tab and body is empty. #}

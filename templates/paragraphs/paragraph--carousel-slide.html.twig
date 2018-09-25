@@ -75,18 +75,18 @@
         {# / Slide image. #}
 
         {# Slide content. #}
-        {% if content.field_text or content.field_text_long_formatted or (content.field_link.0['#url'] and paragraph.field_link.title) %}
+        {% if content.field_string or content.field_text_long or (content.field_link.0['#url'] and paragraph.field_link.title) %}
           <div class="component-carousel-slide__content-wrapper">
             <div class="component-carousel-slide__content">
-              {% if content.field_text %}
+              {% if content.field_string %}
                 <div class="component-carousel-slide__title">
-                  <h2>{{ content.field_text }}</h2>
+                  <h2>{{ content.field_string }}</h2>
                 </div>
               {% endif %}
 
-              {% if content.field_text_long_formatted %}
+              {% if content.field_text_long %}
                 <div class="component-carousel-slide__body">
-                  {{ content.field_text_long_formatted }}
+                  {{ content.field_text_long }}
                 </div>
               {% endif %}
 

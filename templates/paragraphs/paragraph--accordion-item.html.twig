@@ -48,12 +48,12 @@
 %}
 {% block paragraph %}
   {% block content %}
-    {% if paragraph.field_text.value %}
-      <a class="base-accordion__header" href="#">{{ content.field_text }}</a>
+    {% if paragraph.field_string.value %}
+      <a class="base-accordion__header" href="#">{{ content.field_string }}</a>
     {% endif %}
-    {% if paragraph.field_text_long_formatted.value %}
+    {% if paragraph.field_text_long.value %}
       <div class="base-accordion__content">
-        {{ content.field_text_long_formatted }}
+        {{ content.field_text_long }}
       </div>
     {% endif %}
   {% endblock %}

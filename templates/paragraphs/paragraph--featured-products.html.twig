@@ -50,9 +50,9 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
-      {% if paragraph.field_text.value %}
+      {% if paragraph.field_string.value %}
         <div class="component-featured-products__title">
-          {{ content.field_text }}
+          {{ content.field_string }}
         </div>
       {% endif %}
       {% if paragraph.field_products_reference.0.target_id %}

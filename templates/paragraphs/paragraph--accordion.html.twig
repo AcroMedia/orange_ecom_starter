@@ -49,8 +49,8 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
-      {% if paragraph.field_text.value %}
-        <h3 class="base-accordion__group-header">{{ content.field_text }}</h3>
+      {% if paragraph.field_string.value %}
+        <h3 class="base-accordion__group-header">{{ content.field_string }}</h3>
       {% endif %}
       {% if paragraph.field_paragraphs_reference.0.target_id %}
         {{ content.field_paragraphs_reference }}
