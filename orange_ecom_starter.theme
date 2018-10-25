@@ -414,14 +414,6 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
     if (isset($variables['elements']['#commerce_product'])) {
       $product = $variables['elements']['#commerce_product'];
 
-      // Product - Back to catalog link generation.
-      $current_path = \Drupal::request()->getRequestUri();
-      $variables['product_path'] = Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $product->id(), 'referrer' => $current_path]);
-      $variables['back_to_catalog_path'] = \Drupal::request()->query->get('referrer');
-      if (empty($variables['back_to_catalog_path'])) {
-        $variables['back_to_catalog_path'] = Url::fromRoute('view.store.product_listing');
-      }
-
       // Set base path variable since it's not available by default.
       $variables['base_path'] = base_path();
 
@@ -432,6 +424,23 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
       // Get view mode & assign variable.
       $view_mode = $variables['elements']['#view_mode'];
       $variables['view_mode'] = $view_mode;
+
+      // Back to catalog link generation.
+      $current_path = \Drupal::request()->getRequestUri();
+      $variables['product_path'] = Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $product->id(), 'referrer' => $current_path]);
+      $store_route = 'view.store.product_listing';
+      $referrer = \Drupal::request()->query->get('referrer');
+      $variables['back_to_catalog_path'] = Url::fromRoute($store_route);
+
+      if (substr($referrer, 0, 1) === '/') {
+        $referrer_url = Url::fromUserInput($referrer);
+        // Proceed if referrer has a Drupal route.
+        if ($referrer_url->isRouted()) {
+          if ($referrer_url->getRouteName() == $store_route) {
+            $variables['back_to_catalog_path'] = Url::fromUserInput($referrer)->toString();
+          }
+        }
+      }
 
       // Get product and variations.
       $product_variations = $product->getVariations();
