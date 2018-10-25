@@ -126,4 +126,30 @@
     });
   }
 
+  // Mousedown on hidden button to trigger price recalculation when postal code input is out of focus, because
+  // we can't override it in our theme hooks.
+  if ($('#edit-shipping-information-recalculate-shipping').length) {
+    // Do this on keyup because keydown will trigger and say the field is still full.
+    $('#shipping-information-wrapper').on('keyup', 'input', calculateHandler);
+    $('#shipping-information-wrapper').on('change', 'select', calculateHandler);
+  }
+    var recent = false;
+    function calculateHandler() {
+    if (!recent) {
+      // Loop through and ensure all the required fields are filled out.
+        var required_elements = $('input,select').filter('[required]:visible');
+        for (var i = 0; required_elements.length > i; i++) {
+          // If any aren't filled in return nothing.
+          if (required_elements[i]['value'] === '') {
+            return;
+          }
+        }
+        recent = true;
+        setTimeout(function () {
+            $('input[id^=edit-shipping-information-recalculate-shipping]').mousedown();
+            recent = false;
+        }, 2000);
+      }
+  }
+
 })(jQuery, Drupal);
