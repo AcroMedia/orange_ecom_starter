@@ -21,6 +21,8 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\comment\Entity\Comment;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\Component\Utility\Xss;
+use Drupal\Component\Utility\UrlHelper;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -429,7 +431,7 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
       $current_path = \Drupal::request()->getRequestUri();
       $variables['product_path'] = Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $product->id(), 'referrer' => $current_path]);
       $store_route = 'view.store.product_listing';
-      $referrer = \Drupal::request()->query->get('referrer');
+      $referrer = UrlHelper::stripDangerousProtocols(\Drupal::request()->query->get('referrer'));
       $variables['back_to_catalog_path'] = Url::fromRoute($store_route);
 
       if (substr($referrer, 0, 1) === '/') {
@@ -437,7 +439,7 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
         // Proceed if referrer has a Drupal route.
         if ($referrer_url->isRouted()) {
           if ($referrer_url->getRouteName() == $store_route) {
-            $variables['back_to_catalog_path'] = Url::fromUserInput($referrer)->toString();
+            $variables['back_to_catalog_path'] = Xss::filter($referrer);
           }
         }
       }
