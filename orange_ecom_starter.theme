@@ -23,6 +23,119 @@ use Drupal\comment\Entity\Comment;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ *
+ * Theme settings.
+ */
+function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id = NULL) {
+  // Work-around for a core bug affecting admin themes.
+  // See issue https://www.drupal.org/project/drupal/issues/943212.
+  if (isset($form_id)) {
+    return;
+  }
+
+  // Site Configuration.
+  $form['site_config'] = [
+    '#type' => 'details',
+    '#title' => t('Site Configuration'),
+    '#open' => TRUE,
+  ];
+  $form['site_config']['copyright_name'] = [
+    '#type' => 'textfield',
+    '#title' => t('Copyright Name'),
+    '#description' => t('The name displayed in the copyright text (site and emails). If empty, the site name will be used instead.'),
+    '#default_value' => theme_get_setting('copyright_name'),
+  ];
+
+  // Social Media Links.
+  $form['social_media'] = [
+    '#type' => 'details',
+    '#title' => t('Social Media Links'),
+    '#description' => t('Social media links that are displayed on the site and in the footer of emails that the site sends out.'),
+    '#open' => TRUE,
+  ];
+  $form['social_media']['facebook_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Facebook URL'),
+    '#default_value' => theme_get_setting('facebook_url'),
+  ];
+  $form['social_media']['twitter_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Twitter URL'),
+    '#default_value' => theme_get_setting('twitter_url'),
+  ];
+  $form['social_media']['instagram_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Instagram URL'),
+    '#default_value' => theme_get_setting('instagram_url'),
+  ];
+  $form['social_media']['youtube_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('YouTube URL'),
+    '#default_value' => theme_get_setting('youtube_url'),
+  ];
+  $form['social_media']['linkedin_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('LinkedIn URL'),
+    '#default_value' => theme_get_setting('linkedin_url'),
+  ];
+  $form['social_media']['pinterest_url'] = [
+    '#type' => 'textfield',
+    '#title' => t('Pinterest URL'),
+    '#default_value' => theme_get_setting('pinterest_url'),
+  ];
+
+  // Email Settings.
+  $form['email_settings'] = [
+    '#type' => 'details',
+    '#title' => t('Email Template'),
+    '#open' => TRUE,
+  ];
+  $form['email_settings']['email_logo'] = [
+    '#type' => 'managed_file',
+    '#title' => t('Email Logo'),
+    '#default_value' => theme_get_setting('email_logo'),
+    '#description' => t('The logo displayed in the email footer.<br>Recommended size: 200x100 px. Maximum 500x150 px.'),
+    '#upload_location' => 'public://',
+  ];
+  $form['email_settings']['email_wrapper_bg_color'] = [
+    '#type' => 'textfield',
+    '#title' => t('Wrapper Background Color'),
+    '#default_value' => theme_get_setting('email_wrapper_bg_color'),
+    '#description' => t('The HTML hex color used for the wrapping area around the email body.<br>Example: cccccc'),
+    '#size' => 6,
+    '#maxlength' => 6,
+    '#field_prefix' => '#',
+    '#attributes' => [
+      'placeholder' => 'cccccc',
+    ],
+  ];
+  $form['email_settings']['email_footer_signature'] = [
+    '#type' => 'textfield',
+    '#title' => t('Footer Signature Text'),
+    '#default_value' => theme_get_setting('email_footer_signature'),
+    '#description' => t('Text that is displayed at the bottom of the email body.'),
+    '#attributes' => [
+      'placeholder' => t('From the Acro Media team.'),
+    ],
+  ];
+
+  // Email Logo - Make the uploaded image permanent.
+  $email_logo_image = theme_get_setting('email_logo');
+  if (!empty($email_logo_image)) {
+    $file = File::load($email_logo_image[0]);
+    $file->status = FILE_STATUS_PERMANENT;
+    $file->save();
+    $file_usage = \Drupal::service('file.usage');
+    $file_usage_check = $file_usage->listUsage($file);
+    if (empty($file_usage_check)) {
+      $file_usage->add($file, 'orange_ecom_starter', 'theme', $email_logo_image[0]);
+    }
+  }
+}
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -190,6 +303,15 @@ function orange_ecom_starter_preprocess_page(&$variables) {
   if (function_exists($function)) {
     $function($variables);
   }
+
+  // Set variables from theme settings.
+  $variables['copyright_name'] = theme_get_setting('copyright_name');
+  $variables['facebook_url'] = theme_get_setting('facebook_url');
+  $variables['twitter_url'] = theme_get_setting('twitter_url');
+  $variables['instagram_url'] = theme_get_setting('instagram_url');
+  $variables['youtube_url'] = theme_get_setting('youtube_url');
+  $variables['linkedin_url'] = theme_get_setting('linkedin_url');
+  $variables['pinterest_url'] = theme_get_setting('pinterest_url');
 }
 
 /**
@@ -631,6 +753,29 @@ function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
 
   $variables['base_path'] = base_path();
   $variables['site_path'] = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString();
+
+  // Set variables from theme settings.
+  $email_logo = theme_get_setting('email_logo');
+  if (!empty($email_logo)) {
+    $email_logo_file = File::load($email_logo[0]);
+
+    if ($email_logo_image_style = ImageStyle::load('email_logo')) {
+      $email_logo_url = $email_logo_image_style->buildUrl($email_logo_file->getFileUri());
+
+      if ($email_logo_url) {
+        $variables['email_logo_url'] = $email_logo_url;
+      }
+    }
+  }
+  $variables['email_wrapper_bg_color'] = theme_get_setting('email_wrapper_bg_color');
+  $variables['email_footer_signature'] = theme_get_setting('email_footer_signature');
+  $variables['copyright_name'] = theme_get_setting('copyright_name');
+  $variables['facebook_url'] = theme_get_setting('facebook_url');
+  $variables['twitter_url'] = theme_get_setting('twitter_url');
+  $variables['instagram_url'] = theme_get_setting('instagram_url');
+  $variables['youtube_url'] = theme_get_setting('youtube_url');
+  $variables['linkedin_url'] = theme_get_setting('linkedin_url');
+  $variables['pinterest_url'] = theme_get_setting('pinterest_url');
 }
 
 /**

@@ -214,9 +214,44 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          {% if page.social_nav %}
+          {# Social Media Links. #}
+          {# Set from theme settings. #}
+          {% if facebook_url or twitter_url or instagram_url or youtube_url or linkedin_url or pinterest_url %}
             <div class="social-media-nav">
-              {{ page.social_nav }}
+              <nav role="navigation" class="block block-menu navigation menu--social-media">
+                <ul class="menu menu--social-media">
+                  {% if facebook_url %}
+                    <li class="menu__item menu__item--facebook">
+                      <a href="{{ facebook_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Facebook'|t }}">{{ 'Facebook'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if twitter_url %}
+                    <li class="menu__item menu__item--twitter">
+                      <a href="{{ twitter_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Twitter'|t }}">{{ 'Twitter'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if instagram_url %}
+                    <li class="menu__item menu__item--instagram">
+                      <a href="{{ instagram_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Instagram'|t }}">{{ 'Instagram'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if youtube_url %}
+                    <li class="menu__item menu__item--youtube">
+                      <a href="{{ youtube_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on YouTube'|t }}">{{ 'YouTube'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if linkedin_url %}
+                    <li class="menu__item menu__item--linkedin">
+                      <a href="{{ linkedin_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on LinkedIn'|t }}">{{ 'LinkedIn'|t }}</a>
+                    </li>
+                  {% endif %}
+                  {% if pinterest_url %}
+                    <li class="menu__item menu__item--pinterest">
+                      <a href="{{ pinterest_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Pinterest'|t }}">{{ 'Pinterest'|t }}</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
             </div>
           {% endif %}
 
@@ -227,7 +262,7 @@
           {% endif %}
 
           <div class="site-footer__copyright">
-            {{'Copyright &copy; @year <a href="@frontpage_url">Acro Media Inc</a>.  All rights reserved.'| t({'@frontpage_url': front_page, '@year': 'now'|date('Y') }) }}
+            {{ 'Copyright &copy; @year <a href="@frontpage_url">@site_name</a>.  All rights reserved.'| t({'@site_name': copyright_name ? copyright_name : site_name, '@frontpage_url': front_page, '@year': 'now'|date('Y') }) }}
           </div>
         </div>
       </div>
