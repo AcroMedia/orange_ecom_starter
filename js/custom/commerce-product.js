@@ -59,7 +59,7 @@
   // Alter display for single value attributes.
   Drupal.behaviors.productAttributesSingleValue = {
     attach: function (context, settings) {
-      $('.product__form .attribute-widgets > .form-item, .commerce-order-item-add-to-cart-form .attribute-widgets > .form-item').once().each(function () {
+      $('.product__form .attribute-widgets > .form-item, .commerce-order-item-add-to-cart-form .attribute-widgets > .form-item').once('productAttributesSingleValue').each(function () {
         var $this = $(this);
 
         // Select attributes.
@@ -69,7 +69,6 @@
           if ($selectOptions == 1) {
             var $selectedOptionText = $this.find('select option:selected').text();
             $this.addClass('js-form-item--attribute-single-value');
-            $this.append('<div class="purchased-entity-attribute__single-value">' + $selectedOptionText + '</div>');
           }
         }
         // Radio attributes.
@@ -79,7 +78,6 @@
           if ($radios == 1) {
             var $radioText = $this.find('input:radio:checked').next('label').text();
             $this.addClass('js-form-item--attribute-single-value');
-            $this.append('<div class="purchased-entity-attribute__single-value">' + $radioText + '</div>');
           }
         }
       });

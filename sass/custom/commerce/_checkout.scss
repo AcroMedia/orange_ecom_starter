@@ -95,7 +95,7 @@
   }
   // Credit card number.
   .form-item-payment-information-add-payment-method-payment-details-number {
-    width: 158px;
+    width: 165px;
   }
   // Credit card security code.
   .form-item-payment-information-add-payment-method-payment-details-security-code {
@@ -103,11 +103,21 @@
     // Set top & bottom margins the same as .form-item.
     margin: 1em 0;
     padding: 0;
-    width: 60px;
+    width: 80px;
     vertical-align: top;
+  }
+  .credit-card-form__expiration .form-item {
+    margin-right: 1em;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
   // Credit card divider.
   // Remove if you want that silly slash visible.
+  .form-item-payment-information-add-payment-method-payment-details-expiration-divider {
+    display: none;
+  }
   .credit-card-form__divider {
     margin: 0;
     padding: 0;
@@ -371,14 +381,18 @@
 }
 
 // Coupon Code.
-.form-item-sidebar-coupon-redemption-form-code,
-.form-item-coupon-redemption-form-code {
-  display: inline-block;
+div[id*="edit-coupon-redemption-form"] {
+  margin-top: 1em;
 
-  input {
-    max-width: 200px;
-    width: 100%;
-    height: 40px;
+  .form-item-sidebar-coupon-redemption-form-code,
+  .form-item-coupon-redemption-form-code {
+    display: inline-block;
+    margin-top: 0;
+
+    input {
+      max-width: 200px;
+      width: 100%;
+    }
   }
 }
 

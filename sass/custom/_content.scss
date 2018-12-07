@@ -81,10 +81,15 @@
 .form-group {
   margin-bottom: 25px;
 }
-.form-control,
-.form-textarea-wrapper textarea {
-  max-width: 350px;
+.form-item {
+
+}
+.form-control {
+  padding: 8px 12px;
   width: 100%;
+  max-width: $form-max-width;
+  height: auto;
+  font-size: $fs-form-item;
 }
 .radio,
 .checkbox {
@@ -113,6 +118,206 @@ textarea,
 textarea.resize-vertical {
   // Remove browser resizer.
   resize: none;
+}
+
+// Select/Dropdown.
+.select-wrapper {
+  position: relative;
+  max-width: $form-max-width;
+
+  // Pseudo arrow.
+  &:after {
+    @include fa-icon();
+    content: $fa-var-caret-down;
+    position: absolute;
+    top: 11px;
+    right: 15px;
+    color: $c-body;
+    pointer-events: none;
+  }
+  .form-control {
+    // Account for arrow.
+    padding-right: 37px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+}
+
+// Radio.
+.form-type-radio {
+  position: relative;
+
+  // Hide radio so we can use a pseudo element instead.
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  label {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 1px 0 0 27px;
+    width: auto;
+    height: auto;
+    min-height: 20px;
+    font-size: $fs-form-item;
+    line-height: 1.2;
+    vertical-align: top;
+    cursor: pointer;
+
+    // Pseudo radio.
+    &:before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border: 6px solid #fff;
+      box-shadow: 0 0 0 2px $gray-border;
+      border-radius: 50%;
+      transition: all .2s ease-in-out;
+    }
+    &:hover,
+    &:focus {
+      &:before {
+        background: lighten($gray-border, 15%);
+        border-color: lighten($gray-border, 15%);
+      }
+    }
+  }
+  // Active/checked radio.
+  input[type="radio"]:checked + label:before {
+    background: $c-primary;
+    box-shadow: 0 0 0 2px $c-primary;
+    border: 3px solid #fff;
+    animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+  }
+}
+
+// Checkbox.
+.form-type-checkbox {
+  position: relative;
+
+  // Hide checkbox so we can use a pseudo element instead.
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  label {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 1px 0 0 27px;
+    width: auto;
+    height: auto;
+    min-height: 20px;
+    font-size: $fs-form-item;
+    line-height: 1.2;
+    vertical-align: top;
+    cursor: pointer;
+
+    // Pseudo checkbox.
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      width: 19px;
+      height: 19px;
+      background: transparent;
+      border: 2px solid $gray-border;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 250ms cubic-bezier(.4,.0,.23,1);
+    }
+    &:after {
+      @include fa-icon();
+      content: $fa-var-check;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      font-size: 13px;
+      color: #fff;
+      line-height: 1.0;
+      text-align: center;
+      transition: all .2s ease-in-out;
+    }
+    &:hover,
+    &:focus {
+      &:before {
+        background: lighten($gray-border, 15%);
+      }
+      &:after {
+        color: lighten($gray-border, 15%);
+      }
+    }
+  }
+  // Active/checked radio.
+  input[type="checkbox"]:checked + label:before {
+    border: .6em solid $c-primary;
+    animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+  }
+  input[type="checkbox"]:checked + label:after {
+    color: #fff;
+  }
+}
+
+
+
+// Drupal/Ajax Throbber.
+html {
+  .ajax-throbber {
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    width: 38px;
+    height: 38px;
+    animation: ajax-rotate 0.8s infinite linear;
+    border: 8px solid $c-primary;
+    border-right-color: transparent;
+    border-radius: 50%;
+
+    div,
+    span {
+      display: none !important;
+    }
+  }
+  // Fullscreen Throbber.
+  .ajax-progress.ajax-progress-fullscreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    opacity: 1.0;
+    @include background-opacity(#fff, 0.6);
+
+    .ajax-throbber {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 /**
@@ -384,5 +589,62 @@ table,
     top: 50%;
     left: 50%;
     margin: 0;
+  }
+}
+
+/**
+ * Page Scroll To Top.
+ */
+.b-page-scroll-to-top {
+  position: fixed;
+  bottom: -75px;
+  right: 40px;
+  display: block;
+  margin: 0;
+  padding: 8px 0 0 0;
+  width: 70px;
+  height: 70px;
+  font-size: 40px;
+  line-height: 1.0;
+  color: #e5e5e5;
+  text-align: center;
+  text-decoration: none;
+  background: #fff;
+  border: 4px solid #e5e5e5;
+  border-radius: 50%;
+  outline: none;
+  z-index: 99;
+  transition: all .5s ease-in-out;
+
+  &.is-active {
+    bottom: 40px;
+    display: none;
+
+    @media (min-width: $screen-sm-min) {
+      display: block;
+    }
+  }
+  // Arrow Icon.
+  &:before {
+    @include fa-icon();
+    content: $fa-var-caret-up;
+    position: relative;
+    top: 0;
+    line-height: 1.0;
+    vertical-align: top;
+    transition: all .2s ease-in-out;
+  }
+  &:hover,
+  &:focus {
+    color: #ccc;
+    border-color: #ccc;
+    text-decoration: none;
+    outline: none;
+  }
+  &:hover {
+    // Arrow Icon.
+    &:before {
+      top: -3px;
+    }
   }
 }

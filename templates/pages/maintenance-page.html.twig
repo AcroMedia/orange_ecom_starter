@@ -1,0 +1,79 @@
+{#
+/**
+ * @file
+ * Theme override to display a single Drupal page while offline.
+ *
+ * All available variables are mirrored in page.html.twig.
+ * Some may be blank but they are provided for consistency.
+ *
+ * @see template_preprocess_maintenance_page()
+ */
+#}
+<div class="maintenance-page-body">
+  <div class="maintenance-page-body__banner"></div>
+  <div class="maintenance-page-body__content">
+    {% if site_logo_url %}
+      <div class="maintenance-page-body__logo">
+        <img src="{{ site_logo_url }}" alt="{{ site_name ? site_name }}" />
+      </div>
+    {% endif %}
+
+    <div class="maintenance-page-body__message">
+      {{ page.content }}
+    </div>
+
+    {# Social Media Links. #}
+    {# Set from theme settings. #}
+    {% if facebook_url or twitter_url or instagram_url or youtube_url or linkedin_url or pinterest_url %}
+      <div class="maintenance-page-body__social-media social-media-nav">
+        <nav role="navigation" class="block block-menu navigation menu--social-media">
+          <ul class="menu menu--social-media">
+            {% if facebook_url %}
+              <li class="menu__item menu__item--facebook">
+                <a href="{{ facebook_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Facebook'|t }}">{{ 'Facebook'|t }}</a>
+              </li>
+            {% endif %}
+            {% if twitter_url %}
+              <li class="menu__item menu__item--twitter">
+                <a href="{{ twitter_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Twitter'|t }}">{{ 'Twitter'|t }}</a>
+              </li>
+            {% endif %}
+            {% if instagram_url %}
+              <li class="menu__item menu__item--instagram">
+                <a href="{{ instagram_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Instagram'|t }}">{{ 'Instagram'|t }}</a>
+              </li>
+            {% endif %}
+            {% if youtube_url %}
+              <li class="menu__item menu__item--youtube">
+                <a href="{{ youtube_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on YouTube'|t }}">{{ 'YouTube'|t }}</a>
+              </li>
+            {% endif %}
+            {% if linkedin_url %}
+              <li class="menu__item menu__item--linkedin">
+                <a href="{{ linkedin_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on LinkedIn'|t }}">{{ 'LinkedIn'|t }}</a>
+              </li>
+            {% endif %}
+            {% if pinterest_url %}
+              <li class="menu__item menu__item--pinterest">
+                <a href="{{ pinterest_url }}" class="menu__link" target="_blank" title="{{ 'Follow us on Pinterest'|t }}">{{ 'Pinterest'|t }}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    {% endif %}
+
+    {% if site_name %}
+      <div class="maintenance-page-body__company-name">
+        {{ copyright_name ? copyright_name : site_name }}
+      </div>
+      <div class="maintenance-page-body__copyright">
+        {{ 'Copyright &copy; @year @site_name. All rights reserved.'| t({'@site_name': copyright_name ? copyright_name : site_name, '@year': 'now'|date('Y') }) }}
+      </div>
+    {% else %}
+      <div class="maintenance-page-body__copyright">
+        {{ 'Copyright &copy; @year. All rights reserved.'| t({'@year': 'now'|date('Y') }) }}
+      </div>
+    {% endif %}
+  </div>
+</div>

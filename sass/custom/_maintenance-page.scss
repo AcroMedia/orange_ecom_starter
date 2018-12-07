@@ -1,0 +1,99 @@
+/**
+ * Maintenance Page.
+ */
+body.maintenance-page {
+  margin: 0;
+  padding: 0;
+  color: $c-body;
+  background: #fff;
+}
+.maintenance-page-body {
+  margin: 0;
+  padding: 0 0 50px 0;
+  text-align: center;
+}
+.maintenance-page-body__banner {
+  margin: 0 0 45px 0;
+  padding: 0;
+  height: 200px;
+  background: url(../gfx/maintenance-page-banner.jpg) 50% 0 no-repeat;
+  background-size: auto 200px;
+
+  @media (min-width: $screen-sm-min) {
+    height: 506px;
+    background-size: auto;
+  }
+}
+.maintenance-page-body__logo {
+  margin: 0 auto 40px auto;
+  padding: 0;
+  max-width: 270px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+.maintenance-page-body__content {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 870px;
+}
+.maintenance-page-body__message {
+  margin: 0 auto 25px auto;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.4;
+
+  @media (min-width: $screen-sm-min) {
+    margin: 0 auto 35px auto;
+    font-size: 23px;
+    line-height: 1.5;
+  }
+}
+.maintenance-page-body__company-name {
+  margin: 0 0 10px 0;
+  padding: 0;
+  font-size: 18px;
+
+  @media (min-width: $screen-sm-min) {
+    font-size: 23px;
+  }
+}
+.maintenance-page-body__copyright {
+  font-size: 14px;
+  color: lighten($c-body, 20%);
+
+  a {
+    color: lighten($c-body, 20%);
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: $c-body;
+      text-decoration: underline;
+    }
+  }
+}
+.maintenance-page-body__social-media {
+  margin: 0 0 25px 0;
+  padding: 0;
+
+  .menu--social-media {
+    margin: 0;
+    padding: 0;
+
+    li a {
+      color: $c-body;
+
+      // Icon.
+      &:before {
+        font-size: 26px;
+      }
+      &:hover,
+      &:focus {
+        color: lighten($c-body, 15%);
+      }
+    }
+  }
+}

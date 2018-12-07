@@ -43,6 +43,16 @@ function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Co
     '#title' => t('Site Configuration'),
     '#open' => TRUE,
   ];
+  $form['site_config']['site_logo'] = [
+    '#type' => 'managed_file',
+    '#title' => t('Site Logo'),
+    '#default_value' => theme_get_setting('site_logo'),
+    '#description' => t('The logo displayed on the maintenance page and email footer. Does not affect the site header/footer logo as that is hardcoded within the theme based on the site design.<br>Recommended size: 300px width or larger. It will be scaled down by the site.<br>Allowed types: png gif jpg jpeg.'),
+    '#upload_location' => 'public://',
+    '#upload_validators' => [
+      'file_validate_extensions' => ['png gif jpg jpeg'],
+    ],
+  ];
   $form['site_config']['copyright_name'] = [
     '#type' => 'textfield',
     '#title' => t('Copyright Name'),
@@ -88,20 +98,13 @@ function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Co
     '#default_value' => theme_get_setting('pinterest_url'),
   ];
 
-  // Email Settings.
-  $form['email_settings'] = [
+  // Email Configuration.
+  $form['email_config'] = [
     '#type' => 'details',
-    '#title' => t('Email Template'),
+    '#title' => t('Email Configuration'),
     '#open' => TRUE,
   ];
-  $form['email_settings']['email_logo'] = [
-    '#type' => 'managed_file',
-    '#title' => t('Email Logo'),
-    '#default_value' => theme_get_setting('email_logo'),
-    '#description' => t('The logo displayed in the email footer.<br>Recommended size: 200x100 px. Maximum 500x150 px.'),
-    '#upload_location' => 'public://',
-  ];
-  $form['email_settings']['email_wrapper_bg_color'] = [
+  $form['email_config']['email_wrapper_bg_color'] = [
     '#type' => 'textfield',
     '#title' => t('Wrapper Background Color'),
     '#default_value' => theme_get_setting('email_wrapper_bg_color'),
@@ -113,7 +116,7 @@ function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Co
       'placeholder' => 'cccccc',
     ],
   ];
-  $form['email_settings']['email_footer_signature'] = [
+  $form['email_config']['email_footer_signature'] = [
     '#type' => 'textfield',
     '#title' => t('Footer Signature Text'),
     '#default_value' => theme_get_setting('email_footer_signature'),
@@ -124,7 +127,7 @@ function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Co
   ];
 
   // Email Logo - Make the uploaded image permanent.
-  $email_logo_image = theme_get_setting('email_logo');
+  $email_logo_image = theme_get_setting('site_logo');
   if (!empty($email_logo_image)) {
     $file = File::load($email_logo_image[0]);
     $file->status = FILE_STATUS_PERMANENT;
@@ -711,6 +714,9 @@ function orange_ecom_starter_preprocess_input(&$variables) {
     if (isset($variables['element']['#button_type'])) {
       $variables['button_type'] = $variables['element']['#button_type'];
     }
+    if (isset($variables['element']['#attributes']['id'])) {
+      $variables['element_id'] = $variables['element']['#attributes']['id'];
+    }
   }
 }
 
@@ -719,6 +725,20 @@ function orange_ecom_starter_preprocess_input(&$variables) {
  */
 function orange_ecom_starter_preprocess_form_element(&$variables) {
   $variables['label']['#attributes']['data-element-type'] = $variables['element']['#type'];
+
+  if (isset($variables['element']['#id'])) {
+    $variables['element_id'] = $variables['element']['#id'];
+  }
+  if (isset($variables['element']['#attributes']['class'])) {
+    if (in_array('js-text-full', $variables['element']['#attributes']['class'])) {
+      $variables['is_js_text_widget'] = true;
+    }
+  }
+  if (isset($variables['element']['#allowed_formats'])) {
+    if (in_array('html', $variables['element']['#allowed_formats'])) {
+      $variables['is_js_text_widget'] = true;
+    }
+  }
 }
 
 /**
@@ -730,6 +750,9 @@ function orange_ecom_starter_preprocess_form_element_label(&$variables) {
 
     if (isset($variables['element']['#attributes']['data-element-type'])) {
       $variables['element_type'] = $variables['element']['#attributes']['data-element-type'];
+    }
+    if (isset($variables['element']['#id'])) {
+      $variables['element_id'] = $variables['element']['#id'];
     }
   }
 }
@@ -755,11 +778,11 @@ function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
   $variables['site_path'] = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString();
 
   // Set variables from theme settings.
-  $email_logo = theme_get_setting('email_logo');
+  $email_logo = theme_get_setting('site_logo');
   if (!empty($email_logo)) {
     $email_logo_file = File::load($email_logo[0]);
 
-    if ($email_logo_image_style = ImageStyle::load('email_logo')) {
+    if ($email_logo_image_style = ImageStyle::load('site_logo')) {
       $email_logo_url = $email_logo_image_style->buildUrl($email_logo_file->getFileUri());
 
       if ($email_logo_url) {
@@ -783,4 +806,35 @@ function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
  */
 function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
   $variables['attributes']['class'][] = 'cart--cart-block';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for maintenance-page.html.twig.
+ */
+function orange_ecom_starter_preprocess_maintenance_page(&$variables) {
+  // By default, site_name is set to Drupal if no db connection is available
+  // or during site installation. Setting site_name to an empty string makes
+  // the site and update pages look cleaner.
+  // @see template_preprocess_maintenance_page
+  if (!$variables['db_is_active']) {
+    $variables['site_name'] = '';
+  }
+
+  // Set variables from theme settings.
+  $site_logo = theme_get_setting('site_logo');
+  if (!empty($site_logo)) {
+    $site_logo_file = File::load($site_logo[0]);
+    $site_logo_url = file_create_url($site_logo_file->getFileUri());
+
+    if ($site_logo_url) {
+      $variables['site_logo_url'] = $site_logo_url;
+    }
+  }
+  $variables['copyright_name'] = theme_get_setting('copyright_name');
+  $variables['facebook_url'] = theme_get_setting('facebook_url');
+  $variables['twitter_url'] = theme_get_setting('twitter_url');
+  $variables['instagram_url'] = theme_get_setting('instagram_url');
+  $variables['youtube_url'] = theme_get_setting('youtube_url');
+  $variables['linkedin_url'] = theme_get_setting('linkedin_url');
+  $variables['pinterest_url'] = theme_get_setting('pinterest_url');
 }

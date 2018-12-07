@@ -12,6 +12,7 @@ global-styling:
     - core/drupal
     - magnific_popup/magnific_popup
     - orange_ecom_starter/bootstrap
+    - orange_ecom_starter/form-floating-labels
 
 slick:
   version: 1.x
@@ -22,6 +23,15 @@ slick:
     js/contrib/slick/slick.min.js: {}
   dependencies:
     - core/jquery
+    - core/drupal
+
+form-floating-labels:
+  version: 1.x
+  js:
+    js/custom/form-floating-labels.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
     - core/drupal
 
 aos:
@@ -98,11 +108,3 @@ bootstrap:
     js/contrib/bootstrap/popover.js: { weight: 0 }
   dependencies:
     - core/jquery
-
-maintenance_page:
-  version: 1.x
-  css:
-    theme:
-      css/maintenance-page.css: { media: all }
-  dependencies:
-    - system/maintenance

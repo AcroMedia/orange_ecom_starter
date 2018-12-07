@@ -49,6 +49,15 @@ $f-body: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 $border-radius: 4px;
 
 /**
+ * Forms.
+ */
+$form-max-width: 400px;
+
+// Change with caution.
+// 16px is the recommended size for form elements/accessibility.
+$fs-form-item: 16px;
+
+/**
  * Responsive helpers.
  */
 $screen-min: 320px;

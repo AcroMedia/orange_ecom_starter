@@ -177,6 +177,11 @@
               <div class="product__price">
                 {{ product.variation_price }}
               </div>
+              {% if product.variation_list_price %}
+                <div class="product__list-price">
+                  {{ product.variation_list_price }}
+                </div>
+              {% endif %}
               <div class="product__details">
                 <div class="product__sku">
                   {{ product.variation_sku }}

@@ -1,0 +1,107 @@
+/**
+ * Form Floating Labels.
+ */
+.form-item--floater {
+  position: relative;
+
+  label {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: normal;
+    color: $c-body;
+    pointer-events: none;
+    z-index: 2;
+    transform-origin: top left;
+    transform: translate(15px, 13px) scale(1);
+    transition: all .12s ease-in-out;
+  }
+  .form-control {
+    display: block;
+    margin: 0;
+    padding: 24px 15px 5px 15px;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    line-height: 1.0;
+    color: $c-body;
+    background: #fff;
+    border: 1px solid $gray-border;
+    border-radius: $border-radius;
+    z-index: 1;
+  }
+  // Select/Dropdown.
+  .select-wrapper {
+    .form-control {
+      // Account for arrow.
+      padding-right: 37px;
+    }
+  }
+  // When element is focused/active.
+  &.is-active {
+    label {
+      // Move the label up and reduce size.
+      transform: translate(15px, 5px) scale(.75);
+    }
+  }
+  // Select/Dropdown.
+  .select-wrapper {
+    // Pseudo arrow.
+    &:after {
+      top: 17px;
+    }
+  }
+  // Disabled State.
+  &.form-disabled {
+    .form-control {
+      cursor: not-allowed;
+    }
+    opacity: 0.5;
+  }
+}
+
+/**
+ * Specific Field Types.
+ */
+
+// Address Field.
+.field--type-address .form-item[class*="postal-code"] {
+  // Increase width to account for optional label.
+  width: 180px;
+}
+
+/**
+ * Commerce.
+ */
+
+// Product Pages.
+.product__form .form-item--floater {
+  // Disabled State.
+  // Override disabled style to not confuse users with single value attributes (they are disabled by default).
+  &.form-disabled {
+    .form-control {
+      cursor: auto;
+    }
+    opacity: 1;
+  }
+}
+
+// Store - Product Listing.
+.store-filters .views-exposed-form .form-item-sort-bef-combine .select-wrapper {
+  width: 190px;
+}
+
+// Credit Card Expiration.
+.commerce-checkout-flow .credit-card-form__expiration .form-item {
+  min-width: 88px;
+}
+// Coupon Code.
+div[id*="edit-coupon-redemption-form"] {
+  .form-submit {
+    padding-top: 14px;
+    padding-bottom: 15px;
+    vertical-align: top;
+  }
+}

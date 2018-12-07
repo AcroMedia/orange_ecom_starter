@@ -16,25 +16,30 @@
  * @ingroup templates
  */
 #}
+{# Check for the address line 2 field. #}
+{% if (element_id) and ('address-line2' in element_id) %}
+  {% set is_address_line2 = true %}
+  {% set label_text = 'Apartment, suite, etc.'|t %}
+  {% set title = label_text %}
+{% else %}
+  {% set title = title %}
+{% endif %}
 {%
   set classes = [
     'control-label',
     title_display == 'after' ? 'option',
-    title_display == 'invisible' ? 'sr-only',
+    not is_address_line2 and title_display == 'invisible' ? 'sr-only',
     required ? 'js-form-required',
   ]
 %}
 {% if title is not empty %}
   <label{{ attributes.addClass(classes) }}>{{ element }}{{ title }}
-    {% if description %}
-      <p class="help-block">{{ description }}</p>
+    {% if required and (title_display == 'before' or title_display == 'after') %}
+      <span class="form-required"> *</span>
+    {% else %}
+      {% if (element_type != 'radio') and (element_type != 'checkbox') %}
+        <span class="form-optional {{ not is_address_line2 and title_display == 'invisible' ? 'sr-only' : '' }}"> - {{ 'Optional'|t }}</span>
+      {% endif %}
     {% endif %}
   </label>
-  {% if required and (title_display == 'before' or title_display == 'after') %}
-    <span class="form-required"> *</span>
-  {% else %}
-    {% if (element_type != 'radio') and (element_type != 'checkbox') %}
-      <span class="form-optional {{ title_display == 'invisible' ? 'sr-only' : '' }}"> - {{ 'Optional'|t }}</span>
-    {% endif %}
-  {% endif %}
 {% endif %}

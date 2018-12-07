@@ -126,4 +126,23 @@
     });
   }
 
+  // Scroll To Top Button.
+  var $scrollToTopButton = $('.b-page-scroll-to-top');
+
+  $(window).scroll(function () {
+    var $windowHeight = $(window).scrollTop();
+
+    if ($windowHeight > 300) {
+      $scrollToTopButton.addClass('is-active');
+    }
+    else {
+      $scrollToTopButton.removeClass('is-active');
+    }
+  });
+
+  $scrollToTopButton.click(function (e) {
+    $('html, body').animate({ scrollTop: 0 }, 360);
+    e.preventDefault();
+  });
+
 })(jQuery, Drupal);

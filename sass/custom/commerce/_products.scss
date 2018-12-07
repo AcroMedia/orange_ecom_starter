@@ -69,6 +69,11 @@
       border-color: $c-link;
     }
   }
+  .field--name-list-price {
+    padding-top: 2px;
+    font-size: 12px;
+    color: $c-body;
+  }
 }
 .product-teaser__title {
   margin: 0 0 5px 0;
@@ -317,6 +322,27 @@
     display: none;
   }
 }
+.field--name-list-price {
+  font-size: 14px;
+
+  .field__label {
+    float: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    text-transform: capitalize;
+    vertical-align: top;
+  }
+  .field__item {
+    float: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-decoration: line-through;
+    vertical-align: top;
+  }
+}
 .product__sku {
   div {
     display: inline;
@@ -383,22 +409,22 @@
       display: block;
     }
   }
+  .form-control,
+  .select-wrapper {
+    max-width: 302px;
+  }
   // Quantity.
   .field--name-quantity {
     display: inline-block;
     margin: 0 30px 0 0;
+    width: 96px;
     vertical-align: top;
 
+    .form-item {
+      margin-top: 0;
+    }
     label {
       font-size: 16px;
-    }
-    input {
-      margin: 0;
-      padding: 0;
-      width: 70px;
-      height: 45px;
-      text-align: center;
-      font-size: 21px;
     }
     // Remove number arrows.
     input[type=number]::-webkit-inner-spin-button,
@@ -408,7 +434,7 @@
       appearance: none;
       margin: 0;
     }
-    // Remove number arrows for Firefeox.
+    // Remove number arrows for Firefox.
     input[type="number"] {
       -moz-appearance: textfield;
     }
@@ -416,26 +442,25 @@
   // Form actions/submit container.
   .form-actions {
     display: inline-block;
-    margin-top: 2.5em;
+    margin-top: 0;
     vertical-align: top;
 
     .form-submit {
-      padding: 14px 20px;
-      height: auto;
+      padding: 0 20px;
+      height: 49px;
       font-size: 24px;
       text-transform: capitalize;
     }
   }
 }
 
+.product--rendered-attribute__selected ~ label.option {
+  border: none;
+}
+
 // Attribute Single Value.
 .js-form-item--attribute-single-value {
-  // Hide form elements since we display the value as HTML.
-  input,
-  select {
-    display: none;
-  }
-  .form-type-radio label {
+  .select-wrapper::after {
     display: none;
   }
 }
@@ -810,6 +835,14 @@
           color: $c-link;
         }
       }
+    }
+  }
+  .select-wrapper {
+    max-width: none;
+
+    // Hide pseudo icon.
+    &:after {
+      display: none;
     }
   }
 }

@@ -42,4 +42,9 @@
   <div class="product-teaser__price">
     {{ product.variation_price }}
   </div>
+  {% if product.variation_list_price %}
+    <div class="product-teaser__list-price">
+      {{ product.variation_list_price }}
+    </div>
+  {% endif %}
 </a>
