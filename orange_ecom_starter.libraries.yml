@@ -14,6 +14,24 @@ global-styling:
     - orange_ecom_starter/bootstrap
     - orange_ecom_starter/form-floating-labels
 
+search-toggle:
+  version: 1.x
+  js:
+    js/custom/search-toggle.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
+js-cookie:
+  version: 1.x
+  js:
+    js/contrib/js-cookie/js.cookie.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 slick:
   version: 1.x
   css:

@@ -32,6 +32,10 @@
   %}
   {% block input %}
     <input{{ attributes.addClass(classes) }} />{{ children }}
-    <a href="#" class="form-submit--trigger"></a>
+    <button type="button" class="form-submit--trigger">
+      {% if value %}
+        <span>{{ value }}</span>
+      {% endif %}
+    </button>
   {% endblock %}
 {% endspaceless %}

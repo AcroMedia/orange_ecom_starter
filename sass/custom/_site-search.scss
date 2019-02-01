@@ -1,0 +1,98 @@
+/**
+* Site Search.
+*/
+.view-site-search {
+  clear: both;
+  margin: 0;
+  padding: 10px 0 0 0;
+
+  .views-exposed-form {
+    position: relative;
+    margin: 0 0 20px 0;
+    padding: 0;
+    max-width: 400px;
+
+    .form-item {
+      float: none;
+      margin: 0;
+      padding: 0;
+
+      label {
+        display: none;
+      }
+      .form-optional {
+        display: none;
+      }
+    }
+    .form-control {
+      max-width: 100%;
+      width: 100%;
+    }
+    .form-submit--trigger {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      z-index: 1;
+
+      &:hover {
+        text-decoration: none;
+      }
+      // Search icon.
+      &:before {
+        @include fa-icon();
+        content: $fa-var-search;
+        font-size: 19px;
+        color: $gray-base;
+        transition: color .2s ease-in-out;
+      }
+      &:focus:before,
+      &:hover:before {
+        color: $gray;
+      }
+    }
+    .form-actions {
+      margin: 0;
+      padding: 0;
+    }
+    // Hide form submit since we are using the pseudo submit.
+    .form-submit {
+      display: none;
+    }
+  }
+  .view-content {
+    clear: both;
+    margin: 40px 0 0 0;
+    padding: 40px 0 0 0;
+    border-top: 1px solid $gray-border;
+  }
+  .views-row {
+    clear: both;
+    margin: 0 0 35px 0;
+    padding: 0;
+
+    h4 {
+      margin-top: 0;
+    }
+  }
+}
+
+.block-search {
+  position: relative;
+
+  .form-search-submit-trigger {
+    display: block;
+  }
+  .form-submit {
+    display: none;
+  }
+  .form-item,
+  .form-actions {
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+}

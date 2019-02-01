@@ -76,9 +76,6 @@
     e.preventDefault();
   });
 
-  // Add search input placeholder.
-  $('.block-search input.form-search, .search-page-form input.form-search').attr('placeholder', Drupal.t('Enter keyword...'));
-
   // Add Commerce search input placeholder.
   $('.region-site-search .form-item-search input').attr('placeholder', Drupal.t('Search for products...'));
 
@@ -118,6 +115,29 @@
     $(this).toggleClass('is-active').parent().find('.store-facets--mobile').fadeToggle('fast');
     e.preventDefault();
   });
+
+  // Cart Form.
+  if ($('.cart-form-summary').length) {
+    $('body').scrollspy({
+      target: '.cart-form-summary-col'
+    });
+
+    var $cartFormSummaryOffset = 20;
+
+    // Set higher offset if toolbar is shown.
+    if ($('body.toolbar-horizontal').length) {
+      var $cartFormSummaryOffset = 90;
+    }
+
+    $('.cart-form-summary').affix({
+      offset: {
+        top: $('.cart-form-summary').offset().top - $cartFormSummaryOffset,
+        bottom: function () {
+          return (this.bottom = $('.site-footer').outerHeight(true) + 40)
+        }
+      }
+    });
+  }
 
   // Tabs.
   if ($('.nav-tabs').length) {

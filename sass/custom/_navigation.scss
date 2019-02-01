@@ -244,13 +244,13 @@
   .form-item {
     display: none;
   }
-  .form-item-search {
+  .form-item-search,
+  .form-item-site-keyword {
     display: block;
   }
   label,
   .form-submit,
-  .form-optional,
-  .search-block-form .form-search-submit-trigger {
+  .form-optional {
     display: none;
   }
   .container-inline div,
@@ -261,7 +261,8 @@
     float: none;
   }
   .form-search,
-  .form-item-search input {
+  .form-item-search input,
+  .form-item-site-keyword input {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -282,8 +283,9 @@
     }
   }
 }
-.mobile-search-form__submit {
+.mobile-search-form .form-submit--trigger {
   position: absolute;
+  display: block;
   bottom: 11px;
   right: 0;
   font-size: 25px;
@@ -292,12 +294,19 @@
   text-decoration: none;
   vertical-align: top;
 
+  // Search icon.
+  &:before {
+    @include fa-icon();
+    content: $fa-var-search;
+    transition: color .2s ease-in-out;
+  }
   &:hover,
   &:focus {
     color: $c-primary;
     text-decoration: none;
   }
   span {
+    display: none;
     vertical-align: top;
   }
 }

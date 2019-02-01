@@ -363,7 +363,25 @@
           <div class="row">
             <div class="col-md-12">
               <div class="product__featured-products">
-                {{ product.field_paragraph_reference }}
+                {# Display products if manually selected. #}
+                {% if product_entity.field_paragraph_reference.0.entity.getTranslation(langcode).field_products_reference.0.target_id %}
+                  {{ product.field_paragraph_reference }}
+                {% else %}
+                  {# Display products within the same category using a view. #}
+                  {% set ref_entity = product_entity.field_paragraph_reference.0.entity.getTranslation(langcode) %}
+                  {% if product_entity.field_terms_reference.0.target_id %}
+                    <div class="component-featured-products">
+                      {% if ref_entity.field_string.value %}
+                        <div class="component-featured-products__title">
+                          {{ ref_entity.field_string|view }}
+                        </div>
+                      {% endif %}
+                      <div class="component-featured-products__content">
+                        {{ drupal_view('featured_products', 'default', product_entity.field_terms_reference.0.target_id, product_entity.id) }}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endif %}
               </div>
             </div>
           </div>

@@ -446,6 +446,22 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
       // Make checkout button the primary button.
       $form['actions']['checkout']['#button_type'] = 'primary';
     }
+    if (isset($form['actions'])) {
+      $form['actions']['note'] = [
+        '#type' => 'inline_template',
+        '#template' => '<div class="cart-form-summary__note">{{ note_text }}</div>',
+        '#context' => [
+          'note_text' => t("Taxes, Shipping & Discounts will be applied during checkout"),
+        ],
+        '#weight' => 98,
+      ];
+      // Close the divs started within the View footer.
+      $form['actions']['close_markup'] = [
+        '#type' => 'inline_template',
+        '#template' => '</div></div>',
+        '#weight' => 99,
+      ];
+    }
   }
 
   // Commerce Cart form.
@@ -707,16 +723,16 @@ function orange_ecom_starter_preprocess_commerce_product_variation(&$variables) 
  * Implements hook_preprocess_input(&$variables).
  */
 function orange_ecom_starter_preprocess_input(&$variables) {
-  if (isset($variables['element'])) {
-    if (isset($variables['element']['#type'])) {
-      $variables['type'] = $variables['element']['#type'];
-    }
-    if (isset($variables['element']['#button_type'])) {
-      $variables['button_type'] = $variables['element']['#button_type'];
-    }
-    if (isset($variables['element']['#attributes']['id'])) {
-      $variables['element_id'] = $variables['element']['#attributes']['id'];
-    }
+  if (!isset($variables['element'])) {
+    return;
+  }
+
+  $variables['type'] = $variables['element']['#type'] ?? NULL;
+  $variables['button_type'] = $variables['element']['#button_type'] ?? NULL;
+  $variables['element_id'] = $variables['element']['#attributes']['id'] ?? NULL;
+
+  if (($variables['type'] ?? NULL) === 'submit') {
+    $variables['value'] = $variables['element']['#value'];
   }
 }
 

@@ -37,6 +37,28 @@
  */
 #}
 {% block page_header %}
+  {# Search Toggle. #}
+  {{ attach_library('orange_ecom_starter/search-toggle') }}
+  {# Dropdown used for toggling the active search. #}
+  {% set search_toggle %}
+    <ul class="menu js-search-toggle">
+      <li class="menu__item">
+        {# The default/active search. #}
+        <a href="#">{{ 'Products'|t }}</a>
+        <ul class="menu">
+          {# Modify order of items based on the order of blocks in region: site_search. #}
+          <li class="menu__item active">
+            <a href="#">{{ 'Products'|t }}</a>
+          </li>
+          <li class="menu__item">
+            <a href="#">{{ 'Articles'|t }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  {% endset %}
+  {# / Search Toggle. #}
+
   {# Mobile overlays. #}
   {% if page.mobile_nav %}
     {% if page.site_search %}
@@ -47,10 +69,11 @@
           </a>
 
           <div class="mobile-search-form">
-            {{ page.site_search }}
-            <a class="mobile-search-form__submit" href="#" title="{{ 'Search'|t }}">
-              <span class="fa fa-search" aria-hidden="true"></span>
-            </a>
+            {{ search_toggle }}
+            <div class="mobile-search-form__forms js-search-toggle-forms">
+              {# Add blocks to region in the same order as items in search_toggle. #}
+              {{ page.site_search }}
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +138,11 @@
 
           {% if page.site_search %}
             <div class="site-header__search hidden-xs">
-              {{ page.site_search }}
+              {{ search_toggle }}
+              <div class="site-header__search-forms js-search-toggle-forms">
+                {# Add blocks to region in the same order as items in search_toggle. #}
+                {{ page.site_search }}
+              </div>
             </div>
           {% endif %}
         </div>

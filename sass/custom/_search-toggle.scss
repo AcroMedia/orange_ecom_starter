@@ -1,0 +1,144 @@
+/**
+* Search Toggle.
+*
+* Remove library and CSS to revert to a singular search.
+*/
+
+// Site Header Modifications.
+.site-header__search {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 96px;
+
+  .form-item-search,
+  .form-type-textfield {
+    display: block;
+
+    input {
+      height: 33px;
+      border-radius: 0 $border-radius $border-radius 0;
+    }
+  }
+}
+
+// Search Toggle.
+.js-search-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 96px;
+  z-index: 1;
+
+  > li {
+    position: relative;
+    float: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: none;
+
+    > a {
+      display: block;
+      margin: 0;
+      padding: 6px 12px 0 5px;
+      height: 33px;
+      font-size: 14px;
+      text-align: right;
+      color: #666;
+      font-weight: normal;
+      text-decoration: none;
+      background: #ccc;
+      border-radius: 5px 0 0 5px;
+
+      // Arrow icon.
+      &:after {
+        @include fa-icon();
+        content: $fa-var-caret-down;
+        margin: 0 0 0 5px;
+      }
+    }
+    // Hover/Active state while dropdown is open.
+    &:hover > a,
+    > a:hover,
+    > a:focus {
+      color: #fff;
+      background: #000;
+      border-radius: 5px 0 0 0;
+    }
+  }
+  // Dropdown.
+  > li > ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 100%;
+    z-index: 2;
+
+    > li {
+      display: block;
+      margin: 0;
+      padding: 0;
+
+      > a {
+        display: block;
+        margin: 0;
+        padding: 4px 12px 4px 5px;
+        font-size: 14px;
+        text-align: right;
+        color: #666;
+        font-weight: normal;
+        text-decoration: none;
+        background: #ccc;
+
+        // Pseudo arrow so items line up with parent menu.
+        &:after {
+          @include fa-icon();
+          content: $fa-var-caret-down;
+          margin: 0 0 0 5px;
+          visibility: hidden;
+        }
+        &:hover,
+        &:focus {
+          background: darken(#ccc, 10%);
+        }
+      }
+    }
+    > li.active { display: none; }
+  }
+  > li:hover > ul { display: block; }
+}
+.js-search-toggle-forms {
+  .region > .block {
+    display: none;
+
+    // Show first region by default.
+    &:first-child {
+      display: block;
+    }
+  }
+}
+
+// Mobile.
+.mobile-search-form {
+  .js-search-toggle {
+    top: -50px;
+
+    > li > a {
+      padding-left: 5px;
+      padding-right: 5px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    // Dropdown.
+    > li > ul > li > a {
+      padding-left: 5px;
+      padding-right: 5px;
+      text-align: center;
+    }
+  }
+}

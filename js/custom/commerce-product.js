@@ -55,33 +55,4 @@
     }
   };
 
-  // Product Attributes.
-  // Alter display for single value attributes.
-  Drupal.behaviors.productAttributesSingleValue = {
-    attach: function (context, settings) {
-      $('.product__form .attribute-widgets > .form-item, .commerce-order-item-add-to-cart-form .attribute-widgets > .form-item').once('productAttributesSingleValue').each(function () {
-        var $this = $(this);
-
-        // Select attributes.
-        if ($this.find('select').length) {
-          var $selectOptions = $this.find('select option').length;
-
-          if ($selectOptions == 1) {
-            var $selectedOptionText = $this.find('select option:selected').text();
-            $this.addClass('js-form-item--attribute-single-value');
-          }
-        }
-        // Radio attributes.
-        if ($this.find('input:radio').length) {
-          var $radios = $this.find('input:radio').length;
-
-          if ($radios == 1) {
-            var $radioText = $this.find('input:radio:checked').next('label').text();
-            $this.addClass('js-form-item--attribute-single-value');
-          }
-        }
-      });
-    }
-  };
-
 })(jQuery, Drupal);

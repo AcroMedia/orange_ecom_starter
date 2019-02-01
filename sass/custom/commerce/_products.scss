@@ -40,9 +40,9 @@
 .product-teaser__thumbnail {
   position: relative;
   margin: 0 0 10px 0;
-  padding: 0;
+  padding: 1px;
   border: 1px solid #ccc;
-  opaicty: 1.0;
+  opacity: 1.0;
   @include smooth-transition;
 
   img {
@@ -50,6 +50,21 @@
     margin: 0;
     padding: 0;
     max-width: 100%;
+    height: auto;
+    transition: opacity .3s ease-in-out;
+  }
+}
+.product-teaser__thumbnail-image-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  z-index: 1;
+  @include smooth-transition;
+
+  img {
+    width: 100%;
     height: auto;
   }
 }
@@ -73,6 +88,21 @@
     padding-top: 2px;
     font-size: 12px;
     color: $c-body;
+  }
+}
+// If teaser has hover image.
+.product-teaser--with-hover {
+  &:focus,
+  &:hover {
+    .product-teaser__thumbnail {
+      opacity: 1;
+    }
+    .product-teaser__thumbnail-image {
+      opacity: 0;
+    }
+    .product-teaser__thumbnail-image-hover {
+      opacity: 1;
+    }
   }
 }
 .product-teaser__title {
@@ -111,17 +141,11 @@
   .product-variation {
     position: relative;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 65px;
     min-height: 100px;
 
-    @media (min-width: $screen-xs-min) {
-      padding: 0 0 0 65px;
-    }
     @media (min-width: $screen-sm-ph) {
-      padding: 0 0 0 120px;
-    }
-    @media (min-width: $screen-sm-min) {
-      padding: 0;
+      padding: 0 0 0 65px;
     }
     @media (min-width: $screen-lg-min) {
       padding: 0 0 0 65px;
@@ -134,22 +158,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: none;
+    display: block;
     width: 50px;
     height: 50px;
 
-    @media (min-width: $screen-xs-min) {
+    @media (min-width: $screen-sm-ph) {
       display: block;
       width: 50px;
       height: 50px;
-    }
-    @media (min-width: $screen-sm-ph) {
-      display: block;
-      width: 100px;
-      height: 100px;
-    }
-    @media (min-width: $screen-sm-min) {
-      display: none;
     }
     @media (min-width: $screen-lg-min) {
       display: block;
@@ -454,35 +470,120 @@
   }
 }
 
+// Rendered Attributes.
+.product--rendered-attribute {
+  margin-bottom: 22px;
+}
+.product--rendered-attribute .form-item {
+  display: inline-block;
+  margin: 2px 10px 4px 0;
+  padding: 0;
+  vertical-align: top;
+
+  label {
+    margin: 0;
+    padding: 0;
+
+    // Pseudo element.
+    &:before {
+      display: none;
+    }
+  }
+  .attribute-value {
+    display: inline-block;
+    margin: 0;
+    padding: 10px 18px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.0;
+    color: $c-body;
+    background: #fff;
+    border: 1px solid $gray-border;
+    border-radius: $border-radius;
+    @include smooth-transition();
+  }
+  label:hover .attribute-value {
+    color: $c-body;
+    background: lighten($c-body, 55%);
+  }
+  // Active/checked state.
+  input[type="radio"]:checked + label {
+    .attribute-value {
+      color: #fff;
+      font-weight: normal;
+      background: $c-body;
+      border-color: $c-body;
+    }
+  }
+}
 .product--rendered-attribute__selected ~ label.option {
   border: none;
 }
 
-// Attribute Single Value.
-.js-form-item--attribute-single-value {
-  .select-wrapper::after {
-    display: none;
-  }
-}
-.purchased-entity-attribute__single-value {
-  position: relative;
-  clear: both;
-  margin: 0;
-  padding: 0 0 0 25px;
+// Color Attributes.
+.product--rendered-attribute .form-item[class*="attribute-color"] {
+  margin-left: 0;
+  margin-right: 0;
 
-  // Bullet.
-  &:before {
-    content: '';
-    position: absolute;
-    top: 9px;
-    left: 10px;
-    display: block;
-    width: 4px;
-    height: 4px;
-    background: $c-body;
+  .color-attribute {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 4px;
+    vertical-align: top;
     border-radius: 50%;
+    border: 1px solid transparent;
+    box-shadow: none;
+    transition: all .2s ease-in-out;
+  }
+  .color-attribute__item {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow: 1px 1px 8px 0 rgba(0,0,0,0.3);
+    @include button-hide-text();
+    transition: all .2s ease-in-out;
+  }
+  label {
+    margin: 0;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+      .color-attribute {
+        border-color: #999;
+        transform: scale(0.95);
+      }
+      .color-attribute__item {
+        //box-shadow: 0 0 0 1px #ccc;
+      }
+    }
+    // Pseudo element.
+    &:before {
+      display: none;
+    }
+  }
+  // Active/checked state.
+  input[type="radio"]:checked + label {
+    .color-attribute {
+      border: 1px solid #666;
+      box-shadow: none;
+      transform: scale(1);
+      animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+    }
+    .color-attribute__item {
+
+    }
   }
 }
+
 
 // Product Tabs.
 .product__tabs {

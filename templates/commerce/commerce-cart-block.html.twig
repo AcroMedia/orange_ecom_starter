@@ -1,8 +1,12 @@
-<div{{ attributes}}>
-  <div class="cart-block--summary">
+<div{{ attributes.addClass('cart-block') }}>
+  <div class="cart-block__summary cart-block--summary">
     <a class="cart-block--link__expand" href="{{ url }}">
       <span class="cart-block--summary__count">{{ count_text }}</span>
     </a>
+  </div>
+  <div class="cart-block__line-item clearfix">
+    <div class="cart-block__line-item__label">{{ 'Number of items'|t }}</div>
+    <div class="cart-block__line-item__value">{{ count }}</div>
   </div>
   {% if content %}
   <div class="cart-block--contents">

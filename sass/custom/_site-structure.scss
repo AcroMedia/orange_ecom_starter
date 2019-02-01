@@ -78,7 +78,9 @@
   .form-optional {
     display: none;
   }
-
+  label {
+    display: none;
+  }
   // Product search.
   .region-site-search {
     position: relative;
@@ -94,7 +96,8 @@
       display: none;
     }
   }
-  .form-item-search {
+  .form-item-search,
+  .form-item-site-keyword {
     display: block;
 
     input {
@@ -109,10 +112,9 @@
   .bef-exposed-form .form-item {
     margin: 0;
   }
-
   .form-submit--trigger {
     position: absolute;
-    top: 3px;
+    top: 5px;
     right: 10px;
     display: block;
     margin: 0;
@@ -123,10 +125,10 @@
     &:hover {
       text-decoration: none;
     }
+    // Search icon.
     &:before {
-      display: block;
-      content: "\e003";
-      font-family: $f-glyphicons;
+      @include fa-icon();
+      content: $fa-var-search;
       font-size: 19px;
       color: $gray-base;
       transition: color .2s ease-in-out;

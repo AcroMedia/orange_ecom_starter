@@ -19,17 +19,32 @@
  * @ingroup themeable
  */
 #}
+{%
+  set classes = [
+    'product-teaser',
+    product_entity.field_image_hover.entity.fileuri ? 'product-teaser--with-hover',
+  ]
+%}
+
+{% set teaser_attributes = create_attribute() %}
+
 {# Fallback product thumbnail placeholder. #}
 {% set product_thumbnail_placeholder_url = base_path ~ directory ~ '/gfx/product-placeholder.jpg' %}
 {% set product_thumbnail_placeholder_alt = product_entity.title.value %}
 
-<a href="{{ product_path }}" class="product-teaser">
+<a href="{{ product_path }}" {{ teaser_attributes.addClass(classes) }}>
   <div class="product-teaser__thumbnail">
     {% if product_variation_images %}
       {% for product_variation_image in product_variation_images %}
         {# Use first image of the first variation. #}
         {% if loop.first %}
-          <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" />
+          <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" class="product-teaser__thumbnail-image" />
+
+          {% if product_entity.field_image_hover.entity.fileuri %}
+            <div class="product-teaser__thumbnail-image-hover">
+              <img src="{{ product_entity.field_image_hover.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_entity.field_image_hover.alt }}" />
+            </div>
+          {% endif %}
         {% endif %}
       {% endfor %}
     {% else %}

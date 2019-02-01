@@ -51,14 +51,17 @@
 {% endif %}
 {# Set floating label class. #}
 {%
-  if type == 'textfield' or
+  if (name != 'site_keyword') and
+  (type != 'fivestar') and
+  (is_js_text_widget is not defined) and
+  (type == 'textfield' or
   type == 'textarea' or
   type == 'email' or
   type == 'number' or
   type == 'select' or
   type == 'password' or
   type == 'tel' or
-  type == 'telephone'
+  type == 'telephone')
 %}
   {% set floating_label = 'form-item--floater' %}
 {% endif %}
@@ -70,7 +73,7 @@
     'js-form-type-' ~ type|clean_class,
     'form-item-' ~ name|clean_class,
     'js-form-item-' ~ name|clean_class,
-    (floating_label) and (title_display in ['after', 'before']) and (type != 'fivestar') and (is_js_text_widget is not defined) or (is_address_line2) ? floating_label,
+    (floating_label) and (title_display in ['after', 'before']) or (is_address_line2) ? floating_label,
     title_display not in ['after', 'before'] ? 'form-no-label',
     disabled == 'disabled' ? 'form-disabled',
     is_form_group ? 'form-group',
