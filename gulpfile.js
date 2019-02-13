@@ -5,10 +5,12 @@ var rename = require('gulp-rename');
 var postcss = require('gulp-postcss');
 var easysprite = require('postcss-easysprites');
 var autoprefixer = require('autoprefixer');
+var watch = require('gulp-watch');
 
 // Gulp Sass task.
 gulp.task('sass', function() {
-  gulp.src('./sass/{,*/}*.{scss,sass}')
+  "use strict";
+  return gulp.src('./sass/{,*/}*.{scss,sass}')
     .pipe(sourcemaps.init())
     .pipe(sass({
       errLogToConsole: true
@@ -17,11 +19,11 @@ gulp.task('sass', function() {
       easysprite({
         imagePath:'./gfx',
         spritePath: './gfx/sprites',
-        stylesheetPath: './css',
+        stylesheetPath: './css'
       }),
       autoprefixer({
         browsers: ['> 5%','safari 8']
-      }),
+      })
     ]))
     .pipe(sourcemaps.write())
     .pipe(rename('style.css'))
@@ -30,6 +32,8 @@ gulp.task('sass', function() {
 
 // Create Gulp default task.
 // Having watch within the task ensures that 'sass' has already ran before watching.
-gulp.task('default', ['sass'], function () {
-  gulp.watch('./sass/{,**/}*.{scss,sass}', ['sass'])
-});
+gulp.task('default', gulp.series('sass', function () {
+  "use strict";
+  return watch('./sass/{,**/}*.{scss,sass}', ['sass'])
+}));
+
