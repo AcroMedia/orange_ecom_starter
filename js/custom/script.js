@@ -111,8 +111,17 @@
   // Add store exposed search placeholder.
   $('.view-store .views-exposed-form .form-text').attr('placeholder', Drupal.t('Search for a product'));
 
-  $('.b-store-mobile-facets-toggle').click(function (e) {
-    $(this).toggleClass('is-active').parent().find('.store-facets--mobile').fadeToggle('fast');
+  // Store Facets - Mobile Toggle.
+  $('.store-facets__mobile-toggle').click(function (e) {
+    $('.store-facets__wrapper').addClass('is-active').fadeIn('fast');
+    e.preventDefault();
+  });
+
+  // Store Facets - Close Overlay.
+  $('.store-facets__mobile-close').click(function (e) {
+    $('.store-facets__wrapper').fadeOut('fast', function () {
+      $('.store-facets__wrapper').removeClass('is-active');
+    });
     e.preventDefault();
   });
 

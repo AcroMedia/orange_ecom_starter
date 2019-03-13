@@ -40,7 +40,7 @@
           }
 
           checkAutofill ();
-          setTimeout (checkAutofill, 400);
+          setTimeout (checkAutofill, 600);
         }
 
         // Remove placeholder initially.

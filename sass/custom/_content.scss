@@ -119,6 +119,12 @@ textarea.resize-vertical {
   // Remove browser resizer.
   resize: none;
 }
+// Hide optional fields on login/registration forms since they are actually required.
+.form-item-completion-register-name .form-optional,
+.form-item-login-returning-customer-name .form-optional,
+.form-item-login-returning-customer-password .form-optional {
+  display: none;
+}
 
 // Select/Dropdown.
 .select-wrapper {
@@ -498,16 +504,21 @@ table,
 /**
  * Modals.
  */
+.modal {
+  text-align: center;
+}
 @media (min-width: $screen-sm-min) {
-  .modal.in .modal-dialog {
-    transform: translateX(-50%) translateY(-50%);
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
   }
-  .modal-dialog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 0;
-  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }
 
 /**

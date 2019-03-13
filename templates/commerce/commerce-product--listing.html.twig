@@ -2,7 +2,7 @@
 /**
  * @file
  *
- * Product Teaser template.
+ * Product Listing template.
  *
  * Available variables:
  * - attributes: HTML attributes for the wrapper.
@@ -23,8 +23,8 @@
 {% extends "commerce-product.html.twig" %}
 
 {% block content %}
-  <div class="product-teaser">
-    <a href="{{ product_path }}" class="product-thumbnail product-thumbnail--teaser {{ product_entity.field_image_hover.entity.fileuri ? 'product-thumbnail--with-hover' }}">
+  <div class="product-listing-item">
+    <a href="{{ product_path }}" class="product-thumbnail {{ product_entity.field_image_hover.entity.fileuri ? 'product-thumbnail--with-hover' }}">
       <div class="product-thumbnail__content">
         {% if product_variation_images %}
           {% for product_variation_image in product_variation_images %}
@@ -44,16 +44,36 @@
         {% endif %}
       </div>
     </a>
-    <div class="product-teaser__title">
-      <a href="{{ product_path }}" tabindex="-1">{{ product.title }}</a>
-    </div>
-    <div class="product-teaser__price">
-      {{ product.variation_price }}
-    </div>
-    {% if product.variation_list_price %}
-      <div class="product-teaser__list-price">
-        {{ product.variation_list_price }}
+    <div class="product-listing-item__content">
+      <h2 class="product__title">
+        <a href="{{ product_path }}" tabindex="-1">{{ product.title }}</a>
+      </h2>
+      <div class="product__price">
+        {{ product.variation_price }}
       </div>
-    {% endif %}
+      {% if product.variation_list_price %}
+        <div class="product__list-price">
+          {{ product.variation_list_price }}
+        </div>
+      {% endif %}
+      <div class="product__details">
+        <div class="product__sku">
+          {{ product.variation_sku }}
+        </div>
+        {% if reviews_are_active and average_review_rating|length %}
+          <div class="product__average-rating">
+            {{ 'Average Rating'|t }}: {{ average_review_rating_stars }}
+          </div>
+        {% endif %}
+      </div>
+      {% if product_summary %}
+        <div class="product__summary">
+          {{ product.field_text_long }}
+        </div>
+      {% endif %}
+      <div class="product__view-details">
+        <a href="{{ product_path }}" tabindex="-1">{{ 'View Details >'|t }}</a>
+      </div>
+    </div>
   </div>
 {% endblock content %}

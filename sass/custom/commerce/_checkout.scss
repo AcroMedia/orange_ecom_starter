@@ -334,7 +334,7 @@
   display: block;
   margin: 0;
   padding: 6px 5px;
-  font-size: 10px;
+  font-size: 12px;
   color: #fff;
   background: #666;
   line-height: 1.0;
@@ -398,4 +398,27 @@ div[id*="edit-coupon-redemption-form"] {
  */
 .checkout-complete__order-number {
   font-weight: bold;
+}
+
+/**
+ * Checkout Completion Registration.
+ */
+.checkout-pane-completion-register {
+  clear: both;
+  margin: 40px 0 0 0;
+  padding: 40px 0 0 0;
+  border-top: 1px solid $gray-border;
+
+  h2 {
+    margin-top: 0;
+    text-transform: capitalize;
+  }
+  .form-submit {
+    text-transform: capitalize;
+  }
+  .confirm-parent,
+  .password-parent {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
 }

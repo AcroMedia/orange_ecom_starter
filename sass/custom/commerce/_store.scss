@@ -9,48 +9,105 @@
 .path-products .ajax-progress-fullscreen {
   display: none !important;
 }
-.product-listing {
-  clear: both;
-  margin: 0;
-  padding: 0;
-
-  // Use .views-infinite-scroll-content-wrapper if you have infinite scroll enabled.
-  > .view-content {
-    display: flex;
-    flex-wrap: wrap;
-    // Neg. margin to offset listing items.
-    margin: 0 -10px;
+.store-grid-view {
+  .product-listing {
+    clear: both;
+    margin: 0;
     padding: 0;
 
-    @media (min-width: $screen-xs-min) {
+    // Use .views-infinite-scroll-content-wrapper if you have infinite scroll enabled.
+    > .view-content {
+      display: flex;
+      flex-wrap: wrap;
       // Neg. margin to offset listing items.
       margin: 0 -10px;
-    }
-    @media (min-width: $screen-md-min) {
-      // Neg. margin to offset listing items.
-      margin: 0 -15px;
-    }
-  }
-  .views-row {
-    float: none;
-    margin: 0 0 30px 0;
-    padding: 0 10px;
-    width: 50%;
-    background: none;
+      padding: 0;
 
-    @media (min-width: $screen-xs-min) {
-      padding: 0 10px;
-      width: 33.3333%;
+      @media (min-width: $screen-xs-min) {
+        // Neg. margin to offset listing items.
+        margin: 0 -10px;
+      }
+      @media (min-width: $screen-md-min) {
+        // Neg. margin to offset listing items.
+        margin: 0 -15px;
+      }
     }
-    @media (min-width: $screen-md-min) {
-      padding: 0 15px;
-      width: 25%;
+    .views-row {
+      float: none;
+      margin: 0 0 30px 0;
+      padding: 0 10px;
+      width: 50%;
+      background: none;
+
+      @media (min-width: $screen-xs-min) {
+        padding: 0 10px;
+        width: 33.3333%;
+      }
+      @media (min-width: $screen-md-min) {
+        padding: 0 15px;
+        width: 25%;
+      }
     }
   }
 }
 .product-listing__results-label {
   font-size: 20px;
   color: $gray;
+}
+
+// List View.
+.store-list-view .product-listing {
+  // Use .views-infinite-scroll-content-wrapper if you have infinite scroll enabled.
+  > .view-content {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .views-row {
+    clear: both;
+    float: none;
+    margin: 0 0 40px 0;
+    padding: 0 0 40px 0;
+    border-bottom: 1px solid $gray-border;
+  }
+}
+
+// Store View Switcher.
+.store-display-switcher {
+  position: absolute;
+  top: auto;
+  bottom: 22px;
+  right: 0;
+  margin: 0;
+  padding: 0;
+
+  @media (min-width: $screen-sm-min) {
+    top: 4px;
+    bottom: auto;
+    right: 209px;
+  }
+}
+.store-display-switcher__item {
+  display: inline-block;
+  margin: 0;
+  padding: 0 5px;
+  font-size: 40px;
+  line-height: 1.0;
+  color: #d9d9d9;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $c-link;
+    text-decoration: none;
+  }
+  &.is-active {
+    color: $c-link;
+  }
+  // Grid Item.
+  &.store-display-switcher__item--grid {
+    font-size: 37px;
+  }
 }
 
 // Store Filters.
@@ -342,49 +399,65 @@
 .store-facets {
   position: relative;
 }
-.store-facets__content {
+.store-facets__wrapper {
   // Hide facets content so it can be toggled by mobile control.
   display: none;
 
   @media (min-width: $screen-sm-min) {
-    display: block;
+    display: block !important;
   }
   // Active state.
   &.is-active {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
-    display: block;
+    display: none;
     margin: 0;
-    padding: 20px;
+    padding: 20px 15px;
+    height: 100%;
     width: 100%;
-    height: 300px;
-    border: 1px solid #ccc;
-    background: #fff;
-    overflow: scroll;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
-    /* Set higher depending on other existing elements. */
-    z-index: 10;
-
-    @media (min-width: $screen-sm-min) {
-      position: relative;
-      top: 0;
-      left: 0;
-      display: block;
-      margin: 0;
-      padding: 0;
-      width: auto;
-      height: auto;
-      border: none;
-      background: none;
-      overflow: auto;
-      box-shadow: none;
-      z-index: 0;
-    }
+    border: none;
+    background: $c-white;
+    overflow-x: hidden;
+    box-shadow: none;
+    z-index: 9999;
   }
 }
+.store-facets__content {
+  position: relative;
+}
+.store-facets__mobile-close {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  display: none;
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1.0;
+  color: $c-body;
+  text-decoration: none;
+  vertical-align: top;
+  outline: none;
+  z-index: 10;
 
-// Store Facets - for mobile.
+  // Icon.
+  &::before {
+    @include fa-icon();
+    content: $fa-var-times;
+  }
+  &:hover,
+  &:focus {
+    color: lighten(#818181, 20%);
+    text-decoration: none;
+  }
+  span {
+    vertical-align: top;
+  }
+}
+.is-active .store-facets__mobile-close {
+  display: inline-block;
+}
 .store-facets__mobile-toggle {
   display: block;
   margin: 0 0 20px 0;
@@ -404,11 +477,20 @@
     text-decoration: none;
     background: darken($gray-darker, 20%);
   }
-  // Icon.
-  &:before {
+  // Filter icon.
+  &::before {
     @include fa-icon();
     content: $fa-var-filter;
+    position: relative;
+    top: -1px;
     margin: 0 8px 0 0;
+  }
+  // Arrow icon.
+  &::after {
+    @include fa-icon();
+    content: $fa-var-angle-right;
+    margin: 0 0 0 7px;
+    font-size: 17px;
   }
   // When the toggle is active.
   &.is-active {

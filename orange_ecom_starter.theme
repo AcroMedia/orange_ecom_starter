@@ -323,6 +323,20 @@ function orange_ecom_starter_preprocess_page(&$variables) {
  * Preprocessing for the store product listing.
  */
 function orange_ecom_starter_preprocess_page__view_store_product_listing(&$variables) {
+  // Generate grid/list urls for the store view.
+  $store_route = 'view.store.product_listing';
+
+  $grid_parameters = \Drupal::request()->query->all();
+  if (isset($grid_parameters['list_view'])) {
+    $variables['store_list_view_enabled'] = 1;
+    unset($grid_parameters['list_view']);
+  }
+
+  $list_parameters = $grid_parameters + ['list_view' => 1];
+
+  $variables['store_grid_url'] = Url::fromRoute($store_route, $grid_parameters);
+  $variables['store_list_url'] = Url::fromRoute($store_route, $list_parameters);
+
   // Make the category teaser render array available to the template if
   // a single category is active.
   $facets_query = \Drupal::request()->attributes->get('facets_query');
