@@ -3,7 +3,10 @@
  */
 
 // Colors.
-$c-site-bg: #fff;
+$c-white: #fff;
+$c-black: #000;
+
+$c-site-bg: $c-white;
 
 $c-primary: #f95e27;
 $c-primary-hover: darken($c-primary, 10%);
@@ -30,9 +33,6 @@ $gray-dark:              #545353;
 $gray:                   #807e7e;
 $gray-light:             #b3b3b3;
 $gray-lighter:           #f1f3f2;
-
-$c-white: #fff;
-$c-black: #000;
 
 // Fonts.
 $f-glyphicons: 'Glyphicons Halflings';
