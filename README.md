@@ -3,8 +3,16 @@
 
 > Custom theme by Acro Media Inc.
 
+## Introduction
 This custom theme uses the Orange Framework as a base theme.
 
+## Requirements
+Base Theme: [Orange Framework](https://github.com/AcroMedia/orange_framework).
+
+## Installation
+Enable the theme and away you go.
+
+## Configuration
 ### Sass
 - Configured to compile using Gulp.
 - Compile to CSS by running the following commands:

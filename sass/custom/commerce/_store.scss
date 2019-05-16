@@ -226,6 +226,19 @@
 }
 
 /**
+ * Store Sidebar.
+ */
+.site-sidebar--store {
+  .region-left-sidebar {
+    display: none;
+
+    @media (min-width: $screen-sm-min) {
+      display: block;
+    }
+  }
+}
+
+/**
  * Facets.
  */
 .block-facets {

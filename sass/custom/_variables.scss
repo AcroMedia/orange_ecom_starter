@@ -2,9 +2,7 @@
  * Variables.
  */
 
-/**
- * Colors.
- */
+// Colors.
 $c-site-bg: #fff;
 
 $c-primary: #f95e27;
@@ -36,9 +34,7 @@ $gray-lighter:           #f1f3f2;
 $c-white: #fff;
 $c-black: #000;
 
-/**
- * Fonts.
- */
+// Fonts.
 $f-glyphicons: 'Glyphicons Halflings';
 $f-font-awesome: FontAwesome;
 
@@ -46,14 +42,10 @@ $f-primary: Verdana, Geneva, sans-serif;
 $f-secondary: Georgia, Times, 'Times New Roman', serif;
 $f-body: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 
-/**
- * Site styles.
- */
+// Site Styles.
 $border-radius: 4px;
 
-/**
- * Forms.
- */
+// Forms.
 $form-max-width: 400px;
 
 // Change with caution.
@@ -61,7 +53,7 @@ $form-max-width: 400px;
 $fs-form-item: 16px;
 
 /**
- * Responsive helpers.
+ * Responsive Helpers.
  */
 $screen-min: 320px;
 

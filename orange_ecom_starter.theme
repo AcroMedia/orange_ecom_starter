@@ -24,13 +24,14 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\file\Entity\File;
+use Drupal\Core\Render\Markup;
 
 /**
  * Implements hook_form_system_theme_settings_alter().
  *
  * Theme settings.
  */
-function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id = NULL) {
+function orange_ecom_starter_form_system_theme_settings_alter(&$form, FormStateInterface $form_state, $form_id = NULL) {
   // Work-around for a core bug affecting admin themes.
   // See issue https://www.drupal.org/project/drupal/issues/943212.
   if (isset($form_id)) {
@@ -138,6 +139,21 @@ function orange_ecom_starter_form_system_theme_settings_alter(&$form, \Drupal\Co
       $file_usage->add($file, 'orange_ecom_starter', 'theme', $email_logo_image[0]);
     }
   }
+
+  // User Dashboard.
+  $form['user_dashboard'] = [
+    '#type' => 'details',
+    '#title' => t('User Dashboard'),
+    '#description' => t('The page a user will see after logging in to the site.'),
+    '#open' => TRUE,
+  ];
+  $form['user_dashboard']['footer_message'] = [
+    '#type' => 'text_format',
+    '#title' => t('Footer Message'),
+    '#description' => t('A message that is displayed at the bottom of the dashboard.'),
+    '#format' => 'html',
+    '#default_value' => Markup::create(theme_get_setting('footer_message.value')),
+  ];
 }
 
 /**
@@ -186,9 +202,11 @@ function orange_ecom_starter_theme_suggestions_page_alter(array &$suggestions, a
  * Add body classes if certain regions have content.
  */
 function orange_ecom_starter_preprocess_html(&$variables) {
-  // Page title variable.
   $request = \Drupal::request();
   $route_match = \Drupal::routeMatch();
+  $route_name = $route_match->getRouteName();
+
+  // Page title variable.
   $title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
   if ($title && is_string($title)) {
     $variables['page_title'] = $title;
@@ -207,9 +225,14 @@ function orange_ecom_starter_preprocess_html(&$variables) {
     $variables['term_name'] = $term->getName();
   }
 
-  // Commerce Product.
+  // Commerce Product type variable.
   if ($commerce_product = \Drupal::request()->attributes->get('commerce_product')) {
     $variables['commerce_product_type'] = $commerce_product->bundle();
+  }
+
+  // User profile variable.
+  if ($route_name && $route_name == 'entity.user.canonical') {
+    $variables['user_profile'] = TRUE;
   }
 }
 
@@ -315,6 +338,8 @@ function orange_ecom_starter_preprocess_page(&$variables) {
   $variables['youtube_url'] = theme_get_setting('youtube_url');
   $variables['linkedin_url'] = theme_get_setting('linkedin_url');
   $variables['pinterest_url'] = theme_get_setting('pinterest_url');
+
+
 }
 
 /**
@@ -761,12 +786,12 @@ function orange_ecom_starter_preprocess_form_element(&$variables) {
   }
   if (isset($variables['element']['#attributes']['class'])) {
     if (in_array('js-text-full', $variables['element']['#attributes']['class'])) {
-      $variables['is_js_text_widget'] = true;
+      $variables['is_js_text_widget'] = TRUE;
     }
   }
   if (isset($variables['element']['#allowed_formats'])) {
     if (in_array('html', $variables['element']['#allowed_formats'])) {
-      $variables['is_js_text_widget'] = true;
+      $variables['is_js_text_widget'] = TRUE;
     }
   }
 }
@@ -832,6 +857,17 @@ function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_user(&$variables).
+ */
+function orange_ecom_starter_preprocess_user(&$variables) {
+  // Base path variable.
+  $variables['base_path'] = base_path();
+
+  // Set variables from theme settings.
+  $variables['footer_message'] = Markup::create(theme_get_setting('footer_message.value'));
+}
+
+/**
  * Prepares variables for the cart block element template.
  */
 function orange_ecom_starter_preprocess_commerce_cart_block(&$variables) {
@@ -867,4 +903,14 @@ function orange_ecom_starter_preprocess_maintenance_page(&$variables) {
   $variables['youtube_url'] = theme_get_setting('youtube_url');
   $variables['linkedin_url'] = theme_get_setting('linkedin_url');
   $variables['pinterest_url'] = theme_get_setting('pinterest_url');
+}
+
+/**
+ * Implements hook_preprocess_menu_local_task(&$variables).
+ */
+function orange_ecom_starter_preprocess_menu_local_task(&$variables) {
+  $url = $variables['link']['#url'];
+  if ($url instanceof Url && $url->getRouteName() == 'entity.user.canonical') {
+    $variables["link"]["#title"] = t('Dashboard');
+  }
 }

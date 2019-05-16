@@ -37,6 +37,12 @@
  */
 #}
 {% block page_header %}
+  {% if page.above_site %}
+    <div class="above-site">
+      {{ page.above_site }}
+    </div>
+  {% endif %}
+
   {# Search Toggle. #}
   {{ attach_library('orange_ecom_starter/search-toggle') }}
   {# Dropdown used for toggling the active search. #}

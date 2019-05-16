@@ -1,0 +1,62 @@
+/**
+ * User.
+ */
+
+// Hide page title block since we use the title within the user template.
+body.user-profile .block-page-title-block {
+  display: none;
+}
+
+// User Dashboard.
+.user-dashboard__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 0;
+
+  @media (min-width: $screen-lg-min) {
+    display: block;
+  }
+}
+.user-dashboard__nav-link {
+  flex: 0 100%;
+  width: 100%;
+  padding: 20px 25px 20px;
+  margin: 0 0 20px;
+  color: $c-body;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: top;
+  border: 1px solid $gray-border;
+  border-radius: 8px;
+  @include smooth-transition();
+
+  @media (min-width: $screen-sm-min) {
+    flex: 0 48%;
+    margin-bottom: 20px;
+  }
+  @media (min-width: $screen-lg-min) {
+    display: inline-block;
+    width: auto;
+    min-width: 180px;
+    margin: 0 20px 20px 0;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+  &:hover,
+  &:focus {
+    color: $c-link;
+    text-decoration: none;
+    border-color: $c-link;
+  }
+}
+.user-dashboard__nav-link__title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.user-dashboard__nav-link__description {
+  font-size: 14px;
+}

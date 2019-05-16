@@ -110,6 +110,15 @@ commerce-product:
     - core/drupal
     - orange_ecom_starter/slick
 
+paragraph-notice-strap:
+  version: 1.x
+  js:
+    js/custom/paragraphs/notice-strap.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
 bootstrap:
   version: 1.x
   js:

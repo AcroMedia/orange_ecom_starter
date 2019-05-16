@@ -18,6 +18,11 @@
 @import 'content';
 @import 'comments';
 @import 'site-search';
+@import 'embeds';
+@import 'user';
+
+// Blocks.
+@import 'blocks/content';
 
 // Nodes.
 @import 'nodes/page';
@@ -46,12 +51,14 @@
 @import 'paragraphs/gallery';
 @import 'paragraphs/tabs';
 @import 'paragraphs/webform';
+@import 'paragraphs/notice-strap';
 
 // Commerce.
-@import 'commerce/store';
 @import 'commerce/cart';
-@import 'commerce/products';
 @import 'commerce/checkout';
+@import 'commerce/order';
+@import 'commerce/products';
+@import 'commerce/store';
 
 // Form Floating Labels.
 @import 'form-floating-labels';

@@ -1,0 +1,60 @@
+{#
+/**
+ * @file
+ * Template to present user data.
+ *
+ * This template is used when viewing a registered user's page,
+ * e.g., example.com/user/123. 123 being the user's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.field_example'. Fields attached to a user
+ *   such as 'user_picture' are available as 'content.user_picture'.
+ * - attributes: HTML attributes for the container element.
+ * - user: A Drupal User entity.
+ *
+ * @see template_preprocess_user()
+ */
+#}
+<article{{ attributes.addClass('profile user-dashboard') }}>
+  <h1 class="page-title">{{ 'Dashboard'|t }}</h1>
+
+  {{ drupal_view('user_orders_orange', 'dashboard', user.id) }}
+
+  <div class="user-dashboard__nav">
+    {% if user.hasPermission('userprotect.account.edit') %}
+      <a href="{{ base_path }}user/{{ user.id }}/edit" class="user-dashboard__nav-link user-dashboard__nav-link--account-details">
+        <div class="user-dashboard__nav-link__title">{{ 'Account Details'|t }}</div>
+        <div class="user-dashboard__nav-link__description">{{ 'Update password and other stuff'|t }}</div>
+      </a>
+    {% endif %}
+    {% if user.hasPermission('manage own commerce_payment_method') %}
+      <a href="{{ base_path }}user/{{ user.id }}/payment-methods" class="user-dashboard__nav-link user-dashboard__nav-link--payment-methods">
+        <div class="user-dashboard__nav-link__title">{{ 'Payment Methods'|t }}</div>
+        <div class="user-dashboard__nav-link__description">{{ 'Manage your payment types'|t }}</div>
+      </a>
+    {% endif %}
+    {% if user.hasPermission('view own commerce_order') %}
+      <a href="{{ base_path }}user/{{ user.id }}/orders" class="user-dashboard__nav-link user-dashboard__nav-link--orders">
+        <div class="user-dashboard__nav-link__title">{{ 'Orders'|t }}</div>
+        <div class="user-dashboard__nav-link__description">{{ 'Order history'|t }}</div>
+      </a>
+    {% endif %}
+    {% if user.hasPermission('view own profile') %}
+      <a href="{{ base_path }}user/{{ user.id }}/customer" class="user-dashboard__nav-link user-dashboard__nav-link--address-book">
+        <div class="user-dashboard__nav-link__title">{{ 'Address Book'|t }}</div>
+        <div class="user-dashboard__nav-link__description">{{ 'Edit shipping & billing addresses'|t }}</div>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if content %}
+    {{ content }}
+  {% endif %}
+
+  {% if footer_message %}
+    <div class="user-dashboard__footer-message">
+      {{ footer_message }}
+    </div>
+  {% endif %}
+</article>

@@ -19,6 +19,7 @@ ckeditor_stylesheets:
   - css/style.css
 
 regions:
+  above_site: 'Above Site'
   site_search: 'Site Search'
   header: 'Header'
   highlighted: 'Highlighted'
