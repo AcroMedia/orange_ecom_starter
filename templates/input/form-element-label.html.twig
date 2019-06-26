@@ -32,6 +32,13 @@
     required ? 'js-form-required',
   ]
 %}
+{#
+  If there label already has the class 'js-form-required' then set the boolean
+  as expected. See \Drupal\commerce_authnet\PluginForm\AcceptJs\PaymentMethodAddForm::buildCreditCardForm().
+#}
+{%
+  set required = attributes.hasClass('js-form-required')
+%}
 {% if title is not empty %}
   <label{{ attributes.addClass(classes) }}>{{ element }}{{ title }}
     {% if required and (title_display == 'before' or title_display == 'after') %}
