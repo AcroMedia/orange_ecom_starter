@@ -47,6 +47,15 @@
     <div class="product-teaser__title">
       <a href="{{ product_path }}" tabindex="-1">{{ product.title }}</a>
     </div>
+    {% if has_multiple_variations %}
+      <div class="product__variations-notice">
+        <div class="product__more-options-label">
+          <a href="{{ product_path }}" tabindex="-1">
+            {{ 'More Options'|t }}
+          </a>
+        </div>
+      </div>
+    {% endif %}
     <div class="product-teaser__price">
       {{ product.variation_price }}
     </div>

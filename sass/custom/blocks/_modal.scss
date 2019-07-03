@@ -1,0 +1,32 @@
+/**
+* Modal Blocks.
+*/
+.block--type--modal {
+  .modal-title {
+    padding-right: 25px;
+  }
+}
+.modal--block {
+  .modal-header {
+    border: 0;
+  }
+  .modal-body {
+    padding-bottom: 25px;
+  }
+  // Hide contextual links since they have display issues within modals.
+  div.contextual {
+    display: none !important;
+  }
+  .text-formatted {
+    > h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}

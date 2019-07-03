@@ -289,6 +289,28 @@ function orange_ecom_starter_preprocess_comment(&$variables) {
     $variables['created'] = t('@comment_date', [
       '@comment_date' => \Drupal::service('date.formatter')->format($comment->getCreatedTime(), 'custom', 'F j, Y')
     ]);
+
+    // Product Reviews.
+    if ($comment->bundle() == 'product_review') {
+      // Set average star rating.
+      $score_fragment = [
+        'whole' => 0,
+        'fraction' => 0,
+        'half' => 0,
+        'empty' => 5,
+      ];
+
+      $average = 0;
+
+      if (!empty($comment->field_star_rating->value)) {
+        $average = floatval($comment->field_star_rating->value) * 20;
+      }
+      if ($average > 0) {
+        $score_fragment = convert_granularity($average);
+      }
+
+      $variables['average_star_rating'] = $score_fragment;
+    }
   }
 }
 
@@ -338,8 +360,6 @@ function orange_ecom_starter_preprocess_page(&$variables) {
   $variables['youtube_url'] = theme_get_setting('youtube_url');
   $variables['linkedin_url'] = theme_get_setting('linkedin_url');
   $variables['pinterest_url'] = theme_get_setting('pinterest_url');
-
-
 }
 
 /**
@@ -359,8 +379,8 @@ function orange_ecom_starter_preprocess_page__view_store_product_listing(&$varia
 
   $list_parameters = $grid_parameters + ['list_view' => 1];
 
-  $variables['store_grid_url'] = Url::fromRoute($store_route, $grid_parameters);
-  $variables['store_list_url'] = Url::fromRoute($store_route, $list_parameters);
+  $variables['store_grid_url'] = Url::fromRoute('<current>', $grid_parameters);
+  $variables['store_list_url'] = Url::fromRoute('<current>', $list_parameters);
 
   // Make the category teaser render array available to the template if
   // a single category is active.
@@ -490,7 +510,7 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
         '#type' => 'inline_template',
         '#template' => '<div class="cart-form-summary__note">{{ note_text }}</div>',
         '#context' => [
-          'note_text' => t("Taxes, Shipping & Discounts will be applied during checkout"),
+          'note_text' => t('Taxes, Shipping & Discounts will be applied during checkout'),
         ],
         '#weight' => 98,
       ];
@@ -550,7 +570,7 @@ function orange_ecom_starter_form_alter(&$form, FormStateInterface $form_state, 
         '#type' => 'inline_template',
         '#template' => '<h2 class="commerce-checkout__section-title">{{ title_text }}</h2>',
         '#context' => [
-          'title_text' => t("Optional"),
+          'title_text' => t('Optional'),
         ],
         '#weight' => -99,
       ];
@@ -701,7 +721,7 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
 
       foreach ($cids as $cid) {
         $comment = Comment::load($cid);
-        $average += $comment->get('field_review_rating')->getValue()[0]['rating'];
+        $average += floatval($comment->field_star_rating->value) * 20;
       }
 
       if ($average > 0) {
@@ -709,7 +729,7 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
         $score_fragment = convert_granularity($average);
       }
 
-      $variables['average_review_rating'] = $score_fragment;
+      $variables['average_star_rating'] = $score_fragment;
     }
   }
 }
@@ -720,7 +740,8 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
  * For eg 10.5 will be returned as number 10 and 0.5.
  */
 function convert_granularity($score) {
-  $half = $whole = 0;
+  $half = 0;
+  $whole = 0;
   $granule = ($score * 5) / 100;
 
   // 1.
@@ -744,6 +765,29 @@ function convert_granularity($score) {
   ];
 
   return $score_fragment;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for commerce_product.
+ */
+function orange_ecom_starter_preprocess_commerce_product(&$variables) {
+  if ($product = $variables['elements']['#commerce_product']) {
+    // Get product variations.
+    $product_variations = $product->getVariations();
+
+    if (!empty($product_variations)) {
+      $active_variations = 0;
+      foreach ($product_variations as $variation) {
+        // Check if variation is active.
+        if ($variation->status->value == '1') {
+          $active_variations ++;
+        }
+      }
+      if ($active_variations >= 2) {
+        $variables['has_multiple_variations'] = TRUE;
+      }
+    }
+  }
 }
 
 /**
@@ -776,6 +820,24 @@ function orange_ecom_starter_preprocess_input(&$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_form_element_alter().
+ */
+function orange_ecom_starter_theme_suggestions_form_element_alter(array &$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#name'])) {
+    $suggestions[] = 'form_element__' . $element['#name'];
+  }
+  if (isset($element['#type'])) {
+    $suggestions[] = 'form_element__type__' . $element['#type'];
+  }
+  if (isset($element['#form_id'])) {
+    $suggestions[] = 'form_element__form_id__' . $element['#form_id'];
+    $suggestions[] = 'form_element__' . $element['#form_id'] . '__' . $element['#type'];
+  }
+}
+
+/**
  * Implements hook_preprocess_form_element(&$variables).
  */
 function orange_ecom_starter_preprocess_form_element(&$variables) {
@@ -785,7 +847,7 @@ function orange_ecom_starter_preprocess_form_element(&$variables) {
     $variables['element_id'] = $variables['element']['#id'];
   }
   if (isset($variables['element']['#attributes']['class'])) {
-    if (in_array('js-text-full', $variables['element']['#attributes']['class'])) {
+    if ($variables['element']['#type'] == 'textarea' && in_array('js-text-full', $variables['element']['#attributes']['class'])) {
       $variables['is_js_text_widget'] = TRUE;
     }
   }
@@ -860,11 +922,24 @@ function orange_ecom_starter_preprocess_swiftmailer(&$variables) {
  * Implements hook_preprocess_user(&$variables).
  */
 function orange_ecom_starter_preprocess_user(&$variables) {
+  $account = $variables['elements']['#user'];
+
   // Base path variable.
   $variables['base_path'] = base_path();
 
   // Set variables from theme settings.
   $variables['footer_message'] = Markup::create(theme_get_setting('footer_message.value'));
+}
+
+/**
+ * Implements hook_preprocess_user(&$variables).
+ */
+function orange_ecom_starter_preprocess_username(&$variables) {
+  $account = $variables['account'];
+
+  if (isset($account->field_display_name->value)) {
+    $variables['display_name'] = $account->field_display_name->value;
+  }
 }
 
 /**
@@ -911,6 +986,9 @@ function orange_ecom_starter_preprocess_maintenance_page(&$variables) {
 function orange_ecom_starter_preprocess_menu_local_task(&$variables) {
   $url = $variables['link']['#url'];
   if ($url instanceof Url && $url->getRouteName() == 'entity.user.canonical') {
-    $variables["link"]["#title"] = t('Dashboard');
+    $variables['link']['#title'] = t('Dashboard');
+  }
+  if ($url instanceof Url && $url->getRouteName() == 'entity.user.edit_form') {
+    $variables['link']['#title'] = t('Account Details');
   }
 }

@@ -340,6 +340,29 @@
     height: 50px;
   }
 }
+.product__variations-notice {
+  margin: 0 0 5px;
+}
+.product__more-options-label a {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 11px;
+  line-height: 1;
+  color: $c-body;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: top;
+  background: $gray-lighter;
+  border: 0;
+  border-radius: $border-radius;
+
+  &:hover,
+  &:focus {
+    color: $c-link;
+    background: $gray-lighter;
+  }
+}
 
 /**
  * Product Node.
@@ -481,12 +504,13 @@
 .product__average-rating {
   font-weight: bold;
 
-  .fivestar-widget {
-    font-size: 0;
-  }
   div {
     display: inline-block;
     vertical-align: top;
+  }
+  .star-rating {
+    position: relative;
+    top: 1px;
   }
 }
 .product__brands {
@@ -908,15 +932,15 @@
   padding-left: 0;
 
   // Comment bubble icon.
-  &:before {
+  &::before {
     display: none;
   }
   .comment__date-created {
     margin: 0 0 5px 0;
     color: #999;
   }
-  .field--name-field-review-rating {
-    margin: 0 0 15px 0;
+  .star-rating {
+    margin: 0 0 15px;
   }
   .content p {
     margin: 0;
@@ -950,6 +974,13 @@
     }
   }
 }
+.product__reviews .field--name-field-product-reviews {
+  margin-top: 40px;
+
+  @media (min-width: $screen-sm-min) {
+    margin-top: 0;
+  }
+}
 .product__reviews-header-rating {
   display: block;
   margin: 0 0 20px 0;
@@ -957,6 +988,9 @@
 
   @media (min-width: $screen-xs-min) {
     display: inline-block;
+    margin: 10px 0 0 0;
+  }
+  @media (min-width: $screen-sm-min) {
     margin: 15px 0 0 0;
   }
 }
@@ -981,86 +1015,6 @@
     }
     .review-on {
       display: inline;
-    }
-  }
-}
-
-// Fivestar Overrides.
-.fivestar-basic,
-.fivestar-default {
-  div.fivestar-widget,
-  div.fivestar-widget-static {
-    .star {
-      position: relative;
-      width: 20px;
-      height: 20px;
-      background: none;
-
-      // Icon.
-      &:before {
-        @include fa-icon();
-        content: $fa-var-star-o;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        color: $c-link;
-        text-indent: 0;
-        z-index: 0;
-      }
-      a {
-        position: relative;
-        background: none !important;
-        z-index: 1;
-      }
-      // Whole star.
-      &.on {
-        background: none;
-
-        // Icon.
-        &:before {
-          content: $fa-var-star;
-          color: $c-link;
-        }
-      }
-      // Half star.
-      &.half-on {
-        background: none;
-
-        // Icon.
-        &:before {
-          content: $fa-var-star-half-o;
-          color: $c-link;
-        }
-      }
-      &.hover {
-        background: none;
-
-        // Icon.
-        &:before {
-          color: darken($c-link, 10%);
-        }
-      }
-      // Empty star.
-      span.off {
-        background: none;
-
-        // Icon.
-        &:before {
-          content: $fa-var-star-o;
-          color: $c-link;
-        }
-      }
-    }
-  }
-  .select-wrapper {
-    max-width: none;
-
-    // Hide pseudo icon.
-    &:after {
-      display: none;
     }
   }
 }

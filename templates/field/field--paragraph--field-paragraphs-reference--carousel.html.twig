@@ -28,6 +28,13 @@
     'field--label-' ~ label_display,
   ]
 %}
+
+{# Add class to hide carousel navigation if there's only 1 slide. #}
+{% set item_total = items|length %}
+{% if item_total < 2 %}
+  {% set attributes = attributes.addClass('component-carousel__slider--no-nav') %}
+{% endif %}
+
 <div{{ attributes.addClass(classes, 'component-carousel__slider') }}>
   {% for item in items %}
     <div{{ item.attributes.addClass('component-carousel__slider__item') }}>{{ item.content }}</div>

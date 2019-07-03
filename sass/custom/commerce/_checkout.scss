@@ -30,16 +30,39 @@
       margin: 20px 0 30px 0;
       padding: 0;
       border: none;
-    }
-    // Payment Information fieldset.
-    &.checkout-pane-payment-information > legend {
-      // Icon.
-      &:before {
-        @include fa-icon();
-        content: $fa-var-lock;
-        margin-right: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      legend {
+        font-size: 20px;
       }
     }
+
+    // Payment Information.
+    &.checkout-pane-payment-information {
+      margin: 20px 0 40px 0;
+      padding: 25px 15px;
+      border: 2px solid $gray-lighter;
+
+      @media (min-width: $screen-xs-min) {
+        padding: 25px 30px;
+      }
+      > legend {
+        float: left;
+        display: block;
+        margin: 0 0 20px;
+        padding: 0;
+      }
+      > .fieldset-wrapper {
+        clear: both;
+      }
+      // Sub fieldset legends.
+      .fieldset-wrapper fieldset legend {
+        font-size: 20px;
+      }
+    }
+
     &#edit-login-returning-customer,
     &#edit-login-guest {
       border: none;
@@ -52,7 +75,12 @@
         margin-right: 15px;
       }
     }
+    // Shipping Information.
     &.checkout-pane-shipping-information {
+      margin-bottom: 0;
+      padding-bottom: 20px;
+      border-bottom: 0;
+
       .btn {
         margin-left: 0;
       }
@@ -95,7 +123,27 @@
   }
   // Credit card number.
   .form-item-payment-information-add-payment-method-payment-details-number {
-    width: 165px;
+    position: relative;
+    padding-left: 52px;
+    width: 217px;
+
+    // Lock icon.
+    &::before {
+      @include fa-icon();
+      content: $fa-var-lock;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 12px 0 0;
+      width: 44px;
+      height: 100%;
+      font-size: 26px;
+      text-align: center;
+      color: $c-white;
+      background: $gray-light;
+      border-radius: $border-radius;
+    }
   }
   // Credit card security code.
   .form-item-payment-information-add-payment-method-payment-details-security-code {
@@ -391,6 +439,28 @@ div[id*="edit-coupon-redemption-form"] {
 .commerce-checkout__helper-text {
   color: $gray-light;
   font-style: italic;
+}
+
+/**
+ * Checkout Review.
+ */
+.checkout-pane-review {
+  // Edit buttons.
+  .checkout-pane__edit {
+    // Hide text so we can just display an icon.
+    font-size: 0;
+
+    a {
+      text-decoration: none;
+
+      // Gear icon.
+      &::before {
+        @include fa-icon();
+        content: $fa-var-gear;
+        font-size: 26px;
+      }
+    }
+  }
 }
 
 /**

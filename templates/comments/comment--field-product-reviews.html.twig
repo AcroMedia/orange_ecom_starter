@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for comments.
+ * Comment theme for: Product Reviews.
  *
  * Available variables:
  * - author: Comment author. Can be a link or plain text.
@@ -81,7 +81,9 @@
   <header class="comment__header">
     <div class="comment__author">
       {% set author_warning = comment.owner.anonymous ? '(not verified)'|t %}
-      {% if comment.name.value %}
+      {% if not comment.owner.anonymous %}
+        {{ author }}
+      {% elseif comment.name.value %}
         {{ comment.name.value }} {{ author_warning }}
       {% else %}
         {{ 'Anonymous'|t }} {{ author_warning }}
@@ -90,6 +92,29 @@
     <div class="comment__date-created">{{ created }}</div>
   </header>
   <div{{ content_attributes.addClass('content') }}>
+    {% if average_star_rating|length %}
+      <div class="star-rating clearfix">
+        {# Whole star. #}
+        {% if average_star_rating.whole %}
+          {% for i in 1..average_star_rating.whole %}
+            <div class="star on"></div>
+          {% endfor %}
+        {% endif %}
+
+        {# Half star. #}
+        {% if average_star_rating.half %}
+          <div class="star half-on"></div>
+        {% endif %}
+
+        {# Empty star. #}
+        {% if average_star_rating.empty %}
+          {% for i in range(1,average_star_rating.empty) %}
+            <div class="star"></div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endif %}
+
     {{ content }}
   </div>
 </article>

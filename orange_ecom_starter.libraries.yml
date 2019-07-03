@@ -64,6 +64,15 @@ aos:
     - core/jquery
     - core/drupal
 
+block-modal:
+  version: 1.x
+  js:
+    js/custom/blocks/modal.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - orange_ecom_starter/js-cookie
+
 paragraph-carousel:
   version: 1.x
   js:

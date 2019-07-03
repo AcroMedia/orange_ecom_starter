@@ -122,3 +122,140 @@
 .comment__author {
   font-weight: bold;
 }
+
+// Star Rating.
+.star-rating {
+  font-size: 0;
+
+  .star {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: none;
+    vertical-align: top;
+
+    // Icon.
+    &::before {
+      @include fa-icon();
+      content: $fa-var-star-o;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      color: $c-link;
+      text-indent: 0;
+      z-index: 0;
+    }
+    a {
+      position: relative;
+      background: none !important;
+      z-index: 1;
+    }
+    // Whole star.
+    &.on {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: $fa-var-star;
+        color: $c-link;
+      }
+    }
+    // Half star.
+    &.half-on {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: $fa-var-star-half-o;
+        color: $c-link;
+      }
+    }
+    &.hover {
+      background: none;
+
+      // Icon.
+      &::before {
+        color: $c-link-hover;
+      }
+    }
+    // Empty star.
+    span.off {
+      background: none;
+
+      // Icon.
+      &::before {
+        content: $fa-var-star-o;
+        color: $c-link;
+      }
+    }
+  }
+}
+
+// Star Rating Field.
+.field--name-field-star-rating {
+  .form-type-radio {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+  }
+  // Clearfix.
+  .fieldset-wrapper::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  .form-radios {
+    float: left;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+  }
+  .form-radios > input {
+    display: none;
+  }
+  // Star icon.
+  .form-radios > label::before {
+    @include fa-icon();
+    content: $fa-var-star-o;
+    font-size: 20px;
+  }
+  .form-radios > label {
+    float: right;
+    margin: 0 2px 0 0;
+    padding: 0;
+    font-size: 0;
+    color: $c-link;
+    cursor: pointer;
+  }
+  // Full star when clicked.
+  .form-radios > input:checked ~ label {
+    color: $c-link;
+    // Change icon to solid star.
+    &::before {
+      content: $fa-var-star;
+    }
+  }
+  // Hover for current star.
+  .form-radios:not(:checked) > label:hover,
+  // Hover for previous stars in list.
+  .form-radios:not(:checked) > label:hover ~ label,
+  // Hover for current star when changing rating.
+  .form-radios > input:checked + label:hover,
+  .form-radios > input:checked ~ label:hover,
+  // Lighten current selection.
+  .form-radios > label:hover ~ input:checked ~ label,
+  .form-radios > input:checked ~ label:hover ~ label {
+    color: $c-link;
+    // Change icon to solid star.
+    &::before {
+      content: $fa-var-star;
+    }
+  }
+}

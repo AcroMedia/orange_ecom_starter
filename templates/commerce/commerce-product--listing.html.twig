@@ -48,6 +48,15 @@
       <h2 class="product__title">
         <a href="{{ product_path }}" tabindex="-1">{{ product.title }}</a>
       </h2>
+      {% if has_multiple_variations %}
+        <div class="product__variations-notice">
+          <div class="product__more-options-label">
+            <a href="{{ product_path }}" tabindex="-1">
+              {{ 'More Options'|t }}
+            </a>
+          </div>
+        </div>
+      {% endif %}
       <div class="product__price">
         {{ product.variation_price }}
       </div>
@@ -60,9 +69,9 @@
         <div class="product__sku">
           {{ product.variation_sku }}
         </div>
-        {% if reviews_are_active and average_review_rating|length %}
+        {% if reviews_are_active and average_star_rating|length %}
           <div class="product__average-rating">
-            {{ 'Average Rating'|t }}: {{ average_review_rating_stars }}
+            {{ 'Average Rating'|t }}: {{ average_star_rating_stars }}
           </div>
         {% endif %}
       </div>

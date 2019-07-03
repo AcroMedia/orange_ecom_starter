@@ -37,29 +37,27 @@
 {% endif %}
 
 {# Average Rating. #}
-{% set average_review_rating_stars %}
-  {% if average_review_rating|length %}
-    <div class="fivestar-basic">
-      <div class="fivestar-widget clearfix">
-        {# Whole star. #}
-        {% if average_review_rating.whole %}
-          {% for i in 1..average_review_rating.whole %}
-            <div class="star on"></div>
-          {% endfor %}
-        {% endif %}
+{% set average_star_rating_stars %}
+  {% if average_star_rating|length %}
+    <div class="star-rating clearfix">
+      {# Whole star. #}
+      {% if average_star_rating.whole %}
+        {% for i in 1..average_star_rating.whole %}
+          <div class="star on"></div>
+        {% endfor %}
+      {% endif %}
 
-        {# Half star. #}
-        {% if average_review_rating.half %}
-          <div class="star half-on"></div>
-        {% endif %}
+      {# Half star. #}
+      {% if average_star_rating.half %}
+        <div class="star half-on"></div>
+      {% endif %}
 
-        {# Empty star. #}
-        {% if average_review_rating.empty %}
-          {% for i in range(1,average_review_rating.empty) %}
-            <div class="star"></div>
-          {% endfor %}
-        {% endif %}
-      </div>
+      {# Empty star. #}
+      {% if average_star_rating.empty %}
+        {% for i in range(1,average_star_rating.empty) %}
+          <div class="star"></div>
+        {% endfor %}
+      {% endif %}
     </div>
   {% endif %}
 {% endset %}
@@ -98,9 +96,6 @@
                     </li>
                     <li class="social-media-sharing-menu__item">
                       <a class="social-media-sharing-menu__link social-media-sharing-menu__link--pinterest" href="https://pinterest.com/pin/create/button/?url={{ product_absolute_url|url_encode }}&amp;media={{ product_absolute_url|url_encode }}&amp;description={{ product_entity.title.value|url_encode }}" target="_blank" aria-label="{{ 'Share on Pinterest'|t }}" title="{{ 'Share on Pinterest'|t }}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="social-media-sharing-menu__item">
-                      <a class="social-media-sharing-menu__link social-media-sharing-menu__link--google-plus" href="https://plus.google.com/share?url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Google+'|t }}" title="{{ 'Share on Google+'|t }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                     </li>
                   </ul>
                 </div>
@@ -192,9 +187,9 @@
                   <div class="product__sku">
                     {{ product.variation_sku }}
                   </div>
-                  {% if reviews_are_active and average_review_rating|length %}
+                  {% if reviews_are_active and average_star_rating|length %}
                     <div class="product__average-rating">
-                      {{ 'Average Rating'|t }}: {{ average_review_rating_stars }}
+                      {{ 'Average Rating'|t }}: {{ average_star_rating_stars }}
                     </div>
                   {% endif %}
                 </div>
@@ -230,9 +225,6 @@
                         </li>
                         <li class="social-media-sharing-menu__item">
                           <a class="social-media-sharing-menu__link social-media-sharing-menu__link--pinterest" href="https://pinterest.com/pin/create/button/?url={{ product_absolute_url|url_encode }}&amp;media={{ product_absolute_url|url_encode }}&amp;description={{ product_entity.title.value|url_encode }}" target="_blank" aria-label="{{ 'Share on Pinterest'|t }}" title="{{ 'Share on Pinterest'|t }}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        </li>
-                        <li class="social-media-sharing-menu__item">
-                          <a class="social-media-sharing-menu__link social-media-sharing-menu__link--google-plus" href="https://plus.google.com/share?url={{ product_absolute_url|url_encode }}" target="_blank" aria-label="{{ 'Share on Google+'|t }}" title="{{ 'Share on Google+'|t }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                         </li>
                       </ul>
                     </div>
@@ -331,10 +323,10 @@
                       <div role="tabpanel" class="tab-pane fade {{ (product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id) ? '' : 'active in' }}" id="reviews">
                         <div class="product__reviews">
                           <header class="product__reviews-header clearfix">
-                            {% if average_review_rating|length %}
+                            {% if average_star_rating|length %}
                               <h2 class="tab-pane__title">{{ 'Overall Rating'|t }}</h2>
                               <div class="product__reviews-header-rating">
-                                {{ average_review_rating_stars }}
+                                {{ average_star_rating_stars }}
                               </div>
                             {% endif %}
 

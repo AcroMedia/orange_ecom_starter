@@ -115,6 +115,11 @@
     }
   }
 }
+// Hide carousel navigation if there's only 1 slide.
+.component-carousel .component-carousel__slider--no-nav .slick-dots,
+.component-carousel .component-carousel__slider--no-nav .slick-arrow {
+  display: none !important;
+}
 .component-carousel-slide {
   position: relative;
   margin: 0 auto;
