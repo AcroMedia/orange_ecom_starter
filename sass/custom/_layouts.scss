@@ -1,0 +1,48 @@
+/**
+ * Layouts.
+ */
+.layout-section {
+  clear: both;
+  margin: 0;
+  padding: 45px 0;
+
+  .layout__region > div[class*='component']:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// No Padding.
+.layout-section--no-padding {
+  padding: 0;
+}
+
+// Full Width.
+.layout-section--full-width {
+  > .container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: auto;
+  }
+  // 1 Column Layout.
+  &.layout--1-col {
+    > .container {
+      margin-right: auto;
+      margin-left: auto;
+      padding-left: 0;
+      padding-right: 0;
+      width: auto;
+
+      > .row {
+        margin-left: 0;
+        margin-right: 0;
+
+        > div[class*='col'] {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}

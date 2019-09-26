@@ -84,6 +84,9 @@
       .btn {
         margin-left: 0;
       }
+      .btn[id*='recalculate-shipping'] {
+        margin-top: 20px;
+      }
     }
   }
   // Phone number field.
@@ -129,8 +132,9 @@
 
     // Lock icon.
     &::before {
-      @include fa-icon();
-      content: $fa-var-lock;
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-lock);
       position: absolute;
       top: 0;
       left: 0;
@@ -186,6 +190,12 @@
     padding: 0 0 30px 0;
     border: none;
     border-bottom: 1px solid #ccc;
+  }
+  // Payment Information - Add Payment Method.
+  div[id*='payment-information-add-payment-method-billing-information'] {
+    .btn {
+      margin-left: 0;
+    }
   }
 }
 .layout-region-checkout-footer {
@@ -318,9 +328,10 @@
     }
   }
   // Arrow icon.
-  &:after {
-    @include fa-icon();
-    content: $fa-var-chevron-right;
+  &::after {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-right);
     position: absolute;
     top: 3px;
     right: -19px;
@@ -453,10 +464,11 @@ div[id*="edit-coupon-redemption-form"] {
     a {
       text-decoration: none;
 
-      // Gear icon.
+      // Gear/Cog icon.
       &::before {
-        @include fa-icon();
-        content: $fa-var-gear;
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-cog);
         font-size: 26px;
       }
     }
@@ -481,9 +493,6 @@ div[id*="edit-coupon-redemption-form"] {
 
   h2 {
     margin-top: 0;
-    text-transform: capitalize;
-  }
-  .form-submit {
     text-transform: capitalize;
   }
   .confirm-parent,

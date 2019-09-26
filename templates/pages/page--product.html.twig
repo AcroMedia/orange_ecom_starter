@@ -2,6 +2,18 @@
 
 {% block page_body %}
   <div class="site-content">
+    {% if page.header %}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="site-content__header">
+              {{ page.header }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
     {# Main content. #}
     <main class="content__main-content clearfix" role="main">
       <div class="visually-hidden"><a id="main-content" tabindex="-1"></a></div>

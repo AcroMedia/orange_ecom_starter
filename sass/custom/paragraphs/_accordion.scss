@@ -23,12 +23,15 @@
     border-bottom: 1px solid #e6e6e6;
 
     // Arrow icon.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-angle-right;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-chevron-right);
       color: lighten($gray-light, 10%);
       position: absolute;
+      top: 23px;
       left: 0;
+      font-size: 20px;
       transition: all .2s ease-in-out;
     }
     &:hover,
@@ -46,8 +49,8 @@
     color: $c-body;
 
     // Arrow icon.
-    &:before {
-      content: $fa-var-angle-down;
+    &::before {
+      content: fa-content($fa-var-chevron-down);
     }
     &:hover,
     &:focus {

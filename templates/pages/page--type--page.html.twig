@@ -36,6 +36,12 @@
       {% endif %}
       {# / Page Banner. #}
 
+      {% if page.header %}
+        <div class="site-content__header">
+          {{ page.header }}
+        </div>
+      {% endif %}
+
       <div class="row">
         {# Left Sidebar. #}
         {% if left_sidebar_exists %}

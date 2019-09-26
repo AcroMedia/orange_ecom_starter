@@ -277,7 +277,8 @@
 
         // Checkbox.
         &:before {
-          @include fa-icon();
+          @extend %fa-icon;
+          @extend .fas;
           content: '';
           position: absolute;
           top: 0;
@@ -307,8 +308,8 @@
           }
         }
         // Active checkbox.
-        &.is-active:before {
-          content: $fa-var-check;
+        &.is-active::before {
+          content: fa-content($fa-var-check);
           text-decoration: none;
         }
         // Hide status symbol.
@@ -371,9 +372,10 @@
         border: 1px solid $c-body;
 
         // Close icon.
-        &:after {
-          @include fa-icon();
-          content: $fa-var-times;
+        &::after {
+          @extend %fa-icon;
+          @extend .fas;
+          content: fa-content($fa-var-times);
           position: absolute;
           top: 0;
           right: 0;
@@ -456,8 +458,9 @@
 
   // Icon.
   &::before {
-    @include fa-icon();
-    content: $fa-var-times;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-times);
   }
   &:hover,
   &:focus {
@@ -492,16 +495,18 @@
   }
   // Filter icon.
   &::before {
-    @include fa-icon();
-    content: $fa-var-filter;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-filter);
     position: relative;
     top: -1px;
     margin: 0 8px 0 0;
   }
   // Arrow icon.
   &::after {
-    @include fa-icon();
-    content: $fa-var-angle-right;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-right);
     margin: 0 0 0 7px;
     font-size: 17px;
   }
@@ -512,8 +517,8 @@
     background: darken($gray-darker, 20%);
 
     // Close icon.
-    &:before {
-      content: $fa-var-times;
+    &::before {
+      content: fa-content($fa-var-times);
     }
   }
 }

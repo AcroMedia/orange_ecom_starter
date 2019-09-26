@@ -42,9 +42,10 @@
         transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out;
       }
       // Zoom icon.
-      &:after {
-        @include fa-icon();
-        content: $fa-var-search-plus;
+      &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-search-plus);
         position: absolute;
         top: 10px;
         left: 11px;
@@ -112,18 +113,19 @@
     left: 3px;
 
     // Arrow.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-angle-left;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-chevron-left);
       display: inline-block;
       margin: 0;
       padding: 0;
       color: #6a6a6a;
-      font-size: 50px;
+      font-size: 40px;
       text-align: center;
       outline: none;
     }
-    &:hover:before {
+    &:hover::before {
       opacity: 0.6;
     }
   }
@@ -131,18 +133,19 @@
     right: 3px;
 
     // Arrow.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-angle-right;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-chevron-right);
       display: inline-block;
       margin: 0;
       padding: 0;
       color: #6a6a6a;
-      font-size: 50px;
+      font-size: 40px;
       text-align: center;
       outline: none;
     }
-    &:hover:before {
+    &:hover::before {
       opacity: 0.6;
     }
   }
@@ -150,7 +153,7 @@
   .slick-prev {
     &.slick-disabled {
       // Arrow.
-      &:before {
+      &::before {
         color: #ccc;
         opacity: 1;
       }
@@ -210,8 +213,9 @@
 
   // Play icon.
   &:after {
-    @include fa-icon();
-    content: $fa-var-youtube-play;
+    @extend %fa-icon;
+    @extend .fab;
+    content: fa-content($fa-var-youtube);
     display: block;
     margin: auto;
     position: absolute;

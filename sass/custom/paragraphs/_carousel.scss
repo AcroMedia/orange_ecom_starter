@@ -77,18 +77,19 @@
       width: 50px;
     }
     // Icon.
-    &:before {
-      @include fa-icon();
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
       display: block;
       margin: 0;
       padding: 0;
-      font-size: 30px;
+      font-size: 25px;
       color: #dedede;
       outline: none;
       text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.8);
 
       @media (min-width: $screen-sm-min) {
-        font-size: 60px;
+        font-size: 50px;
       }
     }
     &:hover {
@@ -102,16 +103,16 @@
     left: 0;
 
     // Icon.
-    &:before {
-      content: $fa-var-angle-left;
+    &::before {
+      content: fa-content($fa-var-chevron-left);
     }
   }
   .slick-arrow.slick-next {
     right: 0;
 
     // Icon.
-    &:before {
-      content: $fa-var-angle-right;
+    &::before {
+      content: fa-content($fa-var-chevron-right);
     }
   }
 }

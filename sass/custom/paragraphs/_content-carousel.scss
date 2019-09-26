@@ -26,18 +26,19 @@
       width: 50px;
     }
     // Icon.
-    &:before {
-      @include fa-icon();
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
       display: block;
       margin: 0;
       padding: 0;
-      font-size: 40px;
+      font-size: 30px;
       color: $gray-border;
       outline: none;
       @include smooth-transition();
 
       @media (min-width: $screen-sm-min) {
-        font-size: 60px;
+        font-size: 50px;
       }
     }
     &:hover {
@@ -59,16 +60,16 @@
     left: 0;
 
     // Icon.
-    &:before {
-      content: $fa-var-angle-left;
+    &::before {
+      content: fa-content($fa-var-chevron-left);
     }
   }
   .slick-arrow.slick-next {
     right: 0;
 
     // Icon.
-    &:before {
-      content: $fa-var-angle-right;
+    &::before {
+      content: fa-content($fa-var-chevron-right);
     }
   }
 }

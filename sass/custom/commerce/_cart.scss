@@ -27,16 +27,16 @@
     padding: 15px 0 15px 15px;
   }
   .cart-block--summary > a {
-
     // Icon.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-shopping-cart;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-shopping-cart);
       margin: 0 8px 0 0;
       padding: 0;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 1.0;
-      color: #fff;
+      color: $c-white;
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
     }
     &:hover {
@@ -223,7 +223,6 @@
     .btn {
       margin-right: 0;
       margin-left: 10px;
-      text-transform: capitalize;
 
       &:first-child {
         margin-left: 0;
@@ -458,8 +457,9 @@
   }
   // Remove icon.
   &:after {
-    @include fa-icon();
-    content: $fa-var-times-circle;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-times-circle);
     color: #ccc;
     font-size: 20px;
     @include smooth-transition();

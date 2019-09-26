@@ -11,14 +11,20 @@
 
   <div class="site-content">
     <div class="container">
+      {% if page.header %}
+        <div class="site-content__header">
+          {{ page.header }}
+        </div>
+      {% endif %}
+
       {% if page.store_filters %}
         <div class="row">
           <div class="col-md-12">
             <div class="store-filters">
               {{ page.store_filters }}
               <div class="store-display-switcher">
-                <a href="{{ store_grid_url }}" class="store-display-switcher__item store-display-switcher__item--grid {{ (store_list_view_enabled) != 1 ? 'is-active' : '' }}" title="{{ 'Grid View'|t }}" aria-label="{{ 'Grid View'|t }}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-                <a href="{{ store_list_url }}" class="store-display-switcher__item store-display-switcher__item--list {{ (store_list_view_enabled) == 1 ? 'is-active' : '' }}" title="{{ 'List View'|t }}" aria-label="{{ 'List View'|t }}"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                <a href="{{ store_grid_url }}" class="store-display-switcher__item store-display-switcher__item--grid {{ (store_list_view_enabled) != 1 ? 'is-active' : '' }}" title="{{ 'Grid View'|t }}" aria-label="{{ 'Grid View'|t }}"><i class="fas fa-th-large" aria-hidden="true"></i></a>
+                <a href="{{ store_list_url }}" class="store-display-switcher__item store-display-switcher__item--list {{ (store_list_view_enabled) == 1 ? 'is-active' : '' }}" title="{{ 'List View'|t }}" aria-label="{{ 'List View'|t }}"><i class="fas fa-bars" aria-hidden="true"></i></a>
               </div>
             </div>
           </div>

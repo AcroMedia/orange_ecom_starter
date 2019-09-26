@@ -114,7 +114,7 @@
   }
   .form-submit--trigger {
     position: absolute;
-    top: 5px;
+    top: 6px;
     right: 10px;
     display: block;
     margin: 0;
@@ -127,9 +127,10 @@
     }
     // Search icon.
     &:before {
-      @include fa-icon();
-      content: $fa-var-search;
-      font-size: 19px;
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-search);
+      font-size: 18px;
       color: $gray-base;
       transition: color .2s ease-in-out;
     }

@@ -55,9 +55,10 @@
       border-radius: 5px 0 0 5px;
 
       // Arrow icon.
-      &:after {
-        @include fa-icon();
-        content: $fa-var-caret-down;
+      &::after {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-caret-down);
         margin: 0 0 0 5px;
       }
     }
@@ -96,9 +97,10 @@
         background: #ccc;
 
         // Pseudo arrow so items line up with parent menu.
-        &:after {
-          @include fa-icon();
-          content: $fa-var-caret-down;
+        &::after {
+          @extend %fa-icon;
+          @extend .fas;
+          content: fa-content($fa-var-caret-down);
           margin: 0 0 0 5px;
           visibility: hidden;
         }

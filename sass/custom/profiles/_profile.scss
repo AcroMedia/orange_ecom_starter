@@ -1,0 +1,131 @@
+/**
+ * Profile.
+ */
+
+// User Customer Profile & Address Book.
+form.profile-customer-edit-form,
+form.profile-customer-add-form {
+  details[id*='edit-address'] {
+    padding: 0;
+    border: 0;
+
+    > summary {
+      display: none;
+    }
+    > .details-wrapper {
+      padding: 0;
+    }
+  }
+}
+
+// Address Book.
+.address-book__container {
+  position: relative;
+  padding-bottom: 40px;
+}
+.address-book__add-link {
+  @extend .btn;
+  @extend .btn--default;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+}
+.address-book__empty-text {
+  margin: 0 0 20px;
+}
+.address-book__profiles {
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: left;
+  // Neg. margin to offset listing items.
+  margin: 20px -10px;
+  padding: 0;
+
+  @media (min-width: $screen-xs-min) {
+    // Neg. margin to offset listing items.
+    margin: 20px -10px;
+  }
+  @media (min-width: $screen-md-min) {
+    // Neg. margin to offset listing items.
+    margin: 20px -15px;
+  }
+  > .address-book__profile {
+    flex: none;
+    position: relative;
+    float: none;
+    margin: 0 0 20px 0;
+    padding: 0 10px;
+    width: 100%;
+    background: none;
+
+    @media (min-width: $screen-sm-ph) {
+      padding: 0 10px;
+      width: 50%;
+    }
+    @media (min-width: $screen-lg-min) {
+      padding: 0 15px;
+      width: 25%;
+    }
+  }
+  .profile-item {
+    position: relative;
+    margin: 0 0 20px;
+    padding: 24px 24px 38px;
+    height: 100%;
+    border-radius: 8px;
+    border: 1px solid $gray-border;
+    box-shadow: 0 2px 3px 0 $gray-border;
+
+    .given-name,
+    .family-name {
+      font-weight: bold;
+    }
+  }
+  // Default profile.
+  > .address-book__profile--default .profile-item {
+    border: 2px solid $c-link;
+  }
+}
+.address-book__operations {
+  position: absolute;
+  left: 40px;
+  bottom: 24px;
+  clear: both;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+
+  > a {
+    position: relative;
+    display: inline-block;
+    margin: 0 8px 0 0;
+    padding: 0;
+    font-size: 14px;
+    text-transform: lowercase;
+    vertical-align: top;
+
+    // Line break.
+    &::after {
+      position: relative;
+      content: '';
+      display: inline-block;
+      margin: 4px 0 0 8px;
+      padding: 0;
+      width: 1px;
+      height: 13px;
+      background: $gray;
+      vertical-align: top;
+    }
+    &:last-child {
+      margin-right: 0;
+
+      // Line break.
+      &::after {
+        margin-left: 0;
+        background: transparent;
+      }
+    }
+  }
+}

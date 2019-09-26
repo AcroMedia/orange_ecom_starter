@@ -104,23 +104,24 @@
 
     // Icons.
     &:before {
-      font-family: $f-font-awesome;
+      @extend %fa-icon;
+      @extend .fab;
       font-size: 18px;
     }
   }
   // Need more? Font Awesome variables at: sass/contrib/font-awesome/_variables.scss
-  .menu__item--facebook a:before { content: $fa-var-facebook; }
-  .menu__item--twitter a:before { content: $fa-var-twitter; }
-  .menu__item--instagram a:before { content: $fa-var-instagram; }
-  .menu__item--google-plus a:before { content: $fa-var-google-plus; }
-  .menu__item--pinterest a:before { content: $fa-var-pinterest; }
-  .menu__item--linkedin a:before { content: $fa-var-linkedin; }
-  .menu__item--youtube a:before { content: $fa-var-youtube-play; }
-  .menu__item--vimeo a:before { content: $fa-var-vimeo; }
-  .menu__item--snapchat a:before { content: $fa-var-snapchat; }
-  .menu__item--vine a:before { content: $fa-var-vine; }
-  .menu__item--yelp a:before { content: $fa-var-yelp; }
-  .menu__item--trip-advisor a:before { content: $fa-var-tripadvisor; }
+  .menu__item--facebook a:before { content: fa-content($fa-var-facebook); }
+  .menu__item--twitter a:before { content: fa-content($fa-var-twitter); }
+  .menu__item--instagram a:before { content: fa-content($fa-var-instagram); }
+  .menu__item--google-plus a:before { content: fa-content($fa-var-google-plus); }
+  .menu__item--pinterest a:before { content: fa-content($fa-var-pinterest); }
+  .menu__item--linkedin a:before { content: fa-content($fa-var-linkedin); }
+  .menu__item--youtube a:before { content: fa-content($fa-var-youtube); }
+  .menu__item--vimeo a:before { content: fa-content($fa-var-vimeo); }
+  .menu__item--snapchat a:before { content: fa-content($fa-var-snapchat); }
+  .menu__item--vine a:before { content: fa-content($fa-var-vine); }
+  .menu__item--yelp a:before { content: fa-content($fa-var-yelp); }
+  .menu__item--trip-advisor a:before { content: fa-content($fa-var-tripadvisor); }
 }
 
 /**
@@ -295,9 +296,10 @@
   vertical-align: top;
 
   // Search icon.
-  &:before {
-    @include fa-icon();
-    content: $fa-var-search;
+  &::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-search);
     transition: color .2s ease-in-out;
   }
   &:hover,
@@ -434,9 +436,10 @@
       font-size: 17px;
 
       // Sub item icon.
-      &:before {
-        @include fa-icon();
-        content: $fa-var-chevron-right;
+      &::before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-chevron-right);
         position: absolute;
         top: 10px;
         left: 0;

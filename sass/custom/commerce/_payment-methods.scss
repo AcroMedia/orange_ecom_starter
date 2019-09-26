@@ -1,0 +1,139 @@
+/**
+ * Payment Methods.
+ */
+
+// Hide default tables on user payment methods page.
+body.path-user[class*='payment-methods'] .region-content {
+  .tableresponsive-toggle-columns,
+  table,
+  table.responsive-enabled {
+    display: none;
+  }
+}
+
+// Payment Method Form.
+.commerce-payment-method-form {
+  div[id*='edit-payment-method-billing-information'] .address-book-edit-button {
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+}
+
+// Expired.
+.payment--expired .field--name-expires {
+  color: $c-error;
+}
+
+/**
+ * Listing.
+ */
+.payment-methods-listing {
+  clear: both;
+  margin: 40px 0 20px;
+  padding: 0;
+
+  > .view-content {
+    display: flex;
+    flex-wrap: wrap;
+    // Neg. margin to offset listing items.
+    margin: 0 -10px;
+    padding: 0;
+
+    @media (min-width: $screen-xs-min) {
+      // Neg. margin to offset listing items.
+      margin: 0 -10px;
+    }
+    @media (min-width: $screen-md-min) {
+      // Neg. margin to offset listing items.
+      margin: 0 -15px;
+    }
+    > .views-row {
+      float: none;
+      margin: 0 0 10px 0;
+      padding: 0 10px;
+      width: 100%;
+      background: none;
+
+      @media (min-width: $screen-sm-ph) {
+        padding: 0 10px;
+        width: 50%;
+      }
+      @media (min-width: $screen-lg-min) {
+        padding: 0 15px;
+        width: 25%;
+      }
+    }
+  }
+  .payment-method {
+    > div {
+      display: none;
+    }
+    > .field--name-label,
+    > .field--name-expires,
+    > .payment-methods-listing__item__actions {
+      display: block;
+    }
+  }
+  .payment-methods-listing__item {
+    position: relative;
+    margin: 0 0 20px;
+    padding: 73px 111px 24px 24px;
+    border-radius: 8px;
+    border: 1px solid $gray-border;
+    box-shadow: 0 2px 3px 0 $gray-border;
+
+    // Payment Icon.
+    .payment-method-icon {
+      position: absolute;
+      bottom: 22px;
+      right: 24px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 71px;
+      height: 44px;
+      background-size: contain;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      border: 0;
+      box-shadow: none;
+    }
+  }
+}
+.payment-methods-listing__item__actions {
+  clear: both;
+  margin: 25px 0 0;
+  padding: 0;
+  font-size: 0;
+
+  > a {
+    position: relative;
+    display: inline-block;
+    margin: 0 8px 0 0;
+    padding: 0;
+    font-size: 14px;
+    vertical-align: top;
+
+    // Line break.
+    &::after {
+      position: relative;
+      content: '';
+      display: inline-block;
+      margin: 4px 0 0 8px;
+      padding: 0;
+      width: 1px;
+      height: 13px;
+      background: $gray;
+      vertical-align: top;
+    }
+    &:last-child {
+      margin-right: 0;
+
+      // Line break.
+      &::after {
+        margin-left: 0;
+        background: transparent;
+      }
+    }
+  }
+}

@@ -24,8 +24,9 @@
 
   // Arrow icon.
   &::after {
-    @include fa-icon();
-    content: $fa-var-angle-right;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-chevron-right);
     position: relative;
     display: inline-block;
     margin-left: 5px;

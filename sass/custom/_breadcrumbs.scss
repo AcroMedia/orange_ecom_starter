@@ -1,0 +1,41 @@
+/**
+ * Breadcrumbs.
+ */
+.breadcrumb {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  background: none;
+  border-radius: 0;
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: $c-breadcrumbs;
+    list-style-type: none;
+    text-transform: uppercase;
+    vertical-align: top;
+
+    // Separator.
+    &::before {
+      content: '/';
+      display: inline-block;
+      margin: 0 2px 0 6px;
+      padding: 0;
+      vertical-align: top;
+      color: $c-breadcrumbs;
+    }
+    &:first-child::before {
+      content: '';
+      display: none;
+    }
+  }
+}

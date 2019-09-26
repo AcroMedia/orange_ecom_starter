@@ -414,9 +414,10 @@
   font-size: 16px;
 
   // Icon.
-  &:before {
-    @include fa-icon();
-    content: $fa-var-caret-left;
+  &::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-caret-left);
     margin: 0 7px 0 0;
   }
 }
@@ -606,7 +607,22 @@
       padding: 0 20px;
       height: 49px;
       font-size: 24px;
-      text-transform: capitalize;
+    }
+    // Wishlist button.
+    .form-submit[id*='wishlist'] {
+      font-family: $f-body;
+      font-size: 16px;
+      font-weight: normal;
+      color: $c-link;
+      background: transparent;
+      border-color: transparent;
+
+      &:hover,
+      &:focus {
+        color: $c-link-hover;
+        background: transparent;
+        border-color: transparent;
+      }
     }
   }
 }
@@ -779,9 +795,10 @@
     text-decoration: none;
 
     // Zoom icon.
-    &:after {
-      @include fa-icon();
-      content: $fa-var-search-plus;
+    &::after {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-search-plus);
       position: absolute;
       bottom: 12px;
       right: 12px;
@@ -847,14 +864,15 @@
     left: 3px;
 
     // Arrow.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-angle-left;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-chevron-left);
       display: inline-block;
       margin: 0;
       padding: 0;
       color: #6a6a6a;
-      font-size: 50px;
+      font-size: 40px;
       text-align: center;
       outline: none;
     }
@@ -866,14 +884,15 @@
     right: 3px;
 
     // Arrow.
-    &:before {
-      @include fa-icon();
-      content: $fa-var-angle-right;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-chevron-right);
       display: inline-block;
       margin: 0;
       padding: 0;
       color: #6a6a6a;
-      font-size: 50px;
+      font-size: 40px;
       text-align: center;
       outline: none;
     }

@@ -5,6 +5,7 @@
 // Colors.
 $c-white: #fff;
 $c-black: #000;
+$c-error: #cc0000;
 
 $c-site-bg: $c-white;
 
@@ -25,6 +26,11 @@ $c-body: #666;
 
 $c-link: #1cb06d;
 $c-link-hover: darken($c-link, 10%);
+
+$c-star-on: $c-link;
+$c-star-hover: $c-link-hover;
+$c-star-off: #e2e2e2;
+$c-breadcrumbs: #999;
 
 $gray-border:            #ccc;
 $gray-base:              #151515 !default;

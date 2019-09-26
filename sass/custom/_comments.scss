@@ -34,13 +34,14 @@
     border-bottom: none;
   }
   // Comment bubble icon.
-  &:before {
+  &::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-comment);
+    @include fa-icon-flip(-1,1,0);
     position: absolute;
     top: -3px;
     left: 0;
-    content: $fa-var-comment;
-    @include fa-icon();
-    @include fa-icon-flip(-1,1,0);
     font-size: 43px;
     line-height: 43px;
     color: $c-accent-1;
@@ -71,13 +72,14 @@
           padding-left: 30px;
 
           // Reply icon.
-          &:before {
+          &::before {
+            @extend %fa-icon;
+            @extend .fas;
+            content: fa-content($fa-var-reply);
+            @include fa-icon-flip(-1,-1,0);
             position: absolute;
             top: -1px;
             left: 0;
-            content: $fa-var-reply;
-            @include fa-icon();
-            @include fa-icon-flip(-1,-1,0);
             font-size: 21px;
             line-height: 21px;
             color: $c-accent-1;
@@ -102,10 +104,12 @@
     padding-left: 35px;
 
     // Reply icon.
-    &:before {
-      top: -1px;
-      content: $fa-var-reply;
+    &::before {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-reply);
       @include fa-icon-flip(-1,-1,0);
+      top: -1px;
       font-size: 21px;
       line-height: 21px;
     }
@@ -139,15 +143,16 @@
 
     // Icon.
     &::before {
-      @include fa-icon();
-      content: $fa-var-star-o;
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-star);
       position: absolute;
       top: 0;
       left: 0;
       width: 20px;
       height: 20px;
       font-size: 20px;
-      color: $c-link;
+      color: $c-star-off;
       text-indent: 0;
       z-index: 0;
     }
@@ -162,8 +167,8 @@
 
       // Icon.
       &::before {
-        content: $fa-var-star;
-        color: $c-link;
+        content: fa-content($fa-var-star);
+        color: $c-star-on;
       }
     }
     // Half star.
@@ -172,8 +177,8 @@
 
       // Icon.
       &::before {
-        content: $fa-var-star-half-o;
-        color: $c-link;
+        content: fa-content($fa-var-star-half-alt);
+        color: $c-star-on;
       }
     }
     &.hover {
@@ -181,7 +186,7 @@
 
       // Icon.
       &::before {
-        color: $c-link-hover;
+        color: $c-star-hover;
       }
     }
     // Empty star.
@@ -190,8 +195,8 @@
 
       // Icon.
       &::before {
-        content: $fa-var-star-o;
-        color: $c-link;
+        content: fa-content($fa-var-star);
+        color: $c-star-off;
       }
     }
   }
@@ -222,8 +227,9 @@
   }
   // Star icon.
   .form-radios > label::before {
-    @include fa-icon();
-    content: $fa-var-star-o;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-star);
     font-size: 20px;
   }
   .form-radios > label {
@@ -231,15 +237,15 @@
     margin: 0 2px 0 0;
     padding: 0;
     font-size: 0;
-    color: $c-link;
+    color: $c-star-off;
     cursor: pointer;
   }
   // Full star when clicked.
   .form-radios > input:checked ~ label {
-    color: $c-link;
+    color: $c-star-on;
     // Change icon to solid star.
     &::before {
-      content: $fa-var-star;
+      content: fa-content($fa-var-star);
     }
   }
   // Hover for current star.
@@ -252,10 +258,10 @@
   // Lighten current selection.
   .form-radios > label:hover ~ input:checked ~ label,
   .form-radios > input:checked ~ label:hover ~ label {
-    color: $c-link;
+    color: $c-star-hover;
     // Change icon to solid star.
     &::before {
-      content: $fa-var-star;
+      content: fa-content($fa-var-star);
     }
   }
 }

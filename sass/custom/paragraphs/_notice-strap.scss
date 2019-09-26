@@ -119,8 +119,9 @@
   }
   // Icon.
   &::before {
-    @include fa-icon();
-    content: $fa-var-times;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-times);
   }
 }
 

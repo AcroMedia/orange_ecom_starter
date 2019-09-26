@@ -43,8 +43,9 @@
       }
       // Search icon.
       &:before {
-        @include fa-icon();
-        content: $fa-var-search;
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-search);
         font-size: 19px;
         color: $gray-base;
         transition: color .2s ease-in-out;
