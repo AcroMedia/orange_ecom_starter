@@ -1,9 +1,9 @@
-/**
- * Image Strap.
- */
+//
+// Image Strap.
+//
 .component-image-strap {
   position: relative;
-  margin: 0 0 60px 0;
+  margin: 0 0 60px;
 }
 .component-image-strap__container {
   background: #fff;
@@ -103,14 +103,14 @@
   .btn,
   .btn--primary,
   .btn--default {
-    margin: 0 5px 15px 5px;
+    margin: 0 5px 15px;
     padding: 13px 20px;
     font-size: 20px;
   }
   .btn--default {
     color: #fff;
     border: 1px solid #fff;
-    @include background-opacity(#000, 0.4);
+    @include background-opacity(#000, .4);
 
     &:hover,
     &:focus {

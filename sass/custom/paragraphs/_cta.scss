@@ -1,6 +1,6 @@
-/**
- * CTA.
- */
+//
+// CTA.
+//
 .component-cta {
   position: relative;
   margin: 25px auto;
@@ -34,7 +34,7 @@
 
     &:hover,
     &:focus {
-      opacity: 0.15;
+      opacity: .15;
     }
   }
 }
@@ -44,14 +44,14 @@
   left: 0;
   display: block;
   margin: 0;
-  padding: 15px 15px;
+  padding: 15px;
   width: 100%;
   font-size: 16px;
   font-weight: bold;
   line-height: 1.2;
   color: #fff;
   text-align: center;
-  @include background-opacity(#000, 0.6);
+  @include background-opacity(#000, .6);
   z-index: 0;
 
   @media (min-width: $screen-md-min) {
@@ -61,7 +61,7 @@
 }
 .component-cta__body {
   margin: 0;
-  padding: 20px 0 0 0;
+  padding: 20px 0 0;
   text-align: left;
 
   .field {

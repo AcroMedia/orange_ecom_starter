@@ -1,10 +1,11 @@
-/**
- * Store.
- */
+//
+// Commerce Store.
+//
 
-/**
- * Product Listing.
- */
+//
+// Product Listing.
+//
+
 // Hide ajax throbber due to bug where it duplicates itself.
 .path-products .ajax-progress-fullscreen {
   display: none !important;
@@ -34,7 +35,7 @@
     }
     .views-row {
       float: none;
-      margin: 0 0 30px 0;
+      margin: 0 0 30px;
       padding: 0 10px;
       width: 50%;
       background: none;
@@ -66,8 +67,8 @@
   .views-row {
     clear: both;
     float: none;
-    margin: 0 0 40px 0;
-    padding: 0 0 40px 0;
+    margin: 0 0 40px;
+    padding: 0 0 40px;
     border-bottom: 1px solid $gray-border;
   }
 }
@@ -92,7 +93,7 @@
   margin: 0;
   padding: 0 5px;
   font-size: 40px;
-  line-height: 1.0;
+  line-height: 1;
   color: #d9d9d9;
   text-decoration: none;
 
@@ -114,20 +115,20 @@
 .store-filters {
   position: relative;
   clear: both;
-  margin: 0 0 40px 0;
+  margin: 0 0 40px;
   padding: 0;
   border-bottom: 1px solid #ccc;
 
   // Clearfix.
-  &:after {
-    content: "";
+  &::after {
+    content: '';
     display: table;
     clear: both;
   }
   // Exposed filter search.
   .views-exposed-form {
     float: none;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
     padding: 0;
     width: auto;
     text-align: left;
@@ -173,16 +174,16 @@
       &:hover {
         text-decoration: none;
       }
-      &:before {
+      &::before {
         display: block;
-        content: "\e003";
+        content: '\e003';
         font-family: $f-glyphicons;
         font-size: 19px;
         color: $gray-base;
         transition: color .2s ease-in-out;
       }
-      &:focus:before,
-      &:hover:before {
+      &:focus::before,
+      &:hover::before {
         color: $gray;
       }
     }
@@ -212,7 +213,7 @@
   // Facet Summary.
   .block-facets-summary {
     float: none;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
     padding: 0;
     width: auto;
     min-height: 36px;
@@ -225,9 +226,7 @@
   }
 }
 
-/**
- * Store Sidebar.
- */
+// Store Sidebar.
 .site-sidebar--store {
   .region-left-sidebar {
     display: none;
@@ -238,21 +237,19 @@
   }
 }
 
-/**
- * Facets.
- */
+// Facets.
 .block-facets {
-  margin: 0 0 20px 0;
-  padding: 0 0 20px 0;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
   border-bottom: 1px solid #ccc;
 
   &:last-child {
     padding-bottom: 0;
-    border-bottom: none;
+    border-bottom: 0;
   }
   // Block title.
   h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
     padding: 0;
     font-size: 20px;
     line-height: 1.2;
@@ -263,7 +260,7 @@
     list-style: none;
 
     li {
-      margin: 0 0 5px 0;
+      margin: 0 0 5px;
       padding: 0;
       background: none;
 
@@ -276,7 +273,7 @@
         text-decoration: none;
 
         // Checkbox.
-        &:before {
+        &::before {
           @extend %fa-icon;
           @extend .fas;
           content: '';
@@ -284,7 +281,7 @@
           top: 0;
           left: 0;
           margin: 0;
-          padding: 2px 0 0 0;
+          padding: 2px 0 0;
           width: 20px;
           height: 20px;
           font-size: 14px;
@@ -303,7 +300,7 @@
             text-decoration: underline;
           }
           // Checkbox.
-          &:before {
+          &::before {
             text-decoration: none;
           }
         }
@@ -325,9 +322,7 @@
   }
 }
 
-/**
- * Facets Summary.
- */
+// Facets Summary.
 .block-facets-summary {
   // Block title.
   h2 {
@@ -336,10 +331,10 @@
     left: 0;
     display: none;
     margin: 0 18px 20px 0;
-    padding: 7px 0 0 0;
+    padding: 7px 0 0;
     font-family: $f-body;
     font-size: 16px;
-    line-height: 1.0;
+    line-height: 1;
     font-weight: 600;
     color: $c-body;
 
@@ -381,7 +376,7 @@
           right: 0;
           display: block;
           margin: 0;
-          padding: 7px 0 0 0;
+          padding: 7px 0 0;
           width: 25px;
           height: 100%;
           color: #fff;
@@ -398,7 +393,7 @@
           border-color: $c-link;
 
           // Close icon.
-          &:after {
+          &::after {
             color: #fff;
             background: $c-link;
           }
@@ -408,9 +403,7 @@
   }
 }
 
-/**
- * Store Facets.
- */
+// Store Facets.
 .store-facets {
   position: relative;
 }
@@ -431,7 +424,7 @@
     padding: 20px 15px;
     height: 100%;
     width: 100%;
-    border: none;
+    border: 0;
     background: $c-white;
     overflow-x: hidden;
     box-shadow: none;
@@ -449,7 +442,7 @@
   margin: 0;
   padding: 0;
   font-size: 28px;
-  line-height: 1.0;
+  line-height: 1;
   color: $c-body;
   text-decoration: none;
   vertical-align: top;
@@ -476,7 +469,7 @@
 }
 .store-facets__mobile-toggle {
   display: block;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 15px;
   font-size: 18px;
   font-weight: bold;

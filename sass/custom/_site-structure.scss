@@ -1,14 +1,13 @@
-/**
-* Site Structure.
-*/
+//
+// Site Structure.
+//
+
 .site-wrapper {
   position: relative;
   clear: both;
 }
 
-/**
- * Site Header.
- */
+// Site header.
 .site-header {
   min-height: 120px;
   background: $gray-darker;
@@ -25,9 +24,7 @@
   }
 }
 
-/**
- * Site Header Navigation.
- */
+// Site header navigation.
 .site-header-nav {
   float: right;
   text-align: right;
@@ -44,16 +41,12 @@
   }
 }
 
-/**
- * Site header bottom.
- */
+// Site header bottom.
 .site-header__bottom {
   background-color: $gray-base;
 }
 
-/**
- * Primary navigation.
- */
+// Primary navigation.
 .primary-nav {
   display: block;
 
@@ -68,9 +61,7 @@
   }
 }
 
-/**
- * Site header search.
- */
+// Site header search.
 .site-header__search {
   float: right;
   clear: right;
@@ -126,7 +117,7 @@
       text-decoration: none;
     }
     // Search icon.
-    &:before {
+    &::before {
       @extend %fa-icon;
       @extend .fas;
       content: fa-content($fa-var-search);
@@ -134,16 +125,14 @@
       color: $gray-base;
       transition: color .2s ease-in-out;
     }
-    &:focus:before,
-    &:hover:before {
+    &:focus::before,
+    &:hover::before {
       color: $gray;
     }
   }
 }
 
-/**
- * Site footer.
- */
+// Site footer.
 .site-footer {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -155,11 +144,9 @@
   }
 }
 
-/**
- * Footer navigation.
- */
+// Footer navigation.
 .footer-nav {
-  margin: 0 0 50px 0;
+  margin: 0 0 50px;
 
   .menu__link {
     display: block;
@@ -168,9 +155,7 @@
   }
 }
 
-/**
- * Footer social media nav.
- */
+// Footer social media navigation.
 .site-footer .social-media-nav {
   float: none;
 
@@ -179,17 +164,13 @@
   }
 }
 
-/**
- * Footer copyright.
- */
+// Footer copyright.
 .site-footer__copyright {
   clear: both;
   font-size: 10px;
 }
 
-/**
- * Sticky footer.
- */
+// Sticky footer.
 html {
   height: 100%;
 }

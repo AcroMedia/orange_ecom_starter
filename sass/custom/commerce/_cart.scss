@@ -1,6 +1,7 @@
-/**
- * Cart.
- */
+//
+// Commerce Cart.
+//
+
 .path-cart .page-title {
   text-transform: capitalize;
 }
@@ -35,22 +36,20 @@
       margin: 0 8px 0 0;
       padding: 0;
       font-size: 16px;
-      line-height: 1.0;
+      line-height: 1;
       color: $c-white;
       transition: color .2s ease-in-out, background-color .2s ease-in-out;
     }
     &:hover {
       // Icon.
-      &:before {
+      &::before {
         color: $c-link;
       }
     }
   }
 }
 
-/**
- * Cart Dropdown.
- */
+// Cart Dropdown.
 .cart--cart-block {
   position: relative;
 
@@ -69,7 +68,7 @@
   right: 0;
   width: 320px;
   color: $c-body;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,.15);
 
   @media (min-width: $screen-sm-min) {
     width: 520px;
@@ -99,7 +98,7 @@
 }
 .cart--cart-block .cart-block--contents .cart-block--contents__links {
   margin: 0;
-  padding: 15px 0 0 0;
+  padding: 15px 0 0;
 
   a {
     display: inline-block;
@@ -123,13 +122,13 @@
 }
 .view-commerce-cart-block {
   .views-row {
-    margin: 0 0 10px 0;
-    padding: 0 0 10px 0;
+    margin: 0 0 10px;
+    padding: 0 0 10px;
     border-bottom: 1px solid #ccc;
 
     // Clearfix.
-    &:after {
-      content: "";
+    &::after {
+      content: '';
       display: table;
       clear: both;
     }
@@ -176,33 +175,31 @@
     text-decoration: none;
     text-transform: lowercase;
     background: none;
-    border: none;
+    border: 0;
     box-shadow: none;
 
     &:hover,
     &:focus {
       color: $c-link-hover;
       background: none;
-      border: none;
+      border: 0;
       box-shadow: none;
     }
   }
 }
 
-/**
- * Cart Form.
- */
+// Cart Form.
 .view-commerce-cart-form-orange {
   position: relative;
   clear: both;
-  margin: 40px 0 0 0;
+  margin: 40px 0 0;
   padding: 0;
   text-align: right;
 
   form {
     // Clearfix.
-    &:after {
-      content: "";
+    &::after {
+      content: '';
       display: table;
       clear: both;
     }
@@ -213,7 +210,7 @@
     padding-right: 0;
   }
   .form-actions {
-    margin: 25px 0 0 0;
+    margin: 25px 0 0;
     padding: 0;
     text-align: center;
 
@@ -234,7 +231,7 @@
 // Listing / Cart Items.
 .commerce-cart-form-list {
   float: none;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
   width: 100%;
   text-align: left;
@@ -247,8 +244,8 @@
 }
 .commerce-cart-form-listing {
   display: block;
-  margin: 0 0 20px 0;
-  padding: 20px 0 0 0;
+  margin: 0 0 20px;
+  padding: 20px 0 0;
   list-style: none;
   border-top: 2px solid #ddd;
 
@@ -256,7 +253,7 @@
     position: relative;
     float: none;
     display: block;
-    margin: 0 0 15px 0;
+    margin: 0 0 15px;
     // Left offset for variation image.
     padding: 0 0 15px 120px;
     background: none;
@@ -266,11 +263,11 @@
       padding-right: 90px;
     }
     @media (min-width: $screen-lg-min) {
-      padding: 0 0 15px 0;
+      padding: 0 0 15px;
     }
     // Clearfix.
-    &:after {
-      content: "";
+    &::after {
+      content: '';
       display: table;
       clear: both;
     }
@@ -327,7 +324,7 @@
 
           &:hover,
           &:focus {
-            opacity: 0.8;
+            opacity: .8;
           }
         }
         img {
@@ -369,7 +366,7 @@
 }
 .commerce-cart-form__quantity-cont {
   display: block;
-  margin: 20px 0 0 0;
+  margin: 20px 0 0;
   padding: 0;
   vertical-align: top;
 
@@ -378,7 +375,7 @@
     margin-top: 0;
   }
   // X marker.
-  &:before {
+  &::before {
     content: 'X';
     display: none;
     margin: 7px 5px 0 0;
@@ -387,7 +384,7 @@
 
     @media (min-width: $screen-lg-min) {
       display: inline-block;
-      margin: 0 20px 0 20px;
+      margin: 0 20px;
     }
   }
 }
@@ -404,7 +401,7 @@
   }
   .form-item {
     display: inline-block;
-    margin: 0 0 5px 0;
+    margin: 0 0 5px;
     padding: 0;
     vertical-align: top;
   }
@@ -446,17 +443,17 @@
     height: 20px;
     font-size: 0;
     background: none;
-    border: none;
+    border: 0;
     @include button-hide-text();
 
     &:hover,
     &:focus {
       background: none;
-      border: none;
+      border: 0;
     }
   }
   // Remove icon.
-  &:after {
+  &::after {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-times-circle);
@@ -466,7 +463,7 @@
   }
   &:hover,
   &:focus {
-    &:after {
+    &::after {
       color: $c-link-hover;
     }
   }
@@ -474,7 +471,7 @@
 .cart-form-summary__note {
   display: block;
   margin: 0;
-  padding: 20px 0 0 0;
+  padding: 20px 0 0;
   font-size: 14px;
   font-style: italic;
   text-align: center;
@@ -504,8 +501,8 @@
     width: 260px;
   }
   // Clearfix.
-  &:after {
-    content: "";
+  &::after {
+    content: '';
     display: table;
     clear: both;
   }
@@ -532,7 +529,7 @@ body.toolbar-horizontal .cart-form-summary.affix {
 }
 
 .cart-form-summary__items {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 20px;
   border: 1px solid $gray-border;
 

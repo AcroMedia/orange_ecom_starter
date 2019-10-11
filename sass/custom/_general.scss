@@ -1,6 +1,7 @@
-/**
- * General.
- */
+//
+// General.
+//
+
 html,
 body {
   height: 100%;
@@ -19,9 +20,7 @@ body {
   }
 }
 
-/**
- * Images.
- */
+// Images.
 img {
   display: inline-block;
   max-width: 100%;
@@ -31,7 +30,7 @@ img {
   &.align-left {
     display: block;
     float: none;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
 
     @media (min-width: $screen-xs-min) {
       float: left;
@@ -41,7 +40,7 @@ img {
   &.align-right {
     display: block;
     float: none;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
 
     @media (min-width: $screen-xs-min) {
       float: right;
@@ -55,9 +54,7 @@ img {
   }
 }
 
-/**
- * Typography.
- */
+// Typography.
 h1 {
   margin-top: 30px;
   font-family: $f-primary;
@@ -108,11 +105,9 @@ h6 {
   font-weight: bold;
 }
 
-/**
- * Content.
- */
+// Content.
 p {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
 }
 ul,
@@ -131,8 +126,8 @@ iframe {
 }
 
 // Clearfix for inline fields.
-.field--label-inline:after {
-  content: "";
+.field--label-inline::after {
+  content: '';
   display: table;
   clear: both;
 }
@@ -151,9 +146,7 @@ iframe {
   @include border-top-radius($border-radius);
 }
 
-/**
- * Tabs.
- */
+// Tabs.
 .nav-tabs {
   margin: 20px 0;
   border-bottom-color: $gray-border;
@@ -171,10 +164,6 @@ iframe {
       @media (min-width: $screen-sm-min) {
         border: 1px solid transparent;
         border-radius: $border-radius $border-radius 0 0;
-      }
-      &:hover,
-      &:focus {
-        
       }
     }
     // Active state, and its :hover to override normal :hover
@@ -197,7 +186,7 @@ iframe {
   flex: none;
   margin: 0;
   width: auto;
-  border: none;
+  border: 0;
   border-right: 1px solid $gray-border;
 
   @media (min-width: $screen-sm-min) {
@@ -224,14 +213,12 @@ iframe {
   > li.active > a:focus {
     border: 1px solid $gray-border;
     border-color: $gray-border transparent $gray-border $gray-border;
-    *border-right-color: #fff;
+    border-right-color: #fff;
     border-radius: 0;
   }
 }
 
-/**
- * Panels / Accordion.
- */
+// Panels / Accordion.
 .panel {
   > .panel-heading {
     padding: 0;
@@ -254,17 +241,13 @@ iframe {
   }
 }
 
-/**
- * Slick.
- */
+// Slick.
 .slick-slide {
   // Remove outline on slick items.
   outline: none;
 }
 
-/**
- * Links.
- */
+// Links.
 a {
   color: $c-link;
   text-decoration: none;
@@ -280,9 +263,7 @@ a {
   }
 }
 
-/**
- * Buttons
- */
+// Buttons.
 button {
   @include smooth-transition;
 }
@@ -296,7 +277,7 @@ button {
   height: auto;
   font-family: $f-secondary;
   font-size: 18px;
-  line-height: 1.0;
+  line-height: 1;
   color: $gray-darker;
   text-decoration: none;
   background: #fff;
@@ -364,7 +345,7 @@ button {
   display: none;
   margin: 0;
   padding: 0;
-  border: none;
+  border: 0;
   background: none;
 
   span {
@@ -372,9 +353,10 @@ button {
   }
 }
 
-/**
- * Overrides.
- */
+//
+// Overrides.
+//
+
 // If there's a text color override set.
 .override-text-color {
   .base-accordion .base-accordion__content {

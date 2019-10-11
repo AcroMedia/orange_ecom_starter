@@ -1,6 +1,6 @@
-/**
- * Content Strap Column.
- */
+//
+// Content Strap Column.
+//
 .component-content-strap-column {
   position: relative;
   clear: both;
@@ -9,7 +9,7 @@
   height: 100%;
 
   @media (min-width: $screen-sm-min) {
-    padding: 40px 40px;
+    padding: 40px;
   }
 }
 .component-content-strap-column__overlay {
@@ -46,7 +46,7 @@
   .btn--default {
     color: #fff;
     border: 1px solid #fff;
-    @include background-opacity(#000, 0.4);
+    @include background-opacity(#000, .4);
 
     &:hover,
     &:focus {

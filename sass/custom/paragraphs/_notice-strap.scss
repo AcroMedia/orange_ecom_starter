@@ -1,6 +1,6 @@
-/**
- * Notice Strap.
- */
+//
+// Notice Strap.
+//
 .component-notice-strap {
   position: relative;
   clear: both;
@@ -42,7 +42,7 @@
 }
 .component-notice-strap__body {
   margin: 0;
-  padding: 10px 35px 0 35px;
+  padding: 10px 35px 0;
 
   h1,
   h2,
@@ -85,7 +85,7 @@
   .btn,
   .btn--primary,
   .btn--default {
-    margin: 0 5px 15px 5px;
+    margin: 0 5px 15px;
     padding: 13px 20px;
     font-size: 20px;
   }

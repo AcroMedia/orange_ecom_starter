@@ -1,6 +1,6 @@
-/**
- * Commerce Orders.
- */
+//
+// Commerce Orders.
+//
 
 // Dashboard and Order History.
 .commerce-order-list { }
@@ -153,7 +153,7 @@
     min-height: 130px;
     background: none;
     border: 1px solid $gray-border;
-    border-top: none;
+    border-top: 0;
 
     @media (min-width: $screen-xs-min) {
       padding-right: 105px;

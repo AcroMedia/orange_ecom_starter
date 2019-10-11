@@ -1,6 +1,7 @@
-/**
- * Live CSS.
- */
+//
+// Live CSS.
+//
+
 .live-css-nav ul a:hover {
   color: $c-link;
   text-decoration: none;
@@ -11,21 +12,21 @@
 .live-css-v-primary i {
   background-color: $c-primary;
 
-  &:after {
+  &::after {
     background: $c-primary-hover;
   }
 }
 .live-css-v-secondary i {
   background-color: $c-secondary;
 
-  &:after {
+  &::after {
     background: $c-secondary-hover;
   }
 }
 .live-css-v-tertiary i {
   background-color: $c-tertiary;
 
-  &:after {
+  &::after {
     background: $c-tertiary-hover;
   }
 }
@@ -44,7 +45,7 @@
 .live-css-v-link i {
   background-color: $c-link;
 
-  &:after {
+  &::after {
     background: $c-link-hover;
   }
 }

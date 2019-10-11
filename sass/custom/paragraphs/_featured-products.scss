@@ -1,13 +1,13 @@
-/**
- * Featured Products.
- */
+//
+// Featured Products.
+//
 .component-featured-products {
   clear: both;
-  margin: 0 0 40px 0;
+  margin: 0 0 40px;
   padding: 0;
 }
 .component-featured-products__title {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
   font-size: 35px;
   line-height: 1.2;
@@ -27,9 +27,9 @@
     width: auto;
     height: auto;
     font-size: 0;
-    line-height: 1.0;
+    line-height: 1;
     background: none;
-    border: none;
+    border: 0;
     outline: none;
     vertical-align: middle;
     z-index: 2;
@@ -51,7 +51,7 @@
       outline: none;
     }
     &:hover::before {
-      opacity: 0.6;
+      opacity: .6;
     }
   }
   .slick-next {
@@ -71,7 +71,7 @@
       outline: none;
     }
     &:hover::before {
-      opacity: 0.6;
+      opacity: .6;
     }
   }
   .slick-next,
@@ -102,7 +102,7 @@
   }
   .component-featured-products__slider__slide {
     float: none;
-    margin: 0 0 30px 0;
+    margin: 0 0 30px;
     padding: 0 10px;
     width: 50%;
     background: none;

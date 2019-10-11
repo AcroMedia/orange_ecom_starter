@@ -1,17 +1,10 @@
-/**
- * Navigation styles.
- *
- * NOTE:
- * This file is for base navigation, mobile navigation, and social media navigation styles.
- * Any styles for a specific menu should go in the partial that makes most
- * sense for that menu. Example: Footer navigation styles go in _footer.scss,
- * sidebar navigation styles go in _content.scss, etc.
- *
- */
+//
+// Navigation styles.
+// > For general navigation styling.
+// > Put content specific navigation styling in their corresponding partial.
+//
 
-/**
- * Menus.
- */
+// Menus.
 .menu {
   margin: 0;
   padding: 0;
@@ -42,10 +35,11 @@
   }
 }
 
-/**
- * Primary navigation dropdowns.
- * Remove if you don't need dropdowns or re-use for other menus/sections.
- */
+//
+// Primary navigation dropdowns.
+// > Remove if you don't need dropdowns or re-use for other menus/sections.
+//
+
 @media (min-width: $screen-sm-min) {
   .region-primary-nav {
     .menu--main > .menu__item--expanded > .menu--child {
@@ -59,7 +53,7 @@
       list-style: none;
       background: #333;
       background-clip: padding-box;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+      box-shadow: 0 6px 12px rgba(0,0,0,.175);
       z-index: 1000;
 
       .menu__item .menu__link {
@@ -74,8 +68,8 @@
       display: block;
     }
     // Down arrow.
-    .menu--main > .menu__item--expanded > .menu__link:after {
-      content: "\e114";
+    .menu--main > .menu__item--expanded > .menu__link::after {
+      content: '\e114';
       display: inline-block;
       margin: 0 0 0 6px;
       padding: 0;
@@ -86,9 +80,7 @@
   }
 }
 
-/**
- * Social media navigation.
- */
+// Social Media Navigation.
 .social-media-nav {
 
 }
@@ -103,45 +95,43 @@
     font-size: 0;
 
     // Icons.
-    &:before {
+    &::before {
       @extend %fa-icon;
       @extend .fab;
       font-size: 18px;
     }
   }
   // Need more? Font Awesome variables at: sass/contrib/font-awesome/_variables.scss
-  .menu__item--facebook a:before { content: fa-content($fa-var-facebook); }
-  .menu__item--twitter a:before { content: fa-content($fa-var-twitter); }
-  .menu__item--instagram a:before { content: fa-content($fa-var-instagram); }
-  .menu__item--google-plus a:before { content: fa-content($fa-var-google-plus); }
-  .menu__item--pinterest a:before { content: fa-content($fa-var-pinterest); }
-  .menu__item--linkedin a:before { content: fa-content($fa-var-linkedin); }
-  .menu__item--youtube a:before { content: fa-content($fa-var-youtube); }
-  .menu__item--vimeo a:before { content: fa-content($fa-var-vimeo); }
-  .menu__item--snapchat a:before { content: fa-content($fa-var-snapchat); }
-  .menu__item--vine a:before { content: fa-content($fa-var-vine); }
-  .menu__item--yelp a:before { content: fa-content($fa-var-yelp); }
-  .menu__item--trip-advisor a:before { content: fa-content($fa-var-tripadvisor); }
+  .menu__item--facebook a::before { content: fa-content($fa-var-facebook); }
+  .menu__item--twitter a::before { content: fa-content($fa-var-twitter); }
+  .menu__item--instagram a::before { content: fa-content($fa-var-instagram); }
+  .menu__item--google-plus a::before { content: fa-content($fa-var-google-plus); }
+  .menu__item--pinterest a::before { content: fa-content($fa-var-pinterest); }
+  .menu__item--linkedin a::before { content: fa-content($fa-var-linkedin); }
+  .menu__item--youtube a::before { content: fa-content($fa-var-youtube); }
+  .menu__item--vimeo a::before { content: fa-content($fa-var-vimeo); }
+  .menu__item--snapchat a::before { content: fa-content($fa-var-snapchat); }
+  .menu__item--vine a::before { content: fa-content($fa-var-vine); }
+  .menu__item--yelp a::before { content: fa-content($fa-var-yelp); }
+  .menu__item--trip-advisor a::before { content: fa-content($fa-var-tripadvisor); }
 }
 
-/**
- * Bootstrap overrides.
- */
+// Bootstrap overrides.
 .nav > li > a:hover,
 .nav > li > a:focus {
   background-color: $gray-lighter;
 }
 
-/**
- * Mobile navigation styles.
- */
+//
+// Mobile Navigation.
+//
 
 // Mobile Control Navigation.
 .mobile-control-nav {
   clear: right;
   float: right;
   margin: 0;
-  padding: 10px 0 0 0;
+  padding: 10px 0 0;
   text-align: right;
 
   .menu {
@@ -200,7 +190,7 @@
 // Mobile search.
 .mobile-search-overlay__content {
   margin: 0;
-  padding: 66px 15px 0 15px;
+  padding: 66px 15px 0;
   height: 120px;
   background: $gray-darker;
 }
@@ -210,7 +200,7 @@
   right: 0;
   display: inline-block;
   margin: 0;
-  padding: 10px 15px 0 15px;
+  padding: 10px 15px 0;
   font-size: 28px;
   line-height: 28px;
   color: #818181;
@@ -272,7 +262,7 @@
     font-size: 22px;
     color: #fff;
     text-align: left;
-    border: none;
+    border: 0;
     background: none;
     outline: none;
     box-shadow: none;
@@ -319,7 +309,7 @@
 }
 .mobile-nav-overlay__content {
   position: relative;
-  margin: 0 0 25px 0;
+  margin: 0 0 25px;
   padding: 0;
   text-align: left;
 }
@@ -337,7 +327,7 @@
   right: 0;
   display: inline-block;
   margin: 0;
-  padding: 5px 15px 0 15px;
+  padding: 5px 15px 0;
   font-size: 28px;
   line-height: 28px;
   color: #fff;
@@ -428,7 +418,7 @@
     padding: 0;
 
     .menu__item {
-      border: none;
+      border: 0;
     }
     .menu__link {
       margin: 0;
@@ -455,12 +445,10 @@
   }
 }
 
-/**
- * Social Media Sharing Navigation.
- */
+// Social Media Sharing Navigation.
 .social-media-sharing-nav {
   clear: both;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
 }
 .social-media-sharing-nav--product {
@@ -482,7 +470,7 @@
 .social-media-sharing-menu__link {
   display: inline-block;
   margin: 0;
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   width: 33px;
   height: 30px;
   color: #fff;

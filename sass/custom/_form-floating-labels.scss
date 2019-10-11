@@ -1,6 +1,7 @@
-/**
- * Form Floating Labels.
- */
+//
+// Form Floating Labels.
+//
+
 .form-item--floater {
   position: relative;
 
@@ -21,11 +22,11 @@
   .form-control {
     display: block;
     margin: 0;
-    padding: 24px 15px 5px 15px;
+    padding: 24px 15px 5px;
     width: 100%;
     height: auto;
     font-size: 16px;
-    line-height: 1.0;
+    line-height: 1;
     color: $c-body;
     background: #fff;
     border: 1px solid $gray-border;
@@ -49,7 +50,7 @@
   // Select/Dropdown.
   .select-wrapper {
     // Pseudo arrow.
-    &:after {
+    &::after {
       top: 17px;
     }
   }
@@ -58,13 +59,13 @@
     .form-control {
       cursor: not-allowed;
     }
-    opacity: 0.5;
+    opacity: .5;
   }
 }
 
-/**
- * Specific Field Types.
- */
+//
+// Specific Field Types.
+//
 
 // Address Field.
 .field--type-address .form-item[class*="postal-code"] {
@@ -72,9 +73,9 @@
   width: 180px;
 }
 
-/**
- * Commerce.
- */
+//
+// Commerce.
+//
 
 // Product Pages.
 .product__form .form-item--floater {
@@ -97,6 +98,7 @@
 .commerce-checkout-flow .credit-card-form__expiration .form-item {
   min-width: 88px;
 }
+
 // Coupon Code.
 div[id*="edit-coupon-redemption-form"] {
   .form-submit {

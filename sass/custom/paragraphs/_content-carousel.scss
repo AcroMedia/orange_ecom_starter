@@ -1,6 +1,7 @@
-/**
- * Content Carousel.
- */
+//
+// Content Carousel.
+//
+
 .component-content-carousel {
   position: relative;
   clear: both;
@@ -18,7 +19,7 @@
     font-size: 0;
     text-align: center;
     background: none;
-    border: none;
+    border: 0;
     outline: none;
     z-index: 4;
 
@@ -43,16 +44,16 @@
     }
     &:hover {
       // Icon.
-      &:before {
+      &::before {
         color: $gray-dark;
       }
     }
     // Disabled.
     &.slick-disabled {
       // Icon.
-      &:before {
+      &::before {
         color: $gray-border;
-        opacity: 0.5;
+        opacity: .5;
       }
     }
   }

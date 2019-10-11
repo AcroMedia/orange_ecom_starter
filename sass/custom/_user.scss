@@ -1,6 +1,6 @@
-/**
- * User.
- */
+//
+// User.
+//
 
 // Hide page title block since we use the title within the user template.
 body.user-profile .block-page-title-block {
@@ -22,7 +22,7 @@ body.user-profile .block-page-title-block {
 .user-dashboard__nav-link {
   flex: 0 100%;
   width: 100%;
-  padding: 20px 25px 20px;
+  padding: 20px 25px;
   margin: 0 0 20px;
   color: $c-body;
   text-align: center;

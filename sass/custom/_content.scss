@@ -1,8 +1,9 @@
-/**
- * Site Content.
- */
+//
+// Site Content.
+//
+
 .site-content {
-  padding: 20px 0 40px 0;
+  padding: 20px 0 40px;
 
   @media (min-width: $screen-sm-min) {
     padding: 50px 0;
@@ -12,9 +13,7 @@
   }
 }
 
-/**
- * Sidebar.
- */
+// Sidebar.
 .site-sidebar {
   .menu {
     margin: 0;
@@ -54,7 +53,7 @@
     padding-left: 40px;
 
     // Sub item icon.
-    &:before {
+    &::before {
       left: 25px;
     }
   }
@@ -71,13 +70,14 @@
   }
 }
 
-/**
- * Forms.
- */
+//
+// Forms.
+//
+
 .label,
 .form-item legend {
   color: $c-body;
-  border: none;
+  border: 0;
 }
 .form-group {
   margin-bottom: 25px;
@@ -99,7 +99,7 @@
 .help-block {
   font-size: 80%;
   font-style: italic;
-  color: #9C9C9C;
+  color: #9c9c9c;
 }
 .form-type-radio .description,
 .form-type-checkbox .description {
@@ -179,7 +179,7 @@ textarea.resize-vertical {
     cursor: pointer;
 
     // Pseudo radio.
-    &:before {
+    &::before {
       content: '';
       position: absolute;
       top: 2px;
@@ -197,14 +197,14 @@ textarea.resize-vertical {
     }
     &:hover,
     &:focus {
-      &:before {
+      &::before {
         background: lighten($gray-border, 15%);
         border-color: lighten($gray-border, 15%);
       }
     }
   }
   // Active/checked radio.
-  input[type="radio"]:checked + label:before {
+  input[type="radio"]:checked + label::before {
     background: $c-primary;
     box-shadow: 0 0 0 2px $c-primary;
     border: 3px solid #fff;
@@ -238,7 +238,7 @@ textarea.resize-vertical {
     cursor: pointer;
 
     // Pseudo checkbox.
-    &:before {
+    &::before {
       content: '';
       position: absolute;
       top: 0;
@@ -265,26 +265,26 @@ textarea.resize-vertical {
       left: 3px;
       font-size: 13px;
       color: #fff;
-      line-height: 1.0;
+      line-height: 1;
       text-align: center;
       transition: all .2s ease-in-out;
     }
     &:hover,
     &:focus {
-      &:before {
+      &::before {
         background: lighten($gray-border, 15%);
       }
-      &:after {
+      &::after {
         color: lighten($gray-border, 15%);
       }
     }
   }
   // Active/checked radio.
-  input[type="checkbox"]:checked + label:before {
+  input[type="checkbox"]:checked + label::before {
     border: .6em solid $c-primary;
     animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
   }
-  input[type="checkbox"]:checked + label:after {
+  input[type="checkbox"]:checked + label::after {
     color: #fff;
   }
 }
@@ -299,7 +299,7 @@ html {
     font-size: 16px;
     width: 38px;
     height: 38px;
-    animation: ajax-rotate 0.8s infinite linear;
+    animation: ajax-rotate .8s infinite linear;
     border: 8px solid $c-primary;
     border-right-color: transparent;
     border-radius: 50%;
@@ -315,8 +315,8 @@ html {
     width: 100%;
     height: 100%;
     text-align: center;
-    opacity: 1.0;
-    @include background-opacity(#fff, 0.6);
+    opacity: 1;
+    @include background-opacity(#fff, .6);
 
     .ajax-throbber {
       position: absolute;
@@ -329,9 +329,7 @@ html {
   }
 }
 
-/**
- * Webforms.
- */
+// Webforms.
 .webform-multiple-table {
   table {
     margin-bottom: 20px;
@@ -348,15 +346,13 @@ html {
   }
 }
 
-/**
- * Cards.
- */
+// Cards.
 .card {
   display: block;
   color: $c-body;
   text-align: center;
   text-decoration: none;
-  border: 1px solid #cccc;
+  border: 1px solid #ccc;
   background: #f7f5f5;
   box-shadow: 0 4px 0 0 #ededed;
   transition: all .1s ease-in-out;
@@ -370,12 +366,12 @@ html {
     margin-top: 0;
   }
   .btn {
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
   }
 }
 .card__text-wrapper {
   // 1px padding-bottom to fix spacing issues across browsers.
-  padding: 20px 20px 1px 20px;
+  padding: 20px 20px 1px;
 
   p {
     line-height: 1.5;
@@ -390,9 +386,7 @@ a.card:hover {
   }
 }
 
-/**
- * Image Gallery.
- */
+// Image Gallery.
 .image-gallery-nav {
   ul.flex-direction-nav {
     position: absolute;
@@ -421,21 +415,19 @@ a.card:hover {
 
     &:hover,
     &:focus {
-      opacity: 0.85;
+      opacity: .85;
     }
   }
 }
 
-/**
- * Tables.
- */
+// Tables.
 table,
 .table {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
   width: 100%;
   max-width: 100%;
-  border: none;
+  border: 0;
 
   // Cells.
   > thead,
@@ -484,9 +476,7 @@ table,
   color: #fff;
 }
 
-/**
- * Pagination.
- */
+// Pagination.
 .pager li > a:hover,
 .pager li > a:focus {
   background-color: $gray-lighter;
@@ -504,17 +494,15 @@ table,
   }
 }
 
-/**
- * Modals.
- */
+// Modals.
 .modal {
   text-align: center;
 }
 @media (min-width: $screen-sm-min) {
-  .modal:before {
+  .modal::before {
     display: inline-block;
     vertical-align: middle;
-    content: " ";
+    content: ' ';
     height: 100%;
   }
 }
@@ -524,20 +512,18 @@ table,
   vertical-align: middle;
 }
 
-/**
- * Page Scroll To Top.
- */
+// Page Scroll To Top.
 .b-page-scroll-to-top {
   position: fixed;
   bottom: -75px;
   right: 40px;
   display: block;
   margin: 0;
-  padding: 8px 0 0 0;
+  padding: 8px 0 0;
   width: 70px;
   height: 70px;
   font-size: 40px;
-  line-height: 1.0;
+  line-height: 1;
   color: #e5e5e5;
   text-align: center;
   text-decoration: none;
@@ -563,7 +549,7 @@ table,
     content: fa-content($fa-var-caret-up);
     position: relative;
     top: 0;
-    line-height: 1.0;
+    line-height: 1;
     vertical-align: top;
     transition: all .2s ease-in-out;
   }
@@ -576,7 +562,7 @@ table,
   }
   &:hover {
     // Arrow Icon.
-    &:before {
+    &::before {
       top: -3px;
     }
   }

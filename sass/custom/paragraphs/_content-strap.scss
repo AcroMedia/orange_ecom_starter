@@ -1,12 +1,13 @@
-/**
- * Content Strap.
- */
+//
+// Content Strap.
+//
+
 .component-content-strap {
   position: relative;
   clear: both;
-  margin: 0 0 60px 0;
+  margin: 0 0 60px;
 
-  > .container-fluid > .row  {
+  > .container-fluid > .row {
     display: flex;
     flex-wrap: wrap;
 

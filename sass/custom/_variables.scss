@@ -1,11 +1,11 @@
-/**
- * Variables.
- */
+//
+// Variables.
+//
 
 // Colors.
 $c-white: #fff;
 $c-black: #000;
-$c-error: #cc0000;
+$c-error: #c00;
 
 $c-site-bg: $c-white;
 
@@ -58,9 +58,10 @@ $form-max-width: 400px;
 // 16px is the recommended size for form elements/accessibility.
 $fs-form-item: 16px;
 
-/**
- * Responsive Helpers.
- */
+//
+// Responsive Helpers.
+//
+
 $screen-min: 320px;
 
 // Extra small screen / phone.

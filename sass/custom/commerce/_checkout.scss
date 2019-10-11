@@ -1,6 +1,6 @@
-/**
- * Checkout.
- */
+//
+// Commerce Checkout.
+//
 
 // Section Titles.
 .commerce-checkout-flow fieldset legend,
@@ -14,22 +14,22 @@
   font-weight: normal;
   text-transform: capitalize;
   background: none;
-  border: none;
+  border: 0;
 }
 
 .commerce-checkout-flow {
   fieldset {
     display: block;
-    margin: 20px 0 30px 0;
-    padding: 0 0 30px 0;
-    border: none;
+    margin: 20px 0 30px;
+    padding: 0 0 30px;
+    border: 0;
     border-bottom: 1px solid #ccc;
 
     // Nested fieldsets.
     fieldset {
-      margin: 20px 0 30px 0;
+      margin: 20px 0 30px;
       padding: 0;
-      border: none;
+      border: 0;
 
       &:last-child {
         margin-bottom: 0;
@@ -41,7 +41,7 @@
 
     // Payment Information.
     &.checkout-pane-payment-information {
-      margin: 20px 0 40px 0;
+      margin: 20px 0 40px;
       padding: 25px 15px;
       border: 2px solid $gray-lighter;
 
@@ -65,10 +65,10 @@
 
     &#edit-login-returning-customer,
     &#edit-login-guest {
-      border: none;
+      border: 0;
 
       legend {
-        margin: 0 0 20px 0;
+        margin: 0 0 20px;
       }
       // Add some right margin to space out text beside button.
       #edit-login-returning-customer-submit {
@@ -186,9 +186,9 @@
   }
   // Coupon pane.
   .checkout-pane.checkout-pane-coupon-redemption {
-    margin: 20px 0 30px 0;
-    padding: 0 0 30px 0;
-    border: none;
+    margin: 20px 0 30px;
+    padding: 0 0 30px;
+    border: 0;
     border-bottom: 1px solid #ccc;
   }
   // Payment Information - Add Payment Method.
@@ -214,10 +214,11 @@
   margin-bottom: 40px;
 }
 
-/**
- * Checkout Form.
- * Replacements for: commerce/modules/checkout/css
- */
+//
+// Checkout Form.
+// Replacements for: commerce/modules/checkout/css
+//
+
 .layout-region-checkout-main,
 .layout-region-checkout-footer {
   float: none;
@@ -247,17 +248,19 @@
   padding-right: 0;
 }
 
-/**
- * Checkout Layout.
- * Replacements for: commerce/modules/checkout/css/commerce_checkout.layout.css
- */
+
+//
+// Checkout Layout.
+// Replacements for: commerce/modules/checkout/css/commerce_checkout.layout.css
+//
+
 .form-wrapper__login-option {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
 }
 .form-wrapper__login-option input:not([type="submit"]):not([type="password"]),
-.form-wrapper__returning-customer input[type="password"]{
+.form-wrapper__returning-customer input[type="password"] {
   width: 100%;
 }
 .form-wrapper__login-option input.button {
@@ -291,13 +294,11 @@
   }
 }
 
-/**
- * Checkout Progress / Breadcrumbs.
- */
+// Checkout Progress / Breadcrumbs.
 .checkout-progress {
   clear: both;
   display: block;
-  margin: 20px 0 15px 0;
+  margin: 20px 0 15px;
   padding: 0;
   list-style: none;
   text-align: left;
@@ -309,15 +310,15 @@
   padding: 0 0 6px 15px;
   vertical-align: top;
   font-size: 16px;
-  line-height: 1.0;
+  line-height: 1;
   color: $c-body;
 
   @media (min-width: $screen-xs-min) {
     display: inline-block;
-    padding: 0 0 6px 0;
+    padding: 0 0 6px;
   }
   // Hide numbers.
-  &:before {
+  &::before {
     display: block;
     position: absolute;
     top: 0;
@@ -349,7 +350,7 @@
     padding-right: 0;
 
     // Arrow icon.
-    &:after {
+    &::after {
       display: none;
     }
   }
@@ -357,33 +358,31 @@
 .checkout-progress--step__current {
   color: $c-body;
   font-weight: bold;
-  border-bottom: none;
+  border-bottom: 0;
 
   @media (min-width: $screen-xs-min) {
     color: $c-body;
     border-bottom: 1px solid $c-link;
   }
-  &:before {
+  &::before {
     color: $c-body;
   }
 }
 
-/**
- * Order Summary.
- */
+// Order Summary.
 .checkout-order-summary {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 20px;
   border: 1px solid #ccc;
 }
 .checkout-order-summary__items {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 0;
 }
 .checkout-order-summary__item {
   display: flex;
-  margin: 0 0 20px 0;
-  padding: 0 0 20px 0;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
   border-bottom: 1px solid #ccc;
 }
 .checkout-order-summary__item-quantity {
@@ -396,7 +395,7 @@
   font-size: 12px;
   color: #fff;
   background: #666;
-  line-height: 1.0;
+  line-height: 1;
   text-align: center;
   border-radius: 12px;
   z-index: 1;
@@ -452,9 +451,7 @@ div[id*="edit-coupon-redemption-form"] {
   font-style: italic;
 }
 
-/**
- * Checkout Review.
- */
+// Checkout Review.
 .checkout-pane-review {
   // Edit buttons.
   .checkout-pane__edit {
@@ -475,20 +472,16 @@ div[id*="edit-coupon-redemption-form"] {
   }
 }
 
-/**
- * Checkout Complete.
- */
+// Checkout Complete.
 .checkout-complete__order-number {
   font-weight: bold;
 }
 
-/**
- * Checkout Completion Registration.
- */
+// Checkout Completion Registration.
 .checkout-pane-completion-register {
   clear: both;
-  margin: 40px 0 0 0;
-  padding: 40px 0 0 0;
+  margin: 40px 0 0;
+  padding: 40px 0 0;
   border-top: 1px solid $gray-border;
 
   h2 {

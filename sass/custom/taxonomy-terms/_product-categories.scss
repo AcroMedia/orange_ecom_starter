@@ -1,6 +1,6 @@
-/**
- * Product Categories.
- */
+//
+// Product Categories.
+//
 .product-category {
   position: relative;
   clear: both;
@@ -8,7 +8,7 @@
 
 // Header.
 .product-category__header {
-  margin: 0 0 40px 0;
+  margin: 0 0 40px;
   padding: 20px;
   border: 1px solid $gray-border;
 
@@ -18,7 +18,7 @@
 }
 .product-category--with-image {
   .product-category__header {
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
     padding: 0;
     border: 1px solid $gray-border;
 
@@ -44,6 +44,6 @@
 // Components.
 .product-category__components {
   clear: both;
-  margin: 40px 0 20px 0;
+  margin: 40px 0 20px;
   padding: 0;
 }

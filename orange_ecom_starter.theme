@@ -393,10 +393,10 @@ function orange_ecom_starter_preprocess_page__view_store_product_listing(&$varia
   // Change $category_facet_alias to match your facet URL alias.
   $category_facet_alias = 'categories';
 
-  // Pattern example: categories/1/categories/2/categories/345
-  // $search_pattern = '/(' . $category_facet_alias . '\/)([0-9]+)/';
+  // Pattern example: categories/1/categories/2/categories/345.
+  // $search_pattern = '/(' . $category_facet_alias . '\/)([0-9]+)/';.
 
-  // Pattern: categories/clothing-7/categories/other-shirts-234
+  // Pattern: categories/clothing-7/categories/other-shirts-234.
   $search_pattern = '/(' . $category_facet_alias . '\/[a-zA-Z0-9-]+-)([0-9]+)/';
   $facets_query_categories = preg_match_all($search_pattern, $facets_query, $matches);
 
@@ -422,7 +422,7 @@ function orange_ecom_starter_preprocess_page__view_store_product_listing(&$varia
   // there is a description.
   $has_description = !$term->get('description')->isEmpty();
   // Check for a custom field example:
-  // $has_ctas = !$term->get('field_taxonomy_fields')->isEmpty();
+  // $has_ctas = !$term->get('field_taxonomy_fields')->isEmpty();.
   if ($has_description) {
     $variables['searched_category_term'] = taxonomy_term_view($term, 'teaser');
   }
@@ -780,7 +780,7 @@ function orange_ecom_starter_preprocess_commerce_product(&$variables) {
       foreach ($product_variations as $variation) {
         // Check if variation is active.
         if ($variation->status->value == '1') {
-          $active_variations ++;
+          $active_variations++;
         }
       }
       if ($active_variations >= 2) {

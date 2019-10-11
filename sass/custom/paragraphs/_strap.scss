@@ -1,10 +1,10 @@
-/**
- * Strap.
- */
+//
+// Strap.
+//
 .component-strap {
   position: relative;
   clear: both;
-  margin: 0 0 60px 0;
+  margin: 0 0 60px;
 
   .component-strap__content {
     position: relative;
@@ -68,14 +68,14 @@
   .btn,
   .btn--primary,
   .btn--default {
-    margin: 0 5px 15px 5px;
+    margin: 0 5px 15px;
     padding: 13px 20px;
     font-size: 20px;
   }
   .btn--default {
     color: #fff;
     border: 1px solid #fff;
-    @include background-opacity(#000, 0.4);
+    @include background-opacity(#000, .4);
 
     &:hover,
     &:focus {
@@ -92,7 +92,7 @@
 .component-strap form {
   .form-item {
     display: inline-block;
-    margin: 20px 20px;
+    margin: 20px;
     padding: 0;
     max-width: 240px;
     text-align: left;
@@ -100,14 +100,14 @@
   }
   .form-actions {
     display: inline-block;
-    margin: 20px 20px;
-    padding: 29px 0 0 0;
+    margin: 20px;
+    padding: 29px 0 0;
     vertical-align: top;
   }
   .btn--default {
     color: #fff;
     border: 1px solid #fff;
-    @include background-opacity(#000, 0.4);
+    @include background-opacity(#000, .4);
 
     &:hover,
     &:focus {

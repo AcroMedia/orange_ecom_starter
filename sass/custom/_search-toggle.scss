@@ -1,8 +1,7 @@
-/**
-* Search Toggle.
-*
-* Remove library and CSS to revert to a singular search.
-*/
+//
+// Search Toggle.
+// > Remove library and CSS to revert to a singular search.
+//
 
 // Site Header Modifications.
 .site-header__search {
@@ -68,7 +67,7 @@
     > a:focus {
       color: #fff;
       background: #000;
-      border-radius: 5px 0 0 0;
+      border-radius: 5px 0 0;
     }
   }
   // Dropdown.

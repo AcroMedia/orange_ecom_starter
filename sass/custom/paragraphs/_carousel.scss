@@ -1,10 +1,10 @@
-/**
- * Carousel.
- */
+//
+// Carousel.
+//
 .component-carousel {
   position: relative;
   clear: both;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 20px;
   padding: 0;
   max-width: 1600px;
   overflow: hidden;
@@ -69,7 +69,7 @@
     font-size: 0;
     text-align: center;
     background: none;
-    border: none;
+    border: 0;
     outline: none;
     z-index: 4;
 
@@ -86,7 +86,7 @@
       font-size: 25px;
       color: #dedede;
       outline: none;
-      text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.8);
+      text-shadow: 2px 1px 1px rgba(0, 0, 0, .8);
 
       @media (min-width: $screen-sm-min) {
         font-size: 50px;
@@ -94,7 +94,7 @@
     }
     &:hover {
       // Icon.
-      &:before {
+      &::before {
         color: #fff;
       }
     }
@@ -143,7 +143,7 @@
 
     &:hover,
     &:focus {
-      opacity: 0.1;
+      opacity: .1;
     }
   }
 }
@@ -173,7 +173,7 @@
 }
 .component-carousel-slide__content {
   margin: 0 auto;
-  padding: 20px 20px 60px 20px;
+  padding: 20px 20px 60px;
   max-width: 1200px;
 
   @media (min-width: $screen-sm-min) {
@@ -182,16 +182,16 @@
 }
 .component-carousel-slide__title {
   h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
     padding: 0;
     font-size: 30px;
     line-height: 1.2;
     color: #fff;
-    text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.6);
+    text-shadow: 2px 1px 1px rgba(0, 0, 0, .6);
 
     @media (min-width: $screen-xs-min) {
       font-size: 39px;
-      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+      text-shadow: 2px 2px 3px rgba(0, 0, 0, .6);
     }
     @media (min-width: $screen-sm-min) {
       font-size: 45px;
@@ -199,17 +199,17 @@
   }
 }
 .component-carousel-slide__body {
-  margin: 0 0 17px 0;
+  margin: 0 0 17px;
   padding: 0;
   font-size: 16px;
   line-height: 1.3;
   color: #fff;
-  text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 1px 1px rgba(0, 0, 0, .8);
 
   @media (min-width: $screen-sm-min) {
     font-size: 18px;
     line-height: 1.4;
-    text-shadow: 2px 1px 1px rgba(0, 0, 0, 0.8);
+    text-shadow: 2px 1px 1px rgba(0, 0, 0, .8);
   }
   p {
     margin: 0;

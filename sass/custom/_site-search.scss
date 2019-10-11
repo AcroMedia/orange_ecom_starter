@@ -1,14 +1,15 @@
-/**
-* Site Search.
-*/
+//
+// Site Search.
+//
+
 .view-site-search {
   clear: both;
   margin: 0;
-  padding: 10px 0 0 0;
+  padding: 10px 0 0;
 
   .views-exposed-form {
     position: relative;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
     padding: 0;
     max-width: 400px;
 
@@ -42,7 +43,7 @@
         text-decoration: none;
       }
       // Search icon.
-      &:before {
+      &::before {
         @extend %fa-icon;
         @extend .fas;
         content: fa-content($fa-var-search);
@@ -50,8 +51,8 @@
         color: $gray-base;
         transition: color .2s ease-in-out;
       }
-      &:focus:before,
-      &:hover:before {
+      &:focus::before,
+      &:hover::before {
         color: $gray;
       }
     }
@@ -66,13 +67,13 @@
   }
   .view-content {
     clear: both;
-    margin: 40px 0 0 0;
-    padding: 40px 0 0 0;
+    margin: 40px 0 0;
+    padding: 40px 0 0;
     border-top: 1px solid $gray-border;
   }
   .views-row {
     clear: both;
-    margin: 0 0 35px 0;
+    margin: 0 0 35px;
     padding: 0;
 
     h4 {
