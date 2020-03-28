@@ -41,7 +41,7 @@
       </a>
     {% endif %}
     {% if user.hasPermission('view own profile') %}
-      <a href="{{ base_path }}user/{{ user.id }}/customer" class="user-dashboard__nav-link user-dashboard__nav-link--address-book">
+      <a href="{{ base_path }}user/{{ user.id }}/address-book" class="user-dashboard__nav-link user-dashboard__nav-link--address-book">
         <div class="user-dashboard__nav-link__title">{{ 'Address Book'|t }}</div>
         <div class="user-dashboard__nav-link__description">{{ 'Edit shipping & billing addresses'|t }}</div>
       </a>
