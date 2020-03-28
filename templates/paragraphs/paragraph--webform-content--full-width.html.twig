@@ -1,0 +1,9 @@
+{% extends "paragraph--webform-content.html.twig" %}
+
+{% block content_wrapper %}
+  <div class="container">
+    {% block content %}
+      {{ parent() }}
+    {% endblock content %}
+  </div>
+{% endblock content_wrapper %}

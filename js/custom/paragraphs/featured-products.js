@@ -23,12 +23,18 @@
               accessibility: false,
               draggable: false,
               infinite: false,
-              mobileFirst: false,
               responsive: [
                 {
-                  breakpoint: 1100,
+                  breakpoint: 1300,
                   settings: {
                     slidesToShow: 4,
+                    slidesToScroll: 1
+                  }
+                },
+                {
+                  breakpoint: 768,
+                  settings: {
+                    slidesToShow: 3,
                     slidesToScroll: 1
                   }
                 },

@@ -34,8 +34,8 @@
 {% endif %}
 
 {# Set background image. #}
-{% if product_attribute_value_entity.field_image.entity.uri.value %}
-  {% set image_url = product_attribute_value_entity.field_image.entity.uri.value|image_style('color') %}
+{% if product_attribute_value_entity.field_media_item.entity.field_media_image.entity.uri.value %}
+  {% set image_url = product_attribute_value_entity.field_media_item.entity.field_media_image.entity.uri.value|image_style('color') %}
   {% set style_value = style_value ~ 'background-image: url(' ~ image_url ~ ');' %}
   {% set item_attributes = item_attributes.setAttribute('style', style_value) %}
 {% endif %}

@@ -1,6 +1,7 @@
 //
 // Accordion.
 //
+
 .base-accordion {
   clear: both;
   margin: 0 0 28px;
@@ -68,4 +69,11 @@
       padding: 0;
     }
   }
+}
+
+// Full Width.
+.component-accordion--full-width {
+  clear: both;
+  margin: 0 0 60px;
+  padding: 0;
 }

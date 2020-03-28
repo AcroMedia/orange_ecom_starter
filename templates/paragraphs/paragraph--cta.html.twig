@@ -49,9 +49,9 @@
 {% block paragraph %}
   <div data-aos="zoom-in"{{ attributes.addClass(classes) }}>
     {% block content %}
-      {% if paragraph.field_image.entity.fileuri %}
+      {% if paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
         <div class="component-cta__image">
-          {{ content.field_image }}
+          {{ content.field_media_item }}
 
           {% if content.field_link.0 %}
             <div class="component-cta__link">

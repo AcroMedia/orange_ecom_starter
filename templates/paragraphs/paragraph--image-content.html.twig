@@ -82,14 +82,14 @@
             {% endif %}
           {% endif %}
           <div class="component-image-content__col {{ col_class }}">
-            {% if content.field_image %}
+            {% if paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
               <div class="component-image-content__image">
-                {{ content.field_image }}
+                {{ content.field_media_item }}
               </div>
             {% endif %}
           </div>
           <div class="component-image-content__col {{ col2_class }}">
-            {% if content.field_paragraphs_reference %}
+            {% if content.field_paragraphs %}
               {% if paragraph.field_color.color %}
                 {% set color_id = 'paragraph-' ~ paragraph.id.value ~ '-color' %}
                 {% set body_attributes = body_attributes.setAttribute('id', color_id) %}
@@ -102,7 +102,7 @@
                 </style>
               {% endif %}
               <div{{ body_attributes.addClass('component-image-content__body') }}>
-                {{ content.field_paragraphs_reference }}
+                {{ content.field_paragraphs }}
               </div>
             {% endif %}
           </div>

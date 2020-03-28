@@ -43,18 +43,20 @@
     'component-accordion',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    view_mode ? 'component-accordion--' ~ view_mode|clean_class,
   ]
 %}
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% block content %}
-      {% if paragraph.field_string.value %}
-        <h3 class="base-accordion__group-header">{{ content.field_string }}</h3>
-      {% endif %}
-      {% if paragraph.field_paragraphs_reference.0.target_id %}
-        {{ content.field_paragraphs_reference }}
-      {% endif %}
-    {% endblock %}
+    {% block content_wrapper %}
+      {% block content %}
+        {% if paragraph.field_string.value %}
+          <h3 class="base-accordion__group-header">{{ content.field_string }}</h3>
+        {% endif %}
+        {% if paragraph.field_paragraphs.0.target_id %}
+          {{ content.field_paragraphs }}
+        {% endif %}
+      {% endblock content %}
+    {% endblock content_wrapper %}
   </div>
 {% endblock paragraph %}

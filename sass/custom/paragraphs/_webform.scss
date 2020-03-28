@@ -1,7 +1,15 @@
 //
 // Webform.
 //
+
 .component-webform {
   margin: 0 0 40px;
+  padding: 0;
+}
+
+// Full Width.
+.component-webform--full-width {
+  clear: both;
+  margin: 0 0 60px;
   padding: 0;
 }

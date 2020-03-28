@@ -6,9 +6,24 @@
   .region-highlighted,
   .region-above-content,
   .region-below-content {
+    padding-left: 15px;
+    padding-right: 15px;
     margin-left: auto;
     margin-right: auto;
-    max-width: $screen-xl-min;
+    max-width: 100%;
+
+    @media (min-width: $screen-sm-min) {
+      max-width: $container-tablet;
+    }
+    @media (min-width: $screen-md-min) {
+      max-width: $container-desktop;
+    }
+    @media (min-width: $screen-lg-min) {
+      max-width: $container-large-desktop;
+    }
+    @media (min-width: $screen-xl-min) {
+      max-width: $container-xlarge-desktop;
+    }
   }
   .region-highlighted > div {
     margin: 20px 0;

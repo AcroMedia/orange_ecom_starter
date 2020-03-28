@@ -10,13 +10,13 @@ body {
   font-family: $f-body;
 }
 body {
-  font-size: 16px;
+  font-size: $fs-global;
   line-height: 1.5;
   min-width: $screen-min;
 
   &.cke_editable {
     padding: 20px;
-    background: #fff;
+    background: $c-white;
   }
 }
 
@@ -55,7 +55,8 @@ img {
 }
 
 // Typography.
-h1 {
+h1,
+.h1 {
   margin-top: 30px;
   font-family: $f-primary;
   font-size: 35px;
@@ -64,7 +65,8 @@ h1 {
     font-size: 48px;
   }
 }
-h2 {
+h2,
+.h2 {
   margin-top: 30px;
   font-family: $f-primary;
   font-size: 28px;
@@ -73,7 +75,8 @@ h2 {
     font-size: 35px;
   }
 }
-h3 {
+h3,
+.h3 {
   margin-top: 30px;
   font-family: $f-primary;
   font-size: 25px;
@@ -82,7 +85,8 @@ h3 {
     font-size: 28px;
   }
 }
-h4 {
+h4,
+.h4 {
   margin-top: 25px;
   font-family: $f-primary;
   font-size: 20px;
@@ -91,16 +95,18 @@ h4 {
     font-size: 24px;
   }
 }
-h5 {
+h5,
+.h5 {
   margin-top: 25px;
   font-family: $f-secondary;
   font-size: 18px;
   text-transform: uppercase;
 }
-h6 {
+h6,
+.h6 {
   margin-top: 25px;
   font-family: $f-secondary;
-  font-size: 16px;
+  font-size: $fs-global;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -144,6 +150,113 @@ iframe {
 .card .card__image img,
 .nav-tabs > li > a {
   @include border-top-radius($border-radius);
+}
+
+// Messages.
+.messages {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 15px 20px 15px 39px;
+  background: none;
+  box-shadow: none;
+  border: 1px solid;
+  border-radius: 2px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  // Icon.
+  &::before {
+    @extend %fa-icon;
+    @extend .fas;
+    position: absolute;
+    top: 18px;
+    left: 15px;
+    right: auto;
+  }
+}
+[dir="rtl"] .messages {
+  border-width: 1px;
+  padding-left: 20px;
+  padding-right: 39px;
+  text-align: right;
+
+  // Icon.
+  &::before {
+    left: auto;
+    right: 15px;
+  }
+}
+.messages + .messages {
+  margin-top: 1.538em;
+}
+.messages__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.messages__item + .messages__item {
+  margin-top: 0.769em;
+}
+
+// Status/Success Message.
+.messages--status {
+  color: $c-success-text;
+  background-color: $c-success-accent;
+  border-color: $c-success-border;
+  background-image: none;
+  box-shadow: none;
+
+  // Icon.
+  &::before {
+    content: fa-content($fa-var-check-circle);
+    color: $c-success;
+  }
+}
+[dir="rtl"] .messages--status {
+  border-color: $c-success-border;
+  box-shadow: none;
+  margin-left: 0;
+}
+
+// Warning Message.
+.messages--warning {
+  background-color: $c-warning-accent;
+  border-color: $c-warning-border;
+  color: $c-warning-text;
+  background-image: none;
+  box-shadow: none;
+
+  // Icon.
+  &::before {
+    content: fa-content($fa-var-exclamation-circle);
+    color: $c-warning;
+  }
+}
+[dir="rtl"] .messages--warning {
+  border-color: $c-warning-border;
+  box-shadow: none;
+}
+
+// Error Message.
+.messages--error {
+  background-color: $c-error-accent;
+  color: $c-error-text;
+  border-color: $c-error-border;
+  background-image: none;
+  box-shadow: none;
+
+  // Icon.
+  &::before {
+    content: fa-content($fa-var-times-circle);
+    color: $c-error;
+  }
+  p.error {
+    color: $c-error-text;
+  }
+}
+[dir="rtl"] .messages--error {
+  border-color: $c-error-border;
+  box-shadow: none;
 }
 
 // Tabs.
@@ -248,7 +361,7 @@ iframe {
 }
 
 // Links.
-a {
+@mixin text-link() {
   color: $c-link;
   text-decoration: none;
   @include smooth-transition;
@@ -261,6 +374,10 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+a {
+  @include text-link;
 }
 
 // Buttons.
@@ -333,7 +450,7 @@ button {
 .btn--sm,
 .btn-group-sm > .btn {
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: $fs-global;
 }
 
 // Form buttons.

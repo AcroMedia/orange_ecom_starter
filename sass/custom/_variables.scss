@@ -5,7 +5,6 @@
 // Colors.
 $c-white: #fff;
 $c-black: #000;
-$c-error: #c00;
 
 $c-site-bg: $c-white;
 
@@ -32,6 +31,23 @@ $c-star-hover: $c-link-hover;
 $c-star-off: #e2e2e2;
 $c-breadcrumbs: #999;
 
+// Messaging & Status Colors.
+$c-error: #c00;
+$c-error-text: darken($c-error, 20%);
+$c-error-accent: #fcf4f2;
+$c-error-border: darken($c-error-accent, 20%);
+
+$c-warning: #e09600;
+$c-warning-text: darken($c-warning, 25%);
+$c-warning-accent: #fdf8ed;
+$c-warning-border: darken($c-warning-accent, 20%);
+
+$c-success: #77b259;
+$c-success-text: darken($c-success, 30%);
+$c-success-accent: #f3faef;
+$c-success-border: darken($c-success-accent, 20%);
+
+// Neutral Colors.
 $gray-border:            #ccc;
 $gray-base:              #151515 !default;
 $gray-darker:            #353535;
@@ -47,6 +63,9 @@ $f-font-awesome: FontAwesome;
 $f-primary: Verdana, Geneva, sans-serif;
 $f-secondary: Georgia, Times, 'Times New Roman', serif;
 $f-body: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+// Font Sizing.
+$fs-global: 16px;
 
 // Site Styles.
 $border-radius: 4px;

@@ -58,8 +58,9 @@
 {% endif %}
 
 {# Background Image. #}
-{% if paragraph.field_image.entity.fileuri %}
-  {% set bg_image = paragraph.field_image.entity.fileuri|image_style('background') %}
+{% if paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
+  {% set has_background_image = true %}
+  {% set bg_image = paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri|image_style('background') %}
   {% set style_value = style_value ~ 'background-image: url(' ~ bg_image ~ ');' %}
   {% set attributes = attributes.setAttribute('style', style_value) %}
   {% set attributes = attributes.addClass('component-cta-strap--image') %}
@@ -79,15 +80,15 @@
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% if (paragraph.field_image.entity.fileuri) and (paragraph.field_bg_color.color and paragraph.field_bg_color.opacity) %}
+    {% if (has_background_image) and (paragraph.field_bg_color.color and paragraph.field_bg_color.opacity) %}
       <div class="component-cta-strap__overlay" style="background: {{ paragraph.field_bg_color.color }}; opacity: {{ paragraph.field_bg_color.opacity }};"></div>
     {% endif %}
     {% block content_wrapper %}
       {% block content %}
         <div class="component-cta-strap__content">
           <div{{ body_attributes.addClass('component-cta-strap__body') }}>
-            {% if paragraph.field_paragraphs_reference.0.target_id %}
-              {{ content.field_paragraphs_reference }}
+            {% if paragraph.field_paragraphs.0.target_id %}
+              {{ content.field_paragraphs }}
             {% endif %}
           </div>
         </div>

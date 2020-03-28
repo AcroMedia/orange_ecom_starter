@@ -126,9 +126,15 @@
                         {% for product_variation_image in product_variation.images %}
                           <div>
                             <div class="product-slider__main-slider__item">
-                              <a href="{{ file_url(product_variation_image.entity.uri.value) }}" class="product-slider__main-slider__item-content magnific-popup-gallery">
-                                <span><img src="{{ product_variation_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.alt }}" /></span>
-                              </a>
+                              {% if product_variation_image.entity.field_media_oembed_video.entity.field_media_oembed_video.value %}
+                                <a href="{{ product_variation_image.entity.field_media_oembed_video.entity.field_media_oembed_video.value }}" class="product-slider__main-slider__item-content product-slider__main-slider__item-content--video magnific-popup-gallery mfp-iframe">
+                                  <span>{{ product_variation_image.entity|view('teaser') }}</span>
+                                </a>
+                              {% else %}
+                                <a href="{{ product_variation_image.entity.field_media_image.entity.uri.value|image_style('full') }}" class="product-slider__main-slider__item-content magnific-popup-gallery">
+                                  <span><img src="{{ product_variation_image.entity.field_media_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.entity.field_media_image.alt }}" /></span>
+                                </a>
+                              {% endif %}
                             </div>
                           </div>
                         {% endfor %}
@@ -153,9 +159,19 @@
                         {% endif %}
                         {% for product_variation_image in product_variation.images %}
                           <div>
-                            <a class="product-slider__nav-slider__item" data-product-variation-id="{{ product_variation_id }}">
-                              <span><img src="{{ product_variation_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.alt }}" /></span>
-                            </a>
+                            {% if product_variation_image.entity.field_media_oembed_video.entity.field_media_oembed_video.value %}
+                              <a class="product-slider__nav-slider__item product-slider__nav-slider__item---video" data-product-variation-id="{{ product_variation_id }}">
+                                <span>
+                                  {{ product_variation_image.entity|view('teaser') }}
+                                </span>
+                              </a>
+                            {% else %}
+                              <a class="product-slider__nav-slider__item" data-product-variation-id="{{ product_variation_id }}">
+                                <span>
+                                  <img src="{{ product_variation_image.entity.field_media_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.entity.field_media_image.alt }}" />
+                                </span>
+                              </a>
+                            {% endif %}
                           </div>
                         {% endfor %}
                       {% endfor %}
@@ -166,16 +182,16 @@
               <div class="col-md-7 col-lg-8">
                 <div class="product_main-content">
                   {# Brands. #}
-                  {% if product_entity.field_terms_reference_2.0.target_id %}
+                  {% if product_entity.field_terms_2.0.target_id %}
                     <div class="product__brands">
-                      {% for brand in product_entity.field_terms_reference_2 %}
+                      {% for brand in product_entity.field_terms_2 %}
                         {% set brand_entity = brand.entity.getTranslation(langcode) %}
                         {{ brand_entity.name.value }}{% if not loop.last %},{% endif %}
                       {% endfor %}
                     </div>
                   {% endif %}
                   {# / Brands. #}
-                  <h2 class="product__title">{{ product.title }}</h2>
+                  <h1 class="product__title">{{ product.title }}</h1>
                   <div class="product__price">
                     {{ product.variation_price }}
                   </div>
@@ -235,7 +251,7 @@
                 </div>
               </div>
             </div>
-            {% if product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id or reviews_are_active %}
+            {% if product_entity.body.value or product_entity.field_paragraphs.0.target_id or reviews_are_active %}
               <div class="row">
                 <div class="col-md-12">
                   <div class="product__tabs">
@@ -252,8 +268,8 @@
                       {# / Product Overview tab. #}
 
                       {# Tabs added from the user. #}
-                      {% if product_entity.field_paragraphs_reference.0.target_id %}
-                        {% for tab in product_entity.field_paragraphs_reference %}
+                      {% if product_entity.field_paragraphs.0.target_id %}
+                        {% for tab in product_entity.field_paragraphs %}
                           {% set tab_entity = tab.entity.getTranslation(langcode) %}
                           {% set tab_field_title = tab_entity.field_string %}
                           {% set tab_id = tab_field_title.value|clean_class %}
@@ -276,7 +292,7 @@
 
                       {# Product Reviews tab. #}
                       {% if reviews_are_active %}
-                        <li role="presentation" class="{{ (product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id) ? '' : 'active' }}">
+                        <li role="presentation" class="{{ (product_entity.body.value or product_entity.field_paragraphs.0.target_id) ? '' : 'active' }}">
                           <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">
                             {{ 'Reviews'|t }} {% if review_count %}<span class="badge">{{ review_count }}</span>{% endif %}
                           </a>
@@ -297,8 +313,8 @@
                       {# / Product Overview tab content. #}
 
                       {# Tabs content added from the user. #}
-                      {% if product_entity.field_paragraphs_reference.0.target_id %}
-                        {% for tab in product_entity.field_paragraphs_reference %}
+                      {% if product_entity.field_paragraphs.0.target_id %}
+                        {% for tab in product_entity.field_paragraphs %}
                           {% set tab_entity = tab.entity.getTranslation(langcode) %}
                           {% set tab_field_title = tab_entity.field_string %}
                           {% set tab_field_body = tab_entity.field_text_long %}
@@ -321,7 +337,7 @@
 
                       {# Product Reviews tab content. #}
                       {% if reviews_are_active %}
-                        <div role="tabpanel" class="tab-pane fade {{ (product_entity.body.value or product_entity.field_paragraphs_reference.0.target_id) ? '' : 'active in' }}" id="reviews">
+                        <div role="tabpanel" class="tab-pane fade {{ (product_entity.body.value or product_entity.field_paragraphs.0.target_id) ? '' : 'active in' }}" id="reviews">
                           <div class="product__reviews">
                             <header class="product__reviews-header clearfix">
                               {% if average_star_rating|length %}
@@ -356,17 +372,17 @@
             {% endif %}
 
             {# Featured Products. #}
-            {% if product_entity.field_paragraph_reference.0.target_id %}
+            {% if product_entity.field_paragraph.0.target_id %}
               <div class="row">
                 <div class="col-md-12">
                   <div class="product__featured-products">
                     {# Display products if manually selected. #}
-                    {% if product_entity.field_paragraph_reference.0.entity.getTranslation(langcode).field_products_reference.0.target_id %}
-                      {{ product.field_paragraph_reference }}
+                    {% if product_entity.field_paragraph.0.entity.getTranslation(langcode).field_products.0.target_id %}
+                      {{ product.field_paragraph }}
                     {% else %}
                       {# Display products within the same category using a view. #}
-                      {% set ref_entity = product_entity.field_paragraph_reference.0.entity.getTranslation(langcode) %}
-                      {% if product_entity.field_terms_reference.0.target_id %}
+                      {% set ref_entity = product_entity.field_paragraph.0.entity.getTranslation(langcode) %}
+                      {% if product_entity.field_terms.0.target_id %}
                         <div class="component-featured-products">
                           {% if ref_entity.field_string.value %}
                             <div class="component-featured-products__title">
@@ -374,7 +390,7 @@
                             </div>
                           {% endif %}
                           <div class="component-featured-products__content">
-                            {{ drupal_view('featured_products', 'default', product_entity.field_terms_reference.0.target_id, product_entity.id) }}
+                            {{ drupal_view('featured_products', 'default', product_entity.field_terms.0.target_id, product_entity.id) }}
                           </div>
                         </div>
                       {% endif %}
@@ -392,9 +408,9 @@
   </div>
 
   {# Footer Components. #}
-  {% if product_entity.field_paragraphs_reference_2.0.target_id %}
+  {% if product_entity.field_paragraphs_2.0.target_id %}
     <div class="page-footer-components">
-      {{ product.field_paragraphs_reference_2 }}
+      {{ product.field_paragraphs_2 }}
     </div>
   {% endif %}
   {# / Footer Components. #}

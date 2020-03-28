@@ -26,7 +26,7 @@
 {%
   set classes = [
     'product-category',
-    term.field_image.entity.fileuri ? 'product-category--with-image',
+    term.field_media_item.0.entity.field_media_image.0.entity.fileuri ? 'product-category--with-image',
     'taxonomy-term',
     'vocabulary-' ~ term.bundle|clean_class,
   ]
@@ -35,8 +35,8 @@
 {% set image_attributes = create_attribute() %}
 
 {# Image. #}
-{% if term.field_image.entity.fileuri %}
-  {% set bg_image = term.field_image.entity.fileuri|image_style('background') %}
+{% if term.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
+  {% set bg_image = term.field_media_item.entity.field_media_image.entity.fileuri|image_style('background') %}
   {% set bg_image_style = style_value ~ 'background-image: url(' ~ bg_image ~ ');' %}
   {% set image_attributes = image_attributes.setAttribute('style', bg_image_style) %}
   {% set image_attributes = image_attributes.addClass('component-image-strap__bg-image') %}
@@ -44,12 +44,12 @@
 
 <div{{ attributes.setAttribute('id', 'taxonomy-term-' ~ term.id).addClass(classes) }}>
   <div class="product-category__header">
-    {% if term.field_image.entity.fileuri %}
+    {% if term.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
       <div class="component-image-strap">
-        {% if term.field_image.entity.fileuri %}
+        {% if term.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
           <div{{ image_attributes }}>
             <div class="component-image-strap__image">
-              {{ content.field_image }}
+              {{ content.field_media_item }}
             </div>
           </div>
         {% endif %}
@@ -62,7 +62,7 @@
                   {{ title_prefix }}
                   <h2 class="product-category__header__title">{{ name }}</h2>
                   {{ title_suffix }}
-                  {{ content|without('field_image','field_paragraphs_reference') }}
+                  {{ content|without('field_media_item','field_paragraphs') }}
                 </div>
               </div>
             </div>
@@ -74,15 +74,15 @@
         {{ title_prefix }}
         <h3 class="product-category__header__title">{{ name }}</h3>
         {{ title_suffix }}
-        {{ content|without('field_image','field_paragraphs_reference') }}
+        {{ content|without('field_media_item','field_paragraphs') }}
       </div>
     {% endif %}
   </div>
 
   {# Components. #}
-  {% if term.field_paragraphs_reference.0.target_id %}
+  {% if term.field_paragraphs.0.target_id %}
     <div class="product-category__components">
-      {{ content.field_paragraphs_reference }}
+      {{ content.field_paragraphs }}
     </div>
   {% endif %}
   {# / Components. #}

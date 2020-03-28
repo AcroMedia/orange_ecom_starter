@@ -648,12 +648,12 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
       $product_variations = $product->getVariations();
 
       // Product Images.
-      if (isset($product->field_images->entity)) {
+      if (isset($product->field_media->entity)) {
         // Create array to feed images into.
         $product_images = [];
       }
-      if (isset($product->field_images->entity)) {
-        foreach ($product->field_images as $key => &$product_image) {
+      if (isset($product->field_media->entity)) {
+        foreach ($product->field_media as $key => &$product_image) {
           $product_images[$key]['variation_id'] = '';
           $product_images[$key]['images'][$key] = $product_image;
         }
@@ -665,7 +665,7 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
         // if the variation is active and contains an image.
         foreach ($product_variations as $variation) {
           if ($variation->status->value == '1') {
-            if (isset($variation->field_images->entity)) {
+            if (isset($variation->field_media->entity)) {
               // Create array to feed images into.
               $product_variation_images = [];
               break;
@@ -677,11 +677,11 @@ function orange_ecom_starter_preprocess(&$variables, $hook) {
           // If variation is active.
           if ($variation->status->value == '1') {
             // If variation has an image.
-            if (isset($variation->field_images->entity)) {
+            if (isset($variation->field_media->entity)) {
               $variation_id = $variation->variation_id->value;
               $product_variation_images[$key]['variation_id'] = $variation_id;
 
-              foreach ($variation->field_images as $image_key => &$variation_image) {
+              foreach ($variation->field_media as $image_key => &$variation_image) {
                 $product_variation_images[$key]['images'][$image_key] = $variation_image;
               }
             }

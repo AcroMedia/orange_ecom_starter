@@ -55,9 +55,9 @@
           {{ content.field_string }}
         </div>
       {% endif %}
-      {% if paragraph.field_products_reference.0.target_id %}
+      {% if paragraph.field_products.0.target_id %}
         <div class="component-featured-products__content">
-          {{ content.field_products_reference }}
+          {{ content.field_products }}
         </div>
       {% endif %}
     {% endblock %}

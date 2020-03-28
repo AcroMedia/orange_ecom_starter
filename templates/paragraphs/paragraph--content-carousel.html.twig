@@ -44,13 +44,15 @@
     'component-content-carousel',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    view_mode ? 'component-content-carousel--' ~ view_mode|clean_class,
   ]
 %}
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% block content %}
-      {{ content }}
-    {% endblock %}
+    {% block content_wrapper %}
+      {% block content %}
+        {{ content }}
+      {% endblock content %}
+    {% endblock content_wrapper %}
   </div>
 {% endblock paragraph %}

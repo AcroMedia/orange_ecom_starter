@@ -59,7 +59,8 @@
 {% endif %}
 
 {# Overlay / Background Image. #}
-{% if paragraph.field_image.entity.fileuri %}
+{% if paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
+  {% set has_background_image = true %}
   {% set opacity_value = 1 %}
   {% if paragraph.field_opacity.value %}
     {% set opacity_value = paragraph.field_opacity.value / 100 %}
@@ -67,7 +68,7 @@
 
   {% set overlay_attributes = overlay_attributes.addClass('component-content-strap-column__overlay') %}
 
-  {% set bg_image = paragraph.field_image.entity.fileuri|image_style('background') %}
+  {% set bg_image = paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri|image_style('background') %}
   {% set overlay_style_value = overlay_style_value ~ 'background-image: url(' ~ bg_image ~ ');' %}
 
   {% set overlay_style_value = overlay_style_value ~ ' opacity: ' ~ opacity_value ~ ';' %}
@@ -90,14 +91,14 @@
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-    {% if paragraph.field_image.entity.fileuri %}
+    {% if has_background_image %}
       <div{{ overlay_attributes }}></div>
     {% endif %}
     {% block content %}
       <div class="component-content-strap-column__content" data-aos="fade-up">
         <div{{ body_attributes.addClass('component-content-strap-column__body') }}>
-          {% if paragraph.field_paragraphs_reference.0.target_id %}
-            {{ content.field_paragraphs_reference }}
+          {% if paragraph.field_paragraphs.0.target_id %}
+            {{ content.field_paragraphs }}
           {% endif %}
         </div>
       </div>

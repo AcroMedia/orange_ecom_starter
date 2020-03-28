@@ -79,9 +79,9 @@
   ]
 %}
 <div{{ attributes.addClass(classes) }}>
-  {% if node.field_image.entity.fileuri %}
+  {% if node.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
     <div class="blog-listing-item__image">
-      {{ content.field_image }}
+      {{ content.field_media_item }}
     </div>
   {% endif %}
   <h3 class="blog-listing-item__title">

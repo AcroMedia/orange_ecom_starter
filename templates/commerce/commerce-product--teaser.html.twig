@@ -24,17 +24,25 @@
 
 {% block content %}
   <div class="product-teaser">
-    <a href="{{ product_path }}" class="product-thumbnail product-thumbnail--teaser {{ product_entity.field_image_hover.entity.fileuri ? 'product-thumbnail--with-hover' }}">
+    <a href="{{ product_path }}" class="product-thumbnail product-thumbnail--teaser {{ product_entity.field_media_item.entity.field_media_image.entity.fileuri ? 'product-thumbnail--with-hover' }}">
       <div class="product-thumbnail__content">
         {% if product_variation_images %}
           {% for product_variation_image in product_variation_images %}
             {# Use first image of the first variation. #}
             {% if loop.first %}
-              <img src="{{ product_variation_image.images.0.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.alt }}" class="product-thumbnail__image" />
+              {% if product_variation_image.images.0.entity.field_media_oembed_video.entity.field_media_oembed_video.value %}
+                <div class="product-thumbnail__image">
+                  {{ product_variation_image.images.0.entity|view('teaser') }}
+                </div>
+              {% else %}
+                <div class="product-thumbnail__image">
+                  <img src="{{ product_variation_image.images.0.entity.field_media_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_variation_image.images.0.entity.field_media_image.alt }}" />
+                </div>
+              {% endif %}
 
-              {% if product_entity.field_image_hover.entity.fileuri %}
+              {% if product_entity.field_media_item.entity.field_media_image.entity.fileuri %}
                 <div class="product-thumbnail__image-hover">
-                  <img src="{{ product_entity.field_image_hover.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_entity.field_image_hover.alt }}" />
+                  <img src="{{ product_entity.field_media_item.entity.field_media_image.entity.uri.value|image_style('product_thumbnail') }}" alt="{{ product_entity.field_media_item.entity.field_media_image.alt }}" />
                 </div>
               {% endif %}
             {% endif %}

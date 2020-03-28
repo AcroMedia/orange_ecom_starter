@@ -7,8 +7,8 @@
   .region-highlighted,
   .region-above-content,
   .region-below-content {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
     margin-left: auto;
     margin-right: auto;
     max-width: 100%;
@@ -36,22 +36,22 @@
 }
 
 // Product Thumbnail.
-.product-thumbnail__content {
+.product-thumbnail__content,
+.product-variation--has-image .product-variation__image > a img {
   position: relative;
   margin: 0 0 10px;
   padding: 1px;
   border: 1px solid #ccc;
   opacity: 1;
   @include smooth-transition;
-
-  img {
-    display: block;
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    height: auto;
-    transition: opacity .3s ease-in-out;
-  }
+}
+.product-thumbnail__content img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  height: auto;
+  transition: opacity .3s ease-in-out;
 }
 .product-thumbnail__image-hover {
   position: absolute;
@@ -67,7 +67,8 @@
     height: auto;
   }
 }
-.product-thumbnail {
+.product-thumbnail,
+.product-variation--has-image .product-variation__image > a {
   display: block;
   text-decoration: none;
   text-align: center;
@@ -77,14 +78,23 @@
   &:hover {
     text-decoration: none;
     outline: none;
-
-    .product-thumbnail__content {
-      opacity: .8;
-      border-color: $c-link;
-    }
   }
 }
+.product-thumbnail:hover .product-thumbnail__content,
+.product-thumbnail:focus .product-thumbnail__content,
+.product-variation--has-image .product-variation__image > a:hover img,
+.product-variation--has-image .product-variation__image > a:focus img {
+  opacity: .8;
+  border-color: $c-link;
+}
 // If teaser has hover image.
+.product-thumbnail__image {
+  position: relative;
+
+  img {
+    position: relative;
+  }
+}
 .product-thumbnail--with-hover {
   &:focus,
   &:hover {
@@ -263,7 +273,7 @@
       padding: 0 0 0 120px;
     }
   }
-  .field--name-product-id {
+  .product-variation__image {
     position: absolute;
     top: 0;
     left: 0;
@@ -776,7 +786,6 @@
   }
 }
 .product-slider__main-slider__item {
-
   .product-slider__main-slider__item-content {
     position: relative;
     display: inline-block;
@@ -812,11 +821,38 @@
     &:focus {
       border-color: $c-link;
 
-      &::before {
+      &:before {
         border-top: 77px solid $c-link;
       }
       span {
         opacity: .9;
+      }
+    }
+    // Video.
+    &.product-slider__main-slider__item-content--video {
+      // Play Icon.
+      &::after {
+        @extend %fa-icon;
+        @extend .far;
+        content: fa-content($fa-var-play-circle);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        color: $c-white;
+        text-align: center;
+        font-size: 130px;
+        text-shadow: 0 0 30px $c-black;
+        opacity: 1;
+        z-index: 31;
+        @include background-opacity($c-white, .2);
+        transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out;
       }
     }
   }
@@ -931,6 +967,32 @@
     display: block;
     max-width: 100%;
     height: auto;
+  }
+  &.product-slider__nav-slider__item---video {
+    // Play Icon.
+    &::after {
+      @extend %fa-icon;
+      @extend .far;
+      content: fa-content($fa-var-play-circle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      color: $c-white;
+      text-align: center;
+      font-size: 40px;
+      text-shadow: 0 0 20px $c-black;
+      opacity: 1;
+      z-index: 31;
+      @include background-opacity($c-white, .2);
+      transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out;
+    }
   }
 }
 .slick-current .product-slider__nav-slider__item {

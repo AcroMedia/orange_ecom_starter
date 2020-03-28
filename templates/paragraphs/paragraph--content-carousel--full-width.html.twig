@@ -1,15 +1,13 @@
 {% extends "paragraph--content-carousel.html.twig" %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          {% block content %}
-            {{ parent() }}
-          {% endblock %}
-        </div>
+{% block content_wrapper %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        {% block content %}
+          {{ parent() }}
+        {% endblock content %}
       </div>
     </div>
   </div>
-{% endblock paragraph %}
+{% endblock content_wrapper %}

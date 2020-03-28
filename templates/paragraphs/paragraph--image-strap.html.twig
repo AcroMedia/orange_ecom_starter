@@ -57,8 +57,9 @@
 {% endif %}
 
 {# Background Image. #}
-{% if paragraph.field_image.entity.fileuri %}
-  {% set bg_image = paragraph.field_image.entity.fileuri|image_style('background') %}
+{% if paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
+  {% set has_background_image = true %}
+  {% set bg_image = paragraph.field_media_item.0.entity.field_media_image.0.entity.fileuri|image_style('background') %}
   {% set bg_image_style = style_value ~ 'background-image: url(' ~ bg_image ~ ');' %}
   {% set image_attributes = image_attributes.setAttribute('style', bg_image_style) %}
   {% set image_attributes = image_attributes.addClass('component-image-strap__bg-image') %}
@@ -80,14 +81,18 @@
 {% block paragraph %}
   <div data-aos="fade-up"{{ attributes.addClass(classes) }}>
     {% block content %}
-      {% if paragraph.field_image.entity.fileuri %}
-      <div{{ image_attributes }}>
-        <div class="component-image-strap__image">
-          {{ content.field_image }}
+      {% if has_background_image %}
+        <div{{ image_attributes }}>
+          <div class="component-image-strap__image">
+            {{ content.field_media_item }}
+          </div>
         </div>
-      </div>
       {% endif %}
-      <div class="component-image-strap__container container">
+      {% set container_class = 'container-fluid' %}
+      {% if view_mode|clean_class == 'full-width' %}
+        {% set container_class = 'container' %}
+      {% endif %}
+      <div class="component-image-strap__container {{ container_class }}">
         <div{{ row_style_attributes }} class="row">
           {% set col_class = 'col-md-6' %}
           {% set col2_class = 'col-md-6' %}
@@ -101,7 +106,7 @@
           <div class="component-image-strap__col {{ col2_class }}">
             <div class="component-image-strap__content">
 
-              {% if content.field_paragraphs_reference %}
+              {% if content.field_paragraphs %}
                 {% if paragraph.field_color.color %}
                   {% set color_id = 'paragraph-' ~ paragraph.id.value ~ '-color' %}
                   {% set body_attributes = body_attributes.setAttribute('id', color_id) %}
@@ -114,12 +119,12 @@
                   </style>
                 {% endif %}
                 <div{{ body_attributes.addClass('component-image-strap__body') }}>
-                  {{ content.field_paragraphs_reference }}
+                  {{ content.field_paragraphs }}
                 </div>
               {% endif %}
-              {% if paragraph.field_paragraphs_reference_2.0.target_id %}
+              {% if paragraph.field_paragraphs_2.0.target_id %}
                 <div class="component-image-strap__buttons">
-                  {{ content.field_paragraphs_reference_2 }}
+                  {{ content.field_paragraphs_2 }}
                 </div>
               {% endif %}
             </div>

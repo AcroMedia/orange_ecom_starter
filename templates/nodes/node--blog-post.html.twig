@@ -79,9 +79,9 @@
   ]
 %}
 <article{{ attributes.addClass(classes) }}>
-  {% if node.field_image.entity.fileuri %}
+  {% if node.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
     <div class="blog-post__image">
-      {{ content.field_image }}
+      {{ content.field_media_item }}
     </div>
   {% endif %}
 
@@ -117,12 +117,12 @@
   <div{{ content_attributes }}>
     {{ content.body }}
   </div>
-  {% if node.field_terms_reference.0.target_id %}
+  {% if node.field_terms.0.target_id %}
     <div class="blog-post__footer">
       <div class="blog-post-tags">
         <div class="blog-post-tags__label">{{ 'Posted in'|t }}</div>
         <div class="blog-post-tags__list clearfix">
-          {{ content.field_terms_reference }}
+          {{ content.field_terms }}
         </div>
       </div>
     </div>

@@ -25,11 +25,11 @@
   <div class="site-content">
     <div class="container">
       {# Page Banner. #}
-      {% if node and node.field_image.entity.uri.value %}
+      {% if node and node.field_media_item.0.entity.field_media_image.0.entity.fileuri %}
         <div class="row">
           <div class="col-md-12">
             <div class="page-header-image">
-              {{ drupal_field('field_image', 'node', node.id, 'default') }}
+              {{ drupal_field('field_media_item', 'node', node.id, 'default') }}
             </div>
           </div>
         </div>
@@ -87,9 +87,9 @@
   </div>
 
   {# Footer Components. #}
-  {% if node and node.field_paragraphs_reference_2.0.target_id %}
+  {% if node and node.field_paragraphs_2.0.target_id %}
     <div class="page-footer-components">
-      {{ drupal_field('field_paragraphs_reference_2', 'node', node.id, 'default') }}
+      {{ drupal_field('field_paragraphs_2', 'node', node.id, 'default') }}
     </div>
   {% endif %}
   {# / Footer Components. #}
