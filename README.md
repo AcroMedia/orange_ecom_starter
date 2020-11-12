@@ -1,6 +1,10 @@
 <!-- @file Project Page -->
 # Drupal Orange E-Commerce Starter
 
+**Notice**\
+Development for this theme has moved to [Drupal.org](https://drupal.org). If you want to submit issues, develop, or use this theme please visit the [new project page](https://www.drupal.org/project/orange_ecom_starter).\
+No pull requests submitted to this repository will be accepted.
+
 > Custom theme by Acro Media Inc.
 
 ## Introduction
